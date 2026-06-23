@@ -6,18 +6,21 @@ struct ConnectHero: View {
     let onConnect: () -> Void
 
     var body: some View {
-        VStack(spacing: 22) {
+        VStack(spacing: 24) {
             Spacer()
             PuffyBuddy(mood: .ready, size: 140)
-            VStack(spacing: 8) {
+                .accessibilityHidden(true)
+            VStack(spacing: 10) {
                 Text("Hi, I'm Buddy! 🐾")
-                    .font(.system(size: 26, weight: .heavy, design: .rounded))
+                    .font(.system(size: 27, weight: .heavy, design: .rounded))
                     .foregroundColor(Palette.ink)
-                Text("Connect Apple Health and I'll help you hit 10,000 steps a day and train without overdoing it.")
+                Text("Connect Apple Health and I'll turn your steps and runs into friendly, day-by-day coaching — toward 10,000 steps a day, without overdoing it.")
                     .font(.system(size: 16, weight: .regular))
                     .foregroundColor(Palette.subtle)
                     .multilineTextAlignment(.center)
-                    .padding(.horizontal, 24)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .lineSpacing(2)
+                    .padding(.horizontal, 28)
             }
             Button(action: onConnect) {
                 HStack(spacing: 8) {

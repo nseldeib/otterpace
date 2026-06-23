@@ -12,3 +12,10 @@
 {"timestamp":"2026-06-22T23:26:27Z","kind":"registry-add","message":"registry `AppCoreTests.CoachEngineTests › testReflectionWithWorkout`: added from runner `tests` output"}
 {"timestamp":"2026-06-22T23:26:27Z","kind":"registry-add","message":"registry `AppCoreTests.CoachEngineTests › testClassifyGeneralFallback`: added from runner `tests` output"}
 {"timestamp":"2026-06-22T23:26:27Z","kind":"registry-add","message":"registry `AppCoreTests.CoachEngineTests › testMileageReplySteadyIsReassuring`: added from runner `tests` output"}
+{"timestamp":"2026-06-23T18:44:17Z","kind":"registry-add","message":"registry `AppCoreTests.FormattersTests › testStepGoalA11yNotReached`: added from runner `tests` output"}
+{"timestamp":"2026-06-23T18:44:17Z","kind":"registry-add","message":"registry `AppCoreTests.FormattersTests › testStepGoalCaptionNotReached`: added from runner `tests` output"}
+{"timestamp":"2026-06-23T18:44:17Z","kind":"registry-add","message":"registry `AppCoreTests.ModelTests › testGoalExceededOnlyWhenPastGoal`: added from runner `tests` output"}
+{"timestamp":"2026-06-23T18:44:17Z","kind":"registry-add","message":"registry `AppCoreTests.FormattersTests › testStepGoalCaptionExceeded`: added from runner `tests` output"}
+{"timestamp":"2026-06-23T18:44:17Z","kind":"registry-add","message":"registry `AppCoreTests.FormattersTests › testStepGoalCaptionReachedExactly`: added from runner `tests` output"}
+{"timestamp":"2026-06-23T18:44:17Z","kind":"registry-add","message":"registry `AppCoreTests.FormattersTests › testStepGoalA11yReachedExactly`: added from runner `tests` output"}
+{"timestamp":"2026-06-23T18:44:17Z","kind":"registry-add","message":"registry `AppCoreTests.FormattersTests › testStepGoalA11yExceeded`: added from runner `tests` output"}

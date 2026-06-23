@@ -49,4 +49,44 @@ final class FormattersTests: XCTestCase {
         XCTAssertEqual(prettyDate(""), "")
         XCTAssertEqual(prettyDate("not-a-date"), "not-a-date")
     }
+
+    // stepGoalCaption frames the goal when it has not been reached yet.
+    func testStepGoalCaptionNotReached() {
+        XCTAssertEqual(stepGoalCaption(reached: false, exceeded: false, goal: 10000), "of 10,000")
+        XCTAssertEqual(stepGoalCaption(reached: false, exceeded: false, goal: 8000), "of 8,000")
+    }
+
+    // stepGoalCaption celebrates exactly hitting the goal.
+    func testStepGoalCaptionReachedExactly() {
+        XCTAssertEqual(stepGoalCaption(reached: true, exceeded: false, goal: 10000), "goal hit! 🎉")
+    }
+
+    // stepGoalCaption gives extra cheer once the goal is passed; exceeded wins over reached.
+    func testStepGoalCaptionExceeded() {
+        XCTAssertEqual(stepGoalCaption(reached: true, exceeded: true, goal: 10000), "Goal crushed! 🎉")
+    }
+
+    // stepGoalAccessibilityValue spells out remaining steps when the goal is not yet met.
+    func testStepGoalA11yNotReached() {
+        XCTAssertEqual(
+            stepGoalAccessibilityValue(steps: 6420, goal: 10000, remaining: 3580, reached: false, exceeded: false),
+            "6,420 of 10,000 steps. 3,580 to go."
+        )
+    }
+
+    // stepGoalAccessibilityValue announces the goal as reached at exactly the goal.
+    func testStepGoalA11yReachedExactly() {
+        XCTAssertEqual(
+            stepGoalAccessibilityValue(steps: 10000, goal: 10000, remaining: 0, reached: true, exceeded: false),
+            "10,000 steps. Goal of 10,000 reached."
+        )
+    }
+
+    // stepGoalAccessibilityValue celebrates a crushed goal when steps exceed the goal.
+    func testStepGoalA11yExceeded() {
+        XCTAssertEqual(
+            stepGoalAccessibilityValue(steps: 14200, goal: 10000, remaining: 0, reached: true, exceeded: true),
+            "14,200 steps. You crushed your goal of 10,000."
+        )
+    }
 }

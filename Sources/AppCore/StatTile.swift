@@ -15,6 +15,8 @@ struct StatTile: View {
             Text(value)
                 .font(.system(size: 20, weight: .heavy, design: .rounded))
                 .foregroundColor(Palette.ink)
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
             Text(label)
                 .font(.system(size: 11, weight: .medium))
                 .foregroundColor(Palette.subtle)
@@ -23,5 +25,7 @@ struct StatTile: View {
         .frame(maxWidth: .infinity)
         .padding(.vertical, 14)
         .cardStyle()
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(value) \(label)")
     }
 }

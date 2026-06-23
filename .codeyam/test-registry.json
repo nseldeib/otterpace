@@ -226,6 +226,60 @@
       "runner": "tests"
     },
     {
+      "description": "stepGoalAccessibilityValue celebrates a crushed goal when steps exceed the goal.",
+      "file": "Tests/AppCoreTests/FormattersTests.swift",
+      "format": "junit-xml",
+      "key": "AppCoreTests.FormattersTests › testStepGoalA11yExceeded",
+      "line": 86,
+      "registeredAt": "2026-06-23T19:06:14.844783+00:00",
+      "runner": "tests"
+    },
+    {
+      "description": "stepGoalAccessibilityValue spells out remaining steps when the goal is not yet met.",
+      "file": "Tests/AppCoreTests/FormattersTests.swift",
+      "format": "junit-xml",
+      "key": "AppCoreTests.FormattersTests › testStepGoalA11yNotReached",
+      "line": 70,
+      "registeredAt": "2026-06-23T19:06:01.860508+00:00",
+      "runner": "tests"
+    },
+    {
+      "description": "stepGoalAccessibilityValue announces the goal reached at exactly the goal count.",
+      "file": "Tests/AppCoreTests/FormattersTests.swift",
+      "format": "junit-xml",
+      "key": "AppCoreTests.FormattersTests › testStepGoalA11yReachedExactly",
+      "line": 78,
+      "registeredAt": "2026-06-23T19:06:08.539561+00:00",
+      "runner": "tests"
+    },
+    {
+      "description": "stepGoalCaption gives extra cheer once the goal is passed; exceeded outranks reached.",
+      "file": "Tests/AppCoreTests/FormattersTests.swift",
+      "format": "junit-xml",
+      "key": "AppCoreTests.FormattersTests › testStepGoalCaptionExceeded",
+      "line": 65,
+      "registeredAt": "2026-06-23T19:05:55.604493+00:00",
+      "runner": "tests"
+    },
+    {
+      "description": "stepGoalCaption frames the goal target when the goal has not been reached yet.",
+      "file": "Tests/AppCoreTests/FormattersTests.swift",
+      "format": "junit-xml",
+      "key": "AppCoreTests.FormattersTests › testStepGoalCaptionNotReached",
+      "line": 54,
+      "registeredAt": "2026-06-23T19:05:39.949281+00:00",
+      "runner": "tests"
+    },
+    {
+      "description": "stepGoalCaption celebrates exactly hitting the goal with a goal-hit line.",
+      "file": "Tests/AppCoreTests/FormattersTests.swift",
+      "format": "junit-xml",
+      "key": "AppCoreTests.FormattersTests › testStepGoalCaptionReachedExactly",
+      "line": 60,
+      "registeredAt": "2026-06-23T19:05:49.194717+00:00",
+      "runner": "tests"
+    },
+    {
       "description": "A known raw string maps to the matching tab, case-insensitively",
       "file": "Tests/AppCoreTests/MainTabTests.swift",
       "format": "junit-xml",
@@ -248,7 +302,7 @@
       "file": "Tests/AppCoreTests/ModelTests.swift",
       "format": "junit-xml",
       "key": "AppCoreTests.ModelTests › testConnectFlipsState",
-      "line": 70,
+      "line": 93,
       "registeredAt": "2026-06-22T19:41:43.406519+00:00",
       "runner": "tests"
     },
@@ -259,6 +313,15 @@
       "key": "AppCoreTests.ModelTests › testEmptyStateIsDisconnected",
       "line": 10,
       "registeredAt": "2026-06-22T19:41:43.398712+00:00",
+      "runner": "tests"
+    },
+    {
+      "description": "goalExceeded is true only past the goal, never at or below it, and never for a zero goal.",
+      "file": "Tests/AppCoreTests/ModelTests.swift",
+      "format": "junit-xml",
+      "key": "AppCoreTests.ModelTests › testGoalExceededOnlyWhenPastGoal",
+      "line": 33,
+      "registeredAt": "2026-06-23T19:06:21.205341+00:00",
       "runner": "tests"
     },
     {
@@ -275,7 +338,7 @@
       "file": "Tests/AppCoreTests/ModelTests.swift",
       "format": "junit-xml",
       "key": "AppCoreTests.ModelTests › testReadStateEmptyDefaultsToDisconnected",
-      "line": 60,
+      "line": 83,
       "registeredAt": "2026-06-22T19:41:43.404808+00:00",
       "runner": "tests"
     },
@@ -284,7 +347,7 @@
       "file": "Tests/AppCoreTests/ModelTests.swift",
       "format": "junit-xml",
       "key": "AppCoreTests.ModelTests › testReadStateFromFlatDefaults",
-      "line": 34,
+      "line": 57,
       "registeredAt": "2026-06-22T19:41:43.402746+00:00",
       "runner": "tests"
     }

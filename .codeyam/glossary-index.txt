@@ -1,4 +1,4 @@
-# regenerated from glossary.json on 2026-06-22T23:31:40Z; do not hand-edit
+# regenerated from glossary.json on 2026-06-23T18:45:35Z; do not hand-edit
 AskCoachEmptyState :: Sources/AppCore/AskCoachEmptyState.swift :: tags=
 AskCoachHeader :: Sources/AppCore/AskCoachHeader.swift :: tags=
 AskCoachInputBar :: Sources/AppCore/AskCoachInputBar.swift :: tags=
@@ -32,3 +32,5 @@ WorkoutCard :: Sources/AppCore/WorkoutCard.swift :: tags=
 formatted :: Sources/AppCore/Formatters.swift :: tags= :: test=Tests/AppCoreTests/FormattersTests.swift
 movementLabel :: Sources/AppCore/Formatters.swift :: tags= :: test=Tests/AppCoreTests/FormattersTests.swift
 prettyDate :: Sources/AppCore/Formatters.swift :: tags= :: test=Tests/AppCoreTests/FormattersTests.swift
+stepGoalAccessibilityValue :: Sources/AppCore/Formatters.swift :: tags= :: test=Tests/AppCoreTests/FormattersTests.swift
+stepGoalCaption :: Sources/AppCore/Formatters.swift :: tags= :: test=Tests/AppCoreTests/FormattersTests.swift

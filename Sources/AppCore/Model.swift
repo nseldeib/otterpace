@@ -195,6 +195,12 @@ public final class RunBuddyModel: ObservableObject {
         today.steps >= today.goalSteps && today.goalSteps > 0
     }
 
+    /// True when the user has gone *past* the goal, not merely reached it — used
+    /// to swap the ring's caption from "goal hit" to a celebratory "Goal crushed".
+    public var goalExceeded: Bool {
+        today.steps > today.goalSteps && today.goalSteps > 0
+    }
+
     /// Connect Apple Health (used by the day-one hero's call-to-action).
     public func connect() {
         today.healthKitConnected = true

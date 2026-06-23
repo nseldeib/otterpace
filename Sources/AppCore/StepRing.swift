@@ -8,6 +8,17 @@ struct StepRing: View {
     let goal: Int
     let remaining: Int
     let reached: Bool
+    var exceeded: Bool = false
+
+    // Presentation logic lives in pure, unit-tested helpers (Formatters.swift).
+    private var caption: String {
+        stepGoalCaption(reached: reached, exceeded: exceeded, goal: goal)
+    }
+
+    private var accessibilityValue: String {
+        stepGoalAccessibilityValue(steps: steps, goal: goal, remaining: remaining,
+                                   reached: reached, exceeded: exceeded)
+    }
 
     var body: some View {
         ZStack {
@@ -27,16 +38,23 @@ struct StepRing: View {
                 Text(formatted(steps))
                     .font(.system(size: 26, weight: .heavy, design: .rounded))
                     .foregroundColor(Palette.ink)
-                Text(reached ? "goal hit! 🎉" : "of \(formatted(goal))")
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.6)
+                Text(caption)
                     .font(.system(size: 12, weight: .semibold))
                     .foregroundColor(Palette.subtle)
+                    .multilineTextAlignment(.center)
                 if !reached {
                     Text("\(formatted(remaining)) to go")
                         .font(.system(size: 11, weight: .medium))
                         .foregroundColor(Palette.brand)
                 }
             }
+            .padding(.horizontal, 12)
         }
         .frame(width: 150, height: 150)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Daily step goal")
+        .accessibilityValue(accessibilityValue)
     }
 }

@@ -1,0 +1,185 @@
+{
+  "timestamp": "2026-06-23T19:07:22Z",
+  "title": "Polish Today — Empty States, Edge Cases & Buddy Moods",
+  "type": "feature",
+  "userRequest": "mode: ui\n\n## Goal\n\nRefine the existing Today dashboard without adding a new screen: tighten the\n**empty/day-one state, numeric edge cases, and Buddy mood expressiveness** so\nthe surface feels finished and never shame-based.\n\n## What exists today\n\n- `TodayDashboard` + section components (header, `BuddySummaryCard`,\n  `StatsRow`, `CoachCard`, `WorkoutCard`, `WeeklyLoadCard`).\n- 8 Today/Buddy scenarios already captured (Day One, Fresh Start, Almost There,\n  Midday Nudge, Goal Crushed, Recovery Caution, Buddy moods/loader).\n\n## What to build\n\n- Polish the day-one `ConnectHero` empty state copy and spacing.\n- Handle numeric edges: 0 steps, goal exceeded (>100%), very long pace/distance\n  strings, missing optional sections.\n- Audit Buddy mood mapping for the safety-sensitive `concerned`/`recovery`\n  reads and ensure tone stays encouraging.\n- Accessibility labels on key stats and the Buddy mascot.\n\n## Scenarios (data states)\n\n- **Day one (empty)** — refreshed connect hero.\n- **Zero-step morning** — connected but 0 steps, gentle nudge.\n- **Goal crushed** — >100% ring, celebrating Buddy.\n- **Long-content edge** — long pace/distance/headline strings.\n\n## Out of scope\n\n- New screens (Ask Coach, Weekly Review, History), HealthKit/Strava wiring,\n  new domain types.",
+  "description": "Refined the existing Today dashboard without adding new screens. Polished the day-one ConnectHero copy and spacing, made the step ring celebrate a passed goal with a Goal crushed treatment, kept the connected zero-step morning gentle and never shame-based, and made coach headlines wrap with pace/distance/mileage values shrink-to-fit so long content never breaks layout. Audited the safety-sensitive Buddy concerned/recovery moods for supportive tone and added VoiceOver labels across the ring, Buddy, stat tiles, weekly-load metrics, and the workout card. Extracted stepGoalCaption and stepGoalAccessibilityValue as pure, unit-tested helpers and added goalExceeded coverage; registered four Today data states (day-one, zero-step morning, goal-crushed, long-content).",
+  "modifiedFiles": [
+    {
+      "path": ".codeyam/.last-reconcile.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/capture.js",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/dependency-graph.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/deps-index.txt",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/glossary-index.txt",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/glossary.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/per-test-evidence.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/plans/polish-today-states.md\t.codeyam/plans/completed/polish-today-states.md",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/reconciliation-log.jsonl",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/runner-timing-history.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenario-handlers.js",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-day-one-connect--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-goal-crushed--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/today-day-one-connect.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/today-goal-crushed.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/simulator-status.jsonl",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/state/last-advance.txt",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/state/provider-auth-verdict.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/state/scenario-taxonomy.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/state/session-results-snapshot.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/swift-tests.xml",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/test-cache.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/test-cache/all.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/test-registry.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/test-run-marker.json",
+      "status": "modified"
+    },
+    {
+      "path": ".gitignore",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/BuddySummaryCard.swift",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/CoachCard.swift",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/ConnectHero.swift",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/Formatters.swift",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/Model.swift",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/StatTile.swift",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/StepRing.swift",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/WeeklyLoadCard.swift",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/WorkoutCard.swift",
+      "status": "modified"
+    },
+    {
+      "path": "Tests/AppCoreTests/FormattersTests.swift",
+      "status": "modified"
+    },
+    {
+      "path": "Tests/AppCoreTests/ModelTests.swift",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/mocks/catalog.json",
+      "status": "added"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-long-content--iphone-16.png",
+      "status": "added"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-long-content--iphone-16.png.hash",
+      "status": "added"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-zero-step-morning--iphone-16.png",
+      "status": "added"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-zero-step-morning--iphone-16.png.hash",
+      "status": "added"
+    },
+    {
+      "path": ".codeyam/scenarios/today-long-content.json",
+      "status": "added"
+    },
+    {
+      "path": ".codeyam/scenarios/today-zero-step-morning.json",
+      "status": "added"
+    }
+  ]
+}

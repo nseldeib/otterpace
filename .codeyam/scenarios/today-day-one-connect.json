@@ -1,6 +1,6 @@
 {
   "name": "Today - Day One (Connect)",
-  "id": "f7ee3cf8-db14-464a-80af-8f5d2014459e",
+  "id": "fbf08241-9b8c-4add-a33a-23412849ecff",
   "url": "/",
   "dimensions": [
     "iPhone 16"
@@ -8,9 +8,9 @@
   "mocks": {},
   "deviceState": {
     "preferences": {
+      "rbStartTab": "today",
       "rbConnected": false,
       "rbPreviewMode": "",
-      "rbStartTab": "today",
       "rbAskSeedQuestion": ""
     }
   },

@@ -57,6 +57,40 @@
         "status": "n-a",
         "reason": "Only action is the Connect Apple Health CTA; its connected result is shown by the dashboard scenarios and its logic is covered by testConnectFlipsState."
       }
+    },
+    "TodayDashboard": {
+      "empty": {
+        "status": "n-a",
+        "reason": "Covered at the ContentView entry-point page level (owns the / app scenarios); TodayDashboard cannot be isolated on this no-isolation Swift stack"
+      },
+      "single": {
+        "status": "n-a",
+        "reason": "Dashboard renders fixed sections, not an item list; no single-item boundary"
+      },
+      "typical": {
+        "status": "n-a",
+        "reason": "Covered at the ContentView entry-point page level (owns the / app scenarios); TodayDashboard cannot be isolated on this no-isolation Swift stack"
+      },
+      "many": {
+        "status": "n-a",
+        "reason": "Covered at the ContentView entry-point page level (owns the / app scenarios); TodayDashboard cannot be isolated on this no-isolation Swift stack"
+      },
+      "loading": {
+        "status": "n-a",
+        "reason": "Today reads seeded state synchronously at launch; no async loading state on the dashboard"
+      },
+      "edge": {
+        "status": "n-a",
+        "reason": "Covered at the ContentView entry-point page level (owns the / app scenarios); TodayDashboard cannot be isolated on this no-isolation Swift stack"
+      },
+      "error": {
+        "status": "n-a",
+        "reason": "Mock mode reads local state; Today has no fetch/error path"
+      },
+      "key-interaction": {
+        "status": "n-a",
+        "reason": "Covered at the ContentView entry-point page level (owns the / app scenarios); TodayDashboard cannot be isolated on this no-isolation Swift stack"
+      }
     }
   }
 }

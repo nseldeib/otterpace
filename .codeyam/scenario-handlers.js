@@ -39,16 +39,21 @@ function insecureContextAdvisory(text) {
   });
 }
 
-function getInitScript() {
-  return `
-    window.__codeyamUnhandledRejections = [];
-    window.addEventListener("unhandledrejection", (event) => {
-      const reason = event.reason;
-      const message =
-        reason instanceof Error ? reason.message : String(reason);
-      window.__codeyamUnhandledRejections.push(message);
-    });
-
+// `allowWebSocket` keeps the real `WebSocket` for scenarios that script a
+// `/ws/terminal` transcript (or a WS stream): those captures NEED the socket to
+// connect so the server replays the scripted agent state into the frame. The
+// stub below exists to silence the live terminal's reconnect loop on EVERY
+// OTHER capture (a component that opens `/ws/terminal` with no scripted
+// playback would otherwise screenshot the "Reconnecting…" overlay); for a
+// scripted scenario the server holds the socket open after replay, so there is
+// no reconnect spam to silence and stubbing only hides the very state we are
+// trying to capture. The flag is computed by the capture orchestrator from the
+// scenario's `mocks.transcripts` / `mocks.streams` — see
+// `scenarioScriptsLiveSocket` in scenario-check.js.
+function getInitScript(allowWebSocket = false) {
+  const webSocketStub = allowWebSocket
+    ? ""
+    : `
     // Stub WebSocket during capture to prevent terminal reconnection spam.
     window.WebSocket = class StubWebSocket {
       static CONNECTING = 0;
@@ -71,7 +76,16 @@ function getInitScript() {
           if (this.onclose) this.onclose(new CloseEvent("close"));
         }, 0);
       }
-    };
+    };`;
+  return `
+    window.__codeyamUnhandledRejections = [];
+    window.addEventListener("unhandledrejection", (event) => {
+      const reason = event.reason;
+      const message =
+        reason instanceof Error ? reason.message : String(reason);
+      window.__codeyamUnhandledRejections.push(message);
+    });
+${webSocketStub}
   `;
 }
 

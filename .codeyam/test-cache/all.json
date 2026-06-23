@@ -1,50 +1,26 @@
 {
   "schemaVersion": 4,
-  "version": 10,
+  "version": 20,
   "partition": "all",
-  "hash": "f59e0a637f00fbb7",
+  "hash": "f3d50a62daa93b69",
   "runners": [
     {
       "name": "tests",
       "format": "junit-xml",
-      "output": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<testsuites>\n<testsuite name=\"TestResults\" errors=\"0\" tests=\"32\" failures=\"0\" time=\"3.965789875\">\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testClassifyInjuryWins\" time=\"0.11283\">\n</testcase>\n<testcase classname=\"AppCoreTests.BuddyMoodTests\" name=\"testEveryMoodHasCaption\" time=\"0.112832083\">\n</testcase>\n<testcase classname=\"AppCoreTests.BuddyMoodTests\" name=\"testAccentsDifferentiateMoods\" time=\"0.11283075\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testClassifyReflection\" time=\"0.112823625\">\n</testcase>\n<testcase classname=\"AppCoreTests.BuddyMoodTests\" name=\"testInitFromKnownRaw\" time=\"0.112805833\">\n</testcase>\n<testcase classname=\"AppCoreTests.BuddyMoodTests\" name=\"testInitUnknownFallsBackToReady\" time=\"0.112845083\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testClassifyGeneralFallback\" time=\"0.112802333\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testClassifyMileage\" time=\"0.112851\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testRunOrRestWhenFreshAllowsRun\" time=\"0.108545542\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testMileageReplySpikingIsCaution\" time=\"0.108637792\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testReflectionWithWorkout\" time=\"0.108606417\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testClassifySteps\" time=\"0.108636083\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testRunOrRestAfterHardRunIsRecovery\" time=\"0.108578958\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testMileageReplySteadyIsReassuring\" time=\"0.108626042\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testInjuryReplyIsSafetyFlagged\" time=\"0.131299083\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testClassifyRunOrRest\" time=\"0.131363125\">\n</testcase>\n<testcase classname=\"AppCoreTests.FormattersTests\" name=\"testMovementLabelNow\" time=\"0.102049959\">\n</testcase>\n<testcase classname=\"AppCoreTests.FormattersTests\" name=\"testPrettyDateInvalidFallsThrough\" time=\"0.102043417\">\n</testcase>\n<testcase classname=\"AppCoreTests.FormattersTests\" name=\"testFormattedSmallNumbers\" time=\"0.201334375\">\n</testcase>\n<testcase classname=\"AppCoreTests.FormattersTests\" name=\"testMovementLabelMinutes\" time=\"0.201345375\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testStepsReplyGoalReachedCelebrates\" time=\"0.20137725\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testStepsReplyBelowGoal\" time=\"0.201404666\">\n</testcase>\n<testcase classname=\"AppCoreTests.FormattersTests\" name=\"testMovementLabelHours\" time=\"0.201394625\">\n</testcase>\n<testcase classname=\"AppCoreTests.FormattersTests\" name=\"testFormattedGroupsThousands\" time=\"0.20142475\">\n</testcase>\n<testcase classname=\"AppCoreTests.MainTabTests\" name=\"testInitFromKnownRaw\" time=\"0.087235167\">\n</testcase>\n<testcase classname=\"AppCoreTests.FormattersTests\" name=\"testPrettyDateValid\" time=\"0.087447333\">\n</testcase>\n<testcase classname=\"AppCoreTests.ModelTests\" name=\"testConnectFlipsState\" time=\"0.093642209\">\n</testcase>\n<testcase classname=\"AppCoreTests.ModelTests\" name=\"testReadStateFromFlatDefaults\" time=\"0.093597667\">\n</testcase>\n<testcase classname=\"AppCoreTests.ModelTests\" name=\"testEmptyStateIsDisconnected\" time=\"0.0936665\">\n</testcase>\n<testcase classname=\"AppCoreTests.ModelTests\" name=\"testReadStateEmptyDefaultsToDisconnected\" time=\"0.093605125\">\n</testcase>\n<testcase classname=\"AppCoreTests.ModelTests\" name=\"testGoalProgressClampsAndRemaining\" time=\"0.09363425\">\n</testcase>\n<testcase classname=\"AppCoreTests.MainTabTests\" name=\"testInitUnknownFallsBackToToday\" time=\"0.093673458\">\n</testcase>\n</testsuite>\n</testsuites>\n",
+      "output": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<testsuites>\n<testsuite name=\"TestResults\" errors=\"0\" tests=\"39\" failures=\"0\" time=\"6.524485294\">\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testClassifyMileage\" time=\"0.160399958\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testClassifyInjuryWins\" time=\"0.160469334\">\n</testcase>\n<testcase classname=\"AppCoreTests.BuddyMoodTests\" name=\"testInitUnknownFallsBackToReady\" time=\"0.18356425\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testClassifyGeneralFallback\" time=\"0.183612375\">\n</testcase>\n<testcase classname=\"AppCoreTests.BuddyMoodTests\" name=\"testEveryMoodHasCaption\" time=\"0.183638333\">\n</testcase>\n<testcase classname=\"AppCoreTests.BuddyMoodTests\" name=\"testAccentsDifferentiateMoods\" time=\"0.183611167\">\n</testcase>\n<testcase classname=\"AppCoreTests.BuddyMoodTests\" name=\"testInitFromKnownRaw\" time=\"0.183612834\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testClassifyReflection\" time=\"0.183585542\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testClassifyRunOrRest\" time=\"0.16208825\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testClassifySteps\" time=\"0.162080125\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testInjuryReplyIsSafetyFlagged\" time=\"0.1552945\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testRunOrRestAfterHardRunIsRecovery\" time=\"0.155207917\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testMileageReplySpikingIsCaution\" time=\"0.155321916\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testMileageReplySteadyIsReassuring\" time=\"0.155342792\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testReflectionWithWorkout\" time=\"0.155290625\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testRunOrRestWhenFreshAllowsRun\" time=\"0.1551875\">\n</testcase>\n<testcase classname=\"AppCoreTests.FormattersTests\" name=\"testMovementLabelHours\" time=\"0.174558375\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testStepsReplyBelowGoal\" time=\"0.201789209\">\n</testcase>\n<testcase classname=\"AppCoreTests.CoachEngineTests\" name=\"testStepsReplyGoalReachedCelebrates\" time=\"0.201912125\">\n</testcase>\n<testcase classname=\"AppCoreTests.FormattersTests\" name=\"testMovementLabelNow\" time=\"0.206161542\">\n</testcase>\n<testcase classname=\"AppCoreTests.FormattersTests\" name=\"testMovementLabelMinutes\" time=\"0.206196042\">\n</testcase>\n<testcase classname=\"AppCoreTests.FormattersTests\" name=\"testFormattedGroupsThousands\" time=\"0.206319125\">\n</testcase>\n<testcase classname=\"AppCoreTests.FormattersTests\" name=\"testFormattedSmallNumbers\" time=\"0.206331334\">\n</testcase>\n<testcase classname=\"AppCoreTests.FormattersTests\" name=\"testPrettyDateInvalidFallsThrough\" time=\"0.206079375\">\n</testcase>\n<testcase classname=\"AppCoreTests.FormattersTests\" name=\"testPrettyDateValid\" time=\"0.16462175\">\n</testcase>\n<testcase classname=\"AppCoreTests.FormattersTests\" name=\"testStepGoalA11yNotReached\" time=\"0.153703542\">\n</testcase>\n<testcase classname=\"AppCoreTests.FormattersTests\" name=\"testStepGoalA11yExceeded\" time=\"0.154038333\">\n</testcase>\n<testcase classname=\"AppCoreTests.FormattersTests\" name=\"testStepGoalCaptionExceeded\" time=\"0.14784075\">\n</testcase>\n<testcase classname=\"AppCoreTests.FormattersTests\" name=\"testStepGoalCaptionReachedExactly\" time=\"0.156272917\">\n</testcase>\n<testcase classname=\"AppCoreTests.FormattersTests\" name=\"testStepGoalCaptionNotReached\" time=\"0.156361417\">\n</testcase>\n<testcase classname=\"AppCoreTests.FormattersTests\" name=\"testStepGoalA11yReachedExactly\" time=\"0.156719\">\n</testcase>\n<testcase classname=\"AppCoreTests.MainTabTests\" name=\"testInitFromKnownRaw\" time=\"0.156268375\">\n</testcase>\n<testcase classname=\"AppCoreTests.MainTabTests\" name=\"testInitUnknownFallsBackToToday\" time=\"0.141905416\">\n</testcase>\n<testcase classname=\"AppCoreTests.ModelTests\" name=\"testEmptyStateIsDisconnected\" time=\"0.141732333\">\n</testcase>\n<testcase classname=\"AppCoreTests.ModelTests\" name=\"testConnectFlipsState\" time=\"0.141802875\">\n</testcase>\n<testcase classname=\"AppCoreTests.ModelTests\" name=\"testGoalExceededOnlyWhenPastGoal\" time=\"0.1389275\">\n</testcase>\n<testcase classname=\"AppCoreTests.ModelTests\" name=\"testReadStateFromFlatDefaults\" time=\"0.141976833\">\n</testcase>\n<testcase classname=\"AppCoreTests.ModelTests\" name=\"testGoalProgressClampsAndRemaining\" time=\"0.14234\">\n</testcase>\n<testcase classname=\"AppCoreTests.ModelTests\" name=\"testReadStateEmptyDefaultsToDisconnected\" time=\"0.142319708\">\n</testcase>\n</testsuite>\n</testsuites>\n",
       "invoked_command": "swift test --parallel --disable-swift-testing --xunit-output .codeyam/swift-tests.xml",
       "exit_code": 0,
       "tests": [
         {
+          "key": "AppCoreTests.CoachEngineTests › testClassifyMileage",
+          "status": "passed",
+          "file": null,
+          "line": null,
+          "runner": "tests",
+          "format": "junit-xml"
+        },
+        {
           "key": "AppCoreTests.CoachEngineTests › testClassifyInjuryWins",
-          "status": "passed",
-          "file": null,
-          "line": null,
-          "runner": "tests",
-          "format": "junit-xml"
-        },
-        {
-          "key": "AppCoreTests.BuddyMoodTests › testEveryMoodHasCaption",
-          "status": "passed",
-          "file": null,
-          "line": null,
-          "runner": "tests",
-          "format": "junit-xml"
-        },
-        {
-          "key": "AppCoreTests.BuddyMoodTests › testAccentsDifferentiateMoods",
-          "status": "passed",
-          "file": null,
-          "line": null,
-          "runner": "tests",
-          "format": "junit-xml"
-        },
-        {
-          "key": "AppCoreTests.CoachEngineTests › testClassifyReflection",
-          "status": "passed",
-          "file": null,
-          "line": null,
-          "runner": "tests",
-          "format": "junit-xml"
-        },
-        {
-          "key": "AppCoreTests.BuddyMoodTests › testInitFromKnownRaw",
           "status": "passed",
           "file": null,
           "line": null,
@@ -68,7 +44,7 @@
           "format": "junit-xml"
         },
         {
-          "key": "AppCoreTests.CoachEngineTests › testClassifyMileage",
+          "key": "AppCoreTests.BuddyMoodTests › testEveryMoodHasCaption",
           "status": "passed",
           "file": null,
           "line": null,
@@ -76,7 +52,7 @@
           "format": "junit-xml"
         },
         {
-          "key": "AppCoreTests.CoachEngineTests › testRunOrRestWhenFreshAllowsRun",
+          "key": "AppCoreTests.BuddyMoodTests › testAccentsDifferentiateMoods",
           "status": "passed",
           "file": null,
           "line": null,
@@ -84,7 +60,7 @@
           "format": "junit-xml"
         },
         {
-          "key": "AppCoreTests.CoachEngineTests › testMileageReplySpikingIsCaution",
+          "key": "AppCoreTests.BuddyMoodTests › testInitFromKnownRaw",
           "status": "passed",
           "file": null,
           "line": null,
@@ -92,39 +68,7 @@
           "format": "junit-xml"
         },
         {
-          "key": "AppCoreTests.CoachEngineTests › testReflectionWithWorkout",
-          "status": "passed",
-          "file": null,
-          "line": null,
-          "runner": "tests",
-          "format": "junit-xml"
-        },
-        {
-          "key": "AppCoreTests.CoachEngineTests › testClassifySteps",
-          "status": "passed",
-          "file": null,
-          "line": null,
-          "runner": "tests",
-          "format": "junit-xml"
-        },
-        {
-          "key": "AppCoreTests.CoachEngineTests › testRunOrRestAfterHardRunIsRecovery",
-          "status": "passed",
-          "file": null,
-          "line": null,
-          "runner": "tests",
-          "format": "junit-xml"
-        },
-        {
-          "key": "AppCoreTests.CoachEngineTests › testMileageReplySteadyIsReassuring",
-          "status": "passed",
-          "file": null,
-          "line": null,
-          "runner": "tests",
-          "format": "junit-xml"
-        },
-        {
-          "key": "AppCoreTests.CoachEngineTests › testInjuryReplyIsSafetyFlagged",
+          "key": "AppCoreTests.CoachEngineTests › testClassifyReflection",
           "status": "passed",
           "file": null,
           "line": null,
@@ -140,7 +84,7 @@
           "format": "junit-xml"
         },
         {
-          "key": "AppCoreTests.FormattersTests › testMovementLabelNow",
+          "key": "AppCoreTests.CoachEngineTests › testClassifySteps",
           "status": "passed",
           "file": null,
           "line": null,
@@ -148,7 +92,7 @@
           "format": "junit-xml"
         },
         {
-          "key": "AppCoreTests.FormattersTests › testPrettyDateInvalidFallsThrough",
+          "key": "AppCoreTests.CoachEngineTests › testInjuryReplyIsSafetyFlagged",
           "status": "passed",
           "file": null,
           "line": null,
@@ -156,7 +100,7 @@
           "format": "junit-xml"
         },
         {
-          "key": "AppCoreTests.FormattersTests › testFormattedSmallNumbers",
+          "key": "AppCoreTests.CoachEngineTests › testRunOrRestAfterHardRunIsRecovery",
           "status": "passed",
           "file": null,
           "line": null,
@@ -164,7 +108,7 @@
           "format": "junit-xml"
         },
         {
-          "key": "AppCoreTests.FormattersTests › testMovementLabelMinutes",
+          "key": "AppCoreTests.CoachEngineTests › testMileageReplySpikingIsCaution",
           "status": "passed",
           "file": null,
           "line": null,
@@ -172,7 +116,7 @@
           "format": "junit-xml"
         },
         {
-          "key": "AppCoreTests.CoachEngineTests › testStepsReplyGoalReachedCelebrates",
+          "key": "AppCoreTests.CoachEngineTests › testMileageReplySteadyIsReassuring",
           "status": "passed",
           "file": null,
           "line": null,
@@ -180,7 +124,15 @@
           "format": "junit-xml"
         },
         {
-          "key": "AppCoreTests.CoachEngineTests › testStepsReplyBelowGoal",
+          "key": "AppCoreTests.CoachEngineTests › testReflectionWithWorkout",
+          "status": "passed",
+          "file": null,
+          "line": null,
+          "runner": "tests",
+          "format": "junit-xml"
+        },
+        {
+          "key": "AppCoreTests.CoachEngineTests › testRunOrRestWhenFreshAllowsRun",
           "status": "passed",
           "file": null,
           "line": null,
@@ -196,6 +148,38 @@
           "format": "junit-xml"
         },
         {
+          "key": "AppCoreTests.CoachEngineTests › testStepsReplyBelowGoal",
+          "status": "passed",
+          "file": null,
+          "line": null,
+          "runner": "tests",
+          "format": "junit-xml"
+        },
+        {
+          "key": "AppCoreTests.CoachEngineTests › testStepsReplyGoalReachedCelebrates",
+          "status": "passed",
+          "file": null,
+          "line": null,
+          "runner": "tests",
+          "format": "junit-xml"
+        },
+        {
+          "key": "AppCoreTests.FormattersTests › testMovementLabelNow",
+          "status": "passed",
+          "file": null,
+          "line": null,
+          "runner": "tests",
+          "format": "junit-xml"
+        },
+        {
+          "key": "AppCoreTests.FormattersTests › testMovementLabelMinutes",
+          "status": "passed",
+          "file": null,
+          "line": null,
+          "runner": "tests",
+          "format": "junit-xml"
+        },
+        {
           "key": "AppCoreTests.FormattersTests › testFormattedGroupsThousands",
           "status": "passed",
           "file": null,
@@ -204,7 +188,15 @@
           "format": "junit-xml"
         },
         {
-          "key": "AppCoreTests.MainTabTests › testInitFromKnownRaw",
+          "key": "AppCoreTests.FormattersTests › testFormattedSmallNumbers",
+          "status": "passed",
+          "file": null,
+          "line": null,
+          "runner": "tests",
+          "format": "junit-xml"
+        },
+        {
+          "key": "AppCoreTests.FormattersTests › testPrettyDateInvalidFallsThrough",
           "status": "passed",
           "file": null,
           "line": null,
@@ -220,7 +212,7 @@
           "format": "junit-xml"
         },
         {
-          "key": "AppCoreTests.ModelTests › testConnectFlipsState",
+          "key": "AppCoreTests.FormattersTests › testStepGoalA11yNotReached",
           "status": "passed",
           "file": null,
           "line": null,
@@ -228,7 +220,55 @@
           "format": "junit-xml"
         },
         {
-          "key": "AppCoreTests.ModelTests › testReadStateFromFlatDefaults",
+          "key": "AppCoreTests.FormattersTests › testStepGoalA11yExceeded",
+          "status": "passed",
+          "file": null,
+          "line": null,
+          "runner": "tests",
+          "format": "junit-xml"
+        },
+        {
+          "key": "AppCoreTests.FormattersTests › testStepGoalCaptionExceeded",
+          "status": "passed",
+          "file": null,
+          "line": null,
+          "runner": "tests",
+          "format": "junit-xml"
+        },
+        {
+          "key": "AppCoreTests.FormattersTests › testStepGoalCaptionReachedExactly",
+          "status": "passed",
+          "file": null,
+          "line": null,
+          "runner": "tests",
+          "format": "junit-xml"
+        },
+        {
+          "key": "AppCoreTests.FormattersTests › testStepGoalCaptionNotReached",
+          "status": "passed",
+          "file": null,
+          "line": null,
+          "runner": "tests",
+          "format": "junit-xml"
+        },
+        {
+          "key": "AppCoreTests.FormattersTests › testStepGoalA11yReachedExactly",
+          "status": "passed",
+          "file": null,
+          "line": null,
+          "runner": "tests",
+          "format": "junit-xml"
+        },
+        {
+          "key": "AppCoreTests.MainTabTests › testInitFromKnownRaw",
+          "status": "passed",
+          "file": null,
+          "line": null,
+          "runner": "tests",
+          "format": "junit-xml"
+        },
+        {
+          "key": "AppCoreTests.MainTabTests › testInitUnknownFallsBackToToday",
           "status": "passed",
           "file": null,
           "line": null,
@@ -244,7 +284,23 @@
           "format": "junit-xml"
         },
         {
-          "key": "AppCoreTests.ModelTests › testReadStateEmptyDefaultsToDisconnected",
+          "key": "AppCoreTests.ModelTests › testConnectFlipsState",
+          "status": "passed",
+          "file": null,
+          "line": null,
+          "runner": "tests",
+          "format": "junit-xml"
+        },
+        {
+          "key": "AppCoreTests.ModelTests › testGoalExceededOnlyWhenPastGoal",
+          "status": "passed",
+          "file": null,
+          "line": null,
+          "runner": "tests",
+          "format": "junit-xml"
+        },
+        {
+          "key": "AppCoreTests.ModelTests › testReadStateFromFlatDefaults",
           "status": "passed",
           "file": null,
           "line": null,
@@ -260,7 +316,7 @@
           "format": "junit-xml"
         },
         {
-          "key": "AppCoreTests.MainTabTests › testInitUnknownFallsBackToToday",
+          "key": "AppCoreTests.ModelTests › testReadStateEmptyDefaultsToDisconnected",
           "status": "passed",
           "file": null,
           "line": null,

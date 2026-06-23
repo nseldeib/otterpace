@@ -137,6 +137,31 @@ function readStackLoadingMarkers() {
   }
 }
 
+// True when the scenario being captured scripts a `/ws/terminal` transcript or
+// a WebSocket stream. Such captures need the REAL `WebSocket` so the server can
+// replay the scripted agent state into the frame — `getInitScript` keeps its
+// reconnect-silencing stub OFF for them (see the comment there). Read from the
+// scenario file by slug (`config.scenarioId`), the same cwd-relative path
+// `readStackLoadingMarkers` uses. Defaults to `false` (stub stays on, today's
+// behavior) for the scenario-less CLI preview path or any unreadable/parse
+// failure, so a missing file never accidentally un-stubs a live terminal.
+function scenarioScriptsLiveSocket(config) {
+  const slug = config && config.scenarioId;
+  if (!slug) return false;
+  try {
+    const raw = fs.readFileSync(
+      path.join(".codeyam", "scenarios", `${slug}.json`),
+      "utf8",
+    );
+    const mocks = (JSON.parse(raw) || {}).mocks || {};
+    const transcripts = mocks.transcripts || {};
+    const streams = mocks.streams || {};
+    return Object.keys(transcripts).length > 0 || Object.keys(streams).length > 0;
+  } catch (_) {
+    return false;
+  }
+}
+
 async function getDOMFingerprint(frame) {
   try {
     return await frame.evaluate(() => {
@@ -645,8 +670,11 @@ async function runScenarioCheck(
   // not redirect to `/login` when the proxy is bypassed.
   await applyBrowserState(context, config);
 
-  // Context-level init script runs in ALL frames (including cross-origin iframes)
-  await context.addInitScript(getInitScript());
+  // Context-level init script runs in ALL frames (including cross-origin iframes).
+  // Keep the real WebSocket for scenarios that script a `/ws/terminal`
+  // transcript / WS stream so the scripted agent state reaches the capture;
+  // every other capture gets the reconnect-silencing stub.
+  await context.addInitScript(getInitScript(scenarioScriptsLiveSocket(config)));
 
   const page = await context.newPage();
   // Attach the network tracker BEFORE navigation so every request (the document
@@ -1009,6 +1037,7 @@ module.exports = {
   dumpPageState,
   verifySeededStorageLanded,
   readStackLoadingMarkers,
+  scenarioScriptsLiveSocket,
   applyBrowserState,
   isCrossOriginRequest,
   isCaptureFatalRequestFailure,

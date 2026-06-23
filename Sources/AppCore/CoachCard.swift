@@ -25,6 +25,7 @@ struct CoachCard: View {
             Text(coach.headline)
                 .font(.system(size: 19, weight: .heavy, design: .rounded))
                 .foregroundColor(Palette.ink)
+                .fixedSize(horizontal: false, vertical: true)
             Text(coach.body)
                 .font(.system(size: 15, weight: .regular))
                 .foregroundColor(Palette.ink.opacity(0.8))

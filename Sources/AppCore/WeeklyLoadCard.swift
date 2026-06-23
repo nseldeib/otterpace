@@ -33,11 +33,15 @@ struct WeeklyLoadCard: View {
             Text(value)
                 .font(.system(size: 18, weight: .heavy, design: .rounded))
                 .foregroundColor(Palette.ink)
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
             Text(label)
                 .font(.system(size: 11, weight: .medium))
                 .foregroundColor(Palette.subtle)
         }
         .frame(maxWidth: .infinity)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("\(value) \(label)")
     }
 
     private var divider: some View {

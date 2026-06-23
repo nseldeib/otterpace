@@ -14,12 +14,15 @@ struct BuddySummaryCard: View {
                 PuffyBuddy(mood: mood, size: 92)
                 MoodChip(mood: mood)
             }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("Buddy the mascot, feeling \(mood.caption.lowercased())")
             StepRing(
                 progress: model.goalProgress,
                 steps: model.today.steps,
                 goal: model.today.goalSteps,
                 remaining: model.stepsRemaining,
-                reached: model.goalReached
+                reached: model.goalReached,
+                exceeded: model.goalExceeded
             )
             .frame(maxWidth: .infinity)
         }

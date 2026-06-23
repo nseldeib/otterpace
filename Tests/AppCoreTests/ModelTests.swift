@@ -28,6 +28,29 @@ final class ModelTests: XCTestCase {
         XCTAssertTrue(over.goalReached)
     }
 
+    // goalExceeded distinguishes "past the goal" from merely meeting it, so the
+    // ring can swap "goal hit!" for the celebratory "Goal crushed!".
+    func testGoalExceededOnlyWhenPastGoal() {
+        // Below the goal: neither reached nor exceeded.
+        let under = RunBuddyModel(today: TodayState(healthKitConnected: true, steps: 6420, goalSteps: 10000))
+        XCTAssertFalse(under.goalReached)
+        XCTAssertFalse(under.goalExceeded)
+
+        // Exactly at the goal: reached but NOT exceeded.
+        let exact = RunBuddyModel(today: TodayState(healthKitConnected: true, steps: 10000, goalSteps: 10000))
+        XCTAssertTrue(exact.goalReached)
+        XCTAssertFalse(exact.goalExceeded)
+
+        // Past the goal: both reached and exceeded.
+        let over = RunBuddyModel(today: TodayState(healthKitConnected: true, steps: 14200, goalSteps: 10000))
+        XCTAssertTrue(over.goalReached)
+        XCTAssertTrue(over.goalExceeded)
+
+        // A zero goal can never be exceeded (guards against divide-by-zero framing).
+        let zeroGoal = RunBuddyModel(today: TodayState(healthKitConnected: true, steps: 500, goalSteps: 0))
+        XCTAssertFalse(zeroGoal.goalExceeded)
+    }
+
     // The seed contract: flat `rb*` preference keys (what a scenario's deviceState
     // writes at launch) are read back into a fully-populated TodayState, including
     // the coach group anchored by `rbCoachHeadline`.

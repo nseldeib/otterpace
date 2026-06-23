@@ -273,5 +273,17 @@
     "filePath": "Sources/AppCore/Formatters.swift",
     "name": "prettyDate",
     "testFile": "Tests/AppCoreTests/FormattersTests.swift"
+  },
+  {
+    "description": "Builds the VoiceOver spoken summary for the step-goal ring, mirroring the three caption states with whole-number step, goal, and remaining counts; never shame-based.",
+    "filePath": "Sources/AppCore/Formatters.swift",
+    "name": "stepGoalAccessibilityValue",
+    "testFile": "Tests/AppCoreTests/FormattersTests.swift"
+  },
+  {
+    "description": "Builds the caption shown under the step-goal ring count: a celebratory crushed-goal line once steps pass the goal, a goal-hit line at exactly the goal, and otherwise the of-goal target framing.",
+    "filePath": "Sources/AppCore/Formatters.swift",
+    "name": "stepGoalCaption",
+    "testFile": "Tests/AppCoreTests/FormattersTests.swift"
   }
 ]
