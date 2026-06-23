@@ -1,6 +1,14 @@
 {
   "files": {
-    ".claude/hooks/editor-step-hook.py": {
+    "Tests/AppCoreTests/MainTabTests.swift": {
+      "imports": [],
+      "importedBy": []
+    },
+    "Tests/AppCoreTests/CoachEngineTests.swift": {
+      "imports": [],
+      "importedBy": []
+    },
+    "ui/src/helpers/stepLabels.generated.ts": {
       "imports": [],
       "importedBy": []
     },
@@ -10,11 +18,29 @@
       ],
       "importedBy": []
     },
-    ".claude/hooks/editor-pretool-hook.py": {
+    ".claude/skills/review-session/scripts/find-last-session-helpers.mjs": {
+      "imports": [],
+      "importedBy": [
+        ".claude/skills/review-session/scripts/find-last-session.mjs"
+      ]
+    },
+    ".claude/skills/review-session/scripts/extract-session.mjs": {
       "imports": [],
       "importedBy": []
     },
     "Tests/AppCoreTests/ModelTests.swift": {
+      "imports": [],
+      "importedBy": []
+    },
+    ".claude/hooks/_step_metadata.py": {
+      "imports": [],
+      "importedBy": []
+    },
+    ".claude/hooks/editor-pretool-hook.py": {
+      "imports": [],
+      "importedBy": []
+    },
+    ".claude/hooks/editor-step-hook.py": {
       "imports": [],
       "importedBy": []
     },
@@ -23,32 +49,6 @@
       "importedBy": []
     },
     ".claude/skills/review-session/scripts/extract-session-helpers.mjs": {
-      "imports": [],
-      "importedBy": []
-    },
-    ".claude/skills/review-session/scripts/find-last-session-helpers.mjs": {
-      "imports": [],
-      "importedBy": [
-        ".claude/skills/review-session/scripts/find-last-session.mjs"
-      ]
-    },
-    "Tests/AppCoreTests/CoachEngineTests.swift": {
-      "imports": [],
-      "importedBy": []
-    },
-    "Tests/AppCoreTests/MainTabTests.swift": {
-      "imports": [],
-      "importedBy": []
-    },
-    ".claude/skills/review-session/scripts/extract-session.mjs": {
-      "imports": [],
-      "importedBy": []
-    },
-    "ui/src/helpers/stepLabels.generated.ts": {
-      "imports": [],
-      "importedBy": []
-    },
-    ".claude/hooks/_step_metadata.py": {
       "imports": [],
       "importedBy": []
     }
@@ -63,5 +63,5 @@
       "importedBy": []
     }
   },
-  "lastUpdated": "2026-06-23T19:10:55Z"
+  "lastUpdated": "2026-06-23T19:19:02Z"
 }
