@@ -1,4 +1,10 @@
-# regenerated from glossary.json on 2026-06-23T20:29:50Z; do not hand-edit
+# regenerated from glossary.json on 2026-06-23T21:50:57Z; do not hand-edit
+ActivityHistory :: Sources/AppCore/ActivityHistory.swift :: tags= :: test=Tests/AppCoreTests/ActivityHistoryTests.swift
+ActivityHistoryButton :: Sources/AppCore/ActivityHistoryButton.swift :: tags=
+ActivityHistoryEmptyState :: Sources/AppCore/ActivityHistoryEmptyState.swift :: tags=
+ActivityHistoryHeader :: Sources/AppCore/ActivityHistoryHeader.swift :: tags=
+ActivityHistoryView :: Sources/AppCore/ActivityHistoryView.swift :: tags=
+ActivityWeekSection :: Sources/AppCore/ActivityWeekSection.swift :: tags=
 AskCoachEmptyState :: Sources/AppCore/AskCoachEmptyState.swift :: tags=
 AskCoachHeader :: Sources/AppCore/AskCoachHeader.swift :: tags=
 AskCoachInputBar :: Sources/AppCore/AskCoachInputBar.swift :: tags=

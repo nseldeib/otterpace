@@ -9,30 +9,45 @@ public struct TodayDashboard: View {
     @ObservedObject var model: RunBuddyModel
     var onAskCoach: () -> Void
 
+    // Activity History presents as a full-cover overlay (cross-platform; a
+    // SwiftUI `fullScreenCover` is unavailable on macOS). Initialized from the
+    // scenario seed in `init` so a launch-seeded capture renders it on the first
+    // frame, never mid-transition — same pattern as the Weekly Review overlay.
+    @State private var showHistory: Bool
+
     public init(model: RunBuddyModel, onAskCoach: @escaping () -> Void = {}) {
         self.model = model
         self.onAskCoach = onAskCoach
+        _showHistory = State(initialValue: UserDefaults.standard.bool(forKey: "rbShowHistory"))
     }
 
     public var body: some View {
-        ScrollView {
-            VStack(spacing: 18) {
-                TodayHeader(date: model.today.date)
-                BuddySummaryCard(model: model)
-                StatsRow(today: model.today)
-                if let coach = model.today.coach {
-                    CoachCard(coach: coach, onAskCoach: onAskCoach)
+        ZStack {
+            ScrollView {
+                VStack(spacing: 18) {
+                    TodayHeader(date: model.today.date)
+                    BuddySummaryCard(model: model)
+                    StatsRow(today: model.today)
+                    if let coach = model.today.coach {
+                        CoachCard(coach: coach, onAskCoach: onAskCoach)
+                    }
+                    if let workout = model.today.latestWorkout {
+                        WorkoutCard(workout: workout)
+                    }
+                    if let load = model.today.weeklyLoad {
+                        WeeklyLoadCard(load: load)
+                    }
+                    ActivityHistoryButton(onTap: { showHistory = true })
                 }
-                if let workout = model.today.latestWorkout {
-                    WorkoutCard(workout: workout)
-                }
-                if let load = model.today.weeklyLoad {
-                    WeeklyLoadCard(load: load)
-                }
+                .padding(.horizontal, 18)
+                .padding(.top, 8)
+                .padding(.bottom, 28)
             }
-            .padding(.horizontal, 18)
-            .padding(.top, 8)
-            .padding(.bottom, 28)
+
+            if showHistory {
+                ActivityHistoryView(model: model, onClose: { showHistory = false })
+                    .zIndex(1)
+            }
         }
     }
 }

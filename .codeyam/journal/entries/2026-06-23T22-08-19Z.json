@@ -1,0 +1,163 @@
+{
+  "timestamp": "2026-06-23T22:08:19Z",
+  "title": "Activity History — Recent Workouts & Load Basics",
+  "type": "feature",
+  "userRequest": "mode: ui\n\n## Goal\n\nA scrollable history of recent workouts with **weekly mileage, run frequency,\nand training-load basics** (Milestone 4), so the user can see their progress\nbeyond just today.\n\n## What exists today\n\n- `LatestWorkout` + `WeeklyLoad` domain types (`Sources/AppCore/Model.swift`).\n- `WorkoutCard` (`Sources/AppCore/WorkoutCard.swift`) — single-workout card,\n  reusable as a list row.\n- Seed-driven scenario model (`rb*` UserDefaults keys) for injecting state.\n\n## What to build\n\n- Extend the model with a `workouts: [LatestWorkout]` history list (source-\n  tagged healthkit/strava) plus a derived weekly rollup (mileage, run count,\n  rest days).\n- An `ActivityHistoryView` listing workouts grouped by week with a header\n  rollup; rows reuse `WorkoutCard` styling.\n- Reached from the Coach/Today navigation; production starts empty.\n\n## Scenarios (data states)\n\n- **Empty** — no workouts yet → day-one empty state.\n- **Sparse** — 1–2 recent workouts.\n- **Rich** — multiple weeks, mixed run/walk, enough to exercise grouping.\n- **Long values** — very long run + high mileage week (layout/number edge).\n\n## Out of scope\n\n- Strava OAuth/import (Milestone 5), dedup, maps/routes, per-workout detail\n  screen, editing workouts.",
+  "description": "Added a scrollable Activity History (Milestone 4): recent workouts grouped by week, each week fronted by its training-load rollup — weekly mileage, run count, and rest days. The model gained a workouts history list seeded via a JSON-encoded rbWorkoutsJSON preference, and a pure, deterministic ActivityHistory.groupByWeek (Monday-start, POSIX calendar) does the grouping and rollups. The ActivityHistoryView (header, per-week sections reusing WorkoutCard, empty state) opens from a new Activity history card button on the Today dashboard; production starts empty. Covered by 11 ActivityHistory unit tests and four app scenarios (Empty, Sparse, Rich multi-week, Long values).",
+  "modifiedFiles": [
+    {
+      "path": ".codeyam/.last-reconcile.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/dependency-graph.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/deps-index.txt",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/glossary-index.txt",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/glossary.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/per-test-evidence.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/plans/activity-history.md\t.codeyam/plans/completed/activity-history.md",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/reconciliation-log.jsonl",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/runner-timing-history.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/state/last-advance.txt",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/state/scenario-taxonomy.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/state/session-results-snapshot.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/swift-tests.xml",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/test-cache.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/test-cache/all.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/test-registry.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/test-run-marker.json",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/Model.swift",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/TodayView.swift",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/activity-history-empty.json",
+      "status": "added"
+    },
+    {
+      "path": ".codeyam/scenarios/activity-history-long-values.json",
+      "status": "added"
+    },
+    {
+      "path": ".codeyam/scenarios/activity-history-rich-multi-week.json",
+      "status": "added"
+    },
+    {
+      "path": ".codeyam/scenarios/activity-history-sparse.json",
+      "status": "added"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/activity-history-empty--iphone-16.png",
+      "status": "added"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/activity-history-long-values--iphone-16.png",
+      "status": "added"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/activity-history-rich-multi-week--iphone-16.png",
+      "status": "added"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/activity-history-sparse--iphone-16.png",
+      "status": "added"
+    },
+    {
+      "path": "Sources/AppCore/ActivityHistory.swift",
+      "status": "added"
+    },
+    {
+      "path": "Sources/AppCore/ActivityHistoryButton.swift",
+      "status": "added"
+    },
+    {
+      "path": "Sources/AppCore/ActivityHistoryEmptyState.swift",
+      "status": "added"
+    },
+    {
+      "path": "Sources/AppCore/ActivityHistoryHeader.swift",
+      "status": "added"
+    },
+    {
+      "path": "Sources/AppCore/ActivityHistoryView.swift",
+      "status": "added"
+    },
+    {
+      "path": "Sources/AppCore/ActivityWeekSection.swift",
+      "status": "added"
+    },
+    {
+      "path": "Tests/AppCoreTests/ActivityHistoryTests.swift",
+      "status": "added"
+    }
+  ],
+  "scenarioScreenshots": [
+    {
+      "name": "Activity History — Empty",
+      "screenshotPath": "activity-history-empty--iphone-16.png"
+    },
+    {
+      "name": "Activity History — Long Values",
+      "screenshotPath": "activity-history-long-values--iphone-16.png"
+    },
+    {
+      "name": "Activity History — Rich Multi-Week",
+      "screenshotPath": "activity-history-rich-multi-week--iphone-16.png"
+    },
+    {
+      "name": "Activity History — Sparse",
+      "screenshotPath": "activity-history-sparse--iphone-16.png"
+    }
+  ]
+}

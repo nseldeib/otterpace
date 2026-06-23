@@ -71,6 +71,7 @@ public struct TodayState: Codable, Equatable {
     public var latestWorkout: LatestWorkout?
     public var weeklyLoad: WeeklyLoad?
     public var coach: CoachRecommendation?
+    public var workouts: [LatestWorkout]   // recent history, newest-first; [] => day-one empty
 
     public init(
         healthKitConnected: Bool,
@@ -83,7 +84,8 @@ public struct TodayState: Codable, Equatable {
         minutesSinceLastMovement: Int = 0,
         latestWorkout: LatestWorkout? = nil,
         weeklyLoad: WeeklyLoad? = nil,
-        coach: CoachRecommendation? = nil
+        coach: CoachRecommendation? = nil,
+        workouts: [LatestWorkout] = []
     ) {
         self.healthKitConnected = healthKitConnected
         self.date = date
@@ -96,6 +98,7 @@ public struct TodayState: Codable, Equatable {
         self.latestWorkout = latestWorkout
         self.weeklyLoad = weeklyLoad
         self.coach = coach
+        self.workouts = workouts
     }
 
     // Production default: nothing connected yet, blank day-one state.
@@ -152,6 +155,15 @@ public final class RunBuddyModel: ObservableObject {
             )
         }
 
+        // Activity history: a JSON-encoded array of workouts under a single
+        // preference key (the flat rb* primitives can't hold a list). Newest-first.
+        var workouts: [LatestWorkout] = []
+        if let json = d.string(forKey: "rbWorkoutsJSON"), !json.isEmpty,
+           let data = json.data(using: .utf8),
+           let decoded = try? JSONDecoder().decode([LatestWorkout].self, from: data) {
+            workouts = decoded
+        }
+
         var coach: CoachRecommendation? = nil
         if let headline = d.string(forKey: "rbCoachHeadline"), !headline.isEmpty {
             coach = CoachRecommendation(
@@ -174,7 +186,8 @@ public final class RunBuddyModel: ObservableObject {
             minutesSinceLastMovement: d.integer(forKey: "rbMinutesSinceMovement"),
             latestWorkout: workout,
             weeklyLoad: load,
-            coach: coach
+            coach: coach,
+            workouts: workouts
         )
     }
 

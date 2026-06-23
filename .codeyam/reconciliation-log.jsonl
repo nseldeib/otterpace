@@ -29,3 +29,14 @@
 {"timestamp":"2026-06-23T20:26:28Z","kind":"registry-add","message":"registry `AppCoreTests.WeeklyReviewEngineTests › testNoLoadIsEmptyReview`: added from runner `tests` output"}
 {"timestamp":"2026-06-23T20:26:28Z","kind":"registry-add","message":"registry `AppCoreTests.WeeklyReviewEngineTests › testSteadyWeekIsUnflagged`: added from runner `tests` output"}
 {"timestamp":"2026-06-23T20:26:28Z","kind":"registry-add","message":"registry `AppCoreTests.WeeklyReviewEngineTests › testZeroRunsWithMileageIsSparse`: added from runner `tests` output"}
+{"timestamp":"2026-06-23T21:49:41Z","kind":"registry-add","message":"registry `AppCoreTests.ActivityHistoryTests › testSameWeekGroupsTogether`: added from runner `tests` output"}
+{"timestamp":"2026-06-23T21:49:41Z","kind":"registry-add","message":"registry `AppCoreTests.ActivityHistoryTests › testRunCountExcludesNonRuns`: added from runner `tests` output"}
+{"timestamp":"2026-06-23T21:49:41Z","kind":"registry-add","message":"registry `AppCoreTests.ActivityHistoryTests › testEmptyYieldsNoGroups`: added from runner `tests` output"}
+{"timestamp":"2026-06-23T21:49:41Z","kind":"registry-add","message":"registry `AppCoreTests.ActivityHistoryTests › testDifferentWeeksNewestFirst`: added from runner `tests` output"}
+{"timestamp":"2026-06-23T21:49:41Z","kind":"registry-add","message":"registry `AppCoreTests.ActivityHistoryTests › testModelDecodesWorkoutsJSON`: added from runner `tests` output"}
+{"timestamp":"2026-06-23T21:49:41Z","kind":"registry-add","message":"registry `AppCoreTests.ActivityHistoryTests › testModelEmptyWhenUnseeded`: added from runner `tests` output"}
+{"timestamp":"2026-06-23T21:49:41Z","kind":"registry-add","message":"registry `AppCoreTests.ActivityHistoryTests › testWithinWeekNewestFirst`: added from runner `tests` output"}
+{"timestamp":"2026-06-23T21:49:41Z","kind":"registry-add","message":"registry `AppCoreTests.ActivityHistoryTests › testInvalidDateDropped`: added from runner `tests` output"}
+{"timestamp":"2026-06-23T21:49:41Z","kind":"registry-add","message":"registry `AppCoreTests.ActivityHistoryTests › testTotalMilesSums`: added from runner `tests` output"}
+{"timestamp":"2026-06-23T21:49:41Z","kind":"registry-add","message":"registry `AppCoreTests.ActivityHistoryTests › testRestDaysFromDistinctActiveDays`: added from runner `tests` output"}
+{"timestamp":"2026-06-23T21:49:41Z","kind":"registry-add","message":"registry `AppCoreTests.ActivityHistoryTests › testRestDaysNeverNegative`: added from runner `tests` output"}

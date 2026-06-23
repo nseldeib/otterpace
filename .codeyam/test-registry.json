@@ -1,6 +1,105 @@
 {
   "tests": [
     {
+      "description": "Workouts in different weeks produce separate groups, newest week first.",
+      "file": "Tests/AppCoreTests/ActivityHistoryTests.swift",
+      "format": "junit-xml",
+      "key": "AppCoreTests.ActivityHistoryTests › testDifferentWeeksNewestFirst",
+      "line": 25,
+      "registeredAt": "2026-06-23T22:05:23.594827+00:00",
+      "runner": "tests"
+    },
+    {
+      "description": "An empty workout list yields no week groups.",
+      "file": "Tests/AppCoreTests/ActivityHistoryTests.swift",
+      "format": "junit-xml",
+      "key": "AppCoreTests.ActivityHistoryTests › testEmptyYieldsNoGroups",
+      "line": 12,
+      "registeredAt": "2026-06-23T22:05:01.620060+00:00",
+      "runner": "tests"
+    },
+    {
+      "description": "Workouts with an unparseable date are dropped rather than crashing.",
+      "file": "Tests/AppCoreTests/ActivityHistoryTests.swift",
+      "format": "junit-xml",
+      "key": "AppCoreTests.ActivityHistoryTests › testInvalidDateDropped",
+      "line": 59,
+      "registeredAt": "2026-06-23T22:06:15.713055+00:00",
+      "runner": "tests"
+    },
+    {
+      "description": "The model decodes a seeded rbWorkoutsJSON list into the today state.",
+      "file": "Tests/AppCoreTests/ActivityHistoryTests.swift",
+      "format": "junit-xml",
+      "key": "AppCoreTests.ActivityHistoryTests › testModelDecodesWorkoutsJSON",
+      "line": 72,
+      "registeredAt": "2026-06-23T22:06:40.490172+00:00",
+      "runner": "tests"
+    },
+    {
+      "description": "With no rbWorkoutsJSON seeded, the workouts list is empty.",
+      "file": "Tests/AppCoreTests/ActivityHistoryTests.swift",
+      "format": "junit-xml",
+      "key": "AppCoreTests.ActivityHistoryTests › testModelEmptyWhenUnseeded",
+      "line": 85,
+      "registeredAt": "2026-06-23T22:06:51.167368+00:00",
+      "runner": "tests"
+    },
+    {
+      "description": "Rest days are seven minus the number of distinct active days.",
+      "file": "Tests/AppCoreTests/ActivityHistoryTests.swift",
+      "format": "junit-xml",
+      "key": "AppCoreTests.ActivityHistoryTests › testRestDaysFromDistinctActiveDays",
+      "line": 45,
+      "registeredAt": "2026-06-23T22:05:54.878348+00:00",
+      "runner": "tests"
+    },
+    {
+      "description": "A full seven distinct active days leaves zero rest days, never negative.",
+      "file": "Tests/AppCoreTests/ActivityHistoryTests.swift",
+      "format": "junit-xml",
+      "key": "AppCoreTests.ActivityHistoryTests › testRestDaysNeverNegative",
+      "line": 52,
+      "registeredAt": "2026-06-23T22:06:05.297576+00:00",
+      "runner": "tests"
+    },
+    {
+      "description": "Run count includes only run-type workouts, not walks or rides.",
+      "file": "Tests/AppCoreTests/ActivityHistoryTests.swift",
+      "format": "junit-xml",
+      "key": "AppCoreTests.ActivityHistoryTests › testRunCountExcludesNonRuns",
+      "line": 39,
+      "registeredAt": "2026-06-23T22:05:44.485709+00:00",
+      "runner": "tests"
+    },
+    {
+      "description": "Workouts in the same ISO week collapse into one group.",
+      "file": "Tests/AppCoreTests/ActivityHistoryTests.swift",
+      "format": "junit-xml",
+      "key": "AppCoreTests.ActivityHistoryTests › testSameWeekGroupsTogether",
+      "line": 17,
+      "registeredAt": "2026-06-23T22:05:13.626602+00:00",
+      "runner": "tests"
+    },
+    {
+      "description": "Total mileage sums every workout in the week.",
+      "file": "Tests/AppCoreTests/ActivityHistoryTests.swift",
+      "format": "junit-xml",
+      "key": "AppCoreTests.ActivityHistoryTests › testTotalMilesSums",
+      "line": 32,
+      "registeredAt": "2026-06-23T22:05:33.324640+00:00",
+      "runner": "tests"
+    },
+    {
+      "description": "Within a week, workouts are ordered newest-first by date.",
+      "file": "Tests/AppCoreTests/ActivityHistoryTests.swift",
+      "format": "junit-xml",
+      "key": "AppCoreTests.ActivityHistoryTests › testWithinWeekNewestFirst",
+      "line": 66,
+      "registeredAt": "2026-06-23T22:06:26.560562+00:00",
+      "runner": "tests"
+    },
+    {
       "description": "Caution-leaning moods carry distinct accent colors from the upbeat default.",
       "file": "Tests/AppCoreTests/BuddyMoodTests.swift",
       "format": "junit-xml",

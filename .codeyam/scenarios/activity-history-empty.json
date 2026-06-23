@@ -1,0 +1,25 @@
+{
+  "name": "Activity History — Empty",
+  "id": "ff7ea2dc-d6e6-41f6-970a-0ba8a2f965bf",
+  "url": "/",
+  "dimensions": [
+    "iPhone 16"
+  ],
+  "mocks": {},
+  "deviceState": {
+    "preferences": {
+      "rbWorkoutsJSON": "",
+      "rbPreviewMode": "",
+      "rbGoalSteps": 10000,
+      "rbSteps": 8200,
+      "rbShowWeeklyReview": false,
+      "rbConnected": true,
+      "rbDate": "2026-06-22",
+      "rbStartTab": "today",
+      "rbShowHistory": true,
+      "rbAskSeedQuestion": ""
+    }
+  },
+  "scenarioType": "application",
+  "pageFilePath": "Sources/AppCore/ActivityHistoryView.swift"
+}

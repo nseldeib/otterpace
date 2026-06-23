@@ -1,5 +1,34 @@
 {
   "views": {
+    "ActivityHistoryView": {
+      "empty": {
+        "status": "added"
+      },
+      "single": {
+        "status": "added"
+      },
+      "typical": {
+        "status": "added"
+      },
+      "many": {
+        "status": "n-a",
+        "reason": "Rich multi-week scenario already exercises the long, scrolling grouped list; no separate overflow state."
+      },
+      "loading": {
+        "status": "n-a",
+        "reason": "History is grouped synchronously from already-loaded workouts; no async pending state."
+      },
+      "edge": {
+        "status": "added"
+      },
+      "error": {
+        "status": "n-a",
+        "reason": "groupByWeek is a pure total function; invalid dates are dropped, never an error; no-data is the empty archetype."
+      },
+      "key-interaction": {
+        "status": "added"
+      }
+    },
     "AskCoachView": {
       "empty": {
         "status": "added"

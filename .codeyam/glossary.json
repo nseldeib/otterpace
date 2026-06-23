@@ -1,5 +1,56 @@
 [
   {
+    "description": "Pure deterministic grouping behind the Activity History screen: rolls a newest-first workout list into per-week groups (Monday-start, POSIX calendar) with training-load basics — weekly mileage, run count, and rest days. Drops workouts with unparseable dates.",
+    "filePath": "Sources/AppCore/ActivityHistory.swift",
+    "name": "ActivityHistory",
+    "testFile": "Tests/AppCoreTests/ActivityHistoryTests.swift"
+  },
+  {
+    "description": "The Today dashboard's entry point into Activity History: a full-width card button that opens the recent-workouts history overlay.",
+    "filePath": "Sources/AppCore/ActivityHistoryButton.swift",
+    "name": "ActivityHistoryButton",
+    "untestabilityReason": {
+      "justification": "Native SwiftUI view; no component-isolation harness on this stack, so it is shown via the application scenarios.",
+      "kind": "no-isolation-harness"
+    }
+  },
+  {
+    "description": "The day-one empty state for Activity History: a friendly Buddy prompt shown when no workouts have been logged yet.",
+    "filePath": "Sources/AppCore/ActivityHistoryEmptyState.swift",
+    "name": "ActivityHistoryEmptyState",
+    "untestabilityReason": {
+      "justification": "Native SwiftUI view; no component-isolation harness on this stack, so it is shown via the application scenarios.",
+      "kind": "no-isolation-harness"
+    }
+  },
+  {
+    "description": "The Activity History title bar: Buddy avatar, screen name with a recent-workouts subtitle, and a Done button that dismisses back to the dashboard.",
+    "filePath": "Sources/AppCore/ActivityHistoryHeader.swift",
+    "name": "ActivityHistoryHeader",
+    "untestabilityReason": {
+      "justification": "Native SwiftUI view; no component-isolation harness on this stack, so it is shown via the application scenarios.",
+      "kind": "no-isolation-harness"
+    }
+  },
+  {
+    "description": "The read-only Activity History screen: composes the header, per-week sections, and empty state over model.today.workouts, branching between the grouped history and the day-one empty prompt.",
+    "filePath": "Sources/AppCore/ActivityHistoryView.swift",
+    "name": "ActivityHistoryView",
+    "untestabilityReason": {
+      "justification": "Native SwiftUI view; no component-isolation harness on this stack, so it is shown via the application scenarios.",
+      "kind": "no-isolation-harness"
+    }
+  },
+  {
+    "description": "One week in the history: a header row with the week label and its mileage/run/rest rollup, followed by the week's workouts rendered as shared WorkoutCard rows.",
+    "filePath": "Sources/AppCore/ActivityWeekSection.swift",
+    "name": "ActivityWeekSection",
+    "untestabilityReason": {
+      "justification": "Native SwiftUI view; no component-isolation harness on this stack, so it is shown via the application scenarios.",
+      "kind": "no-isolation-harness"
+    }
+  },
+  {
     "description": "The Ask Coach first-open state: a friendly Buddy and a prompt inviting the user to ask, shown whenever the conversation has no messages yet.",
     "filePath": "Sources/AppCore/AskCoachEmptyState.swift",
     "name": "AskCoachEmptyState",
