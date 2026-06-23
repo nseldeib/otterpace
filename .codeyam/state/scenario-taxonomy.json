@@ -91,6 +91,35 @@
         "status": "n-a",
         "reason": "Covered at the ContentView entry-point page level (owns the / app scenarios); TodayDashboard cannot be isolated on this no-isolation Swift stack"
       }
+    },
+    "WeeklyReviewView": {
+      "empty": {
+        "status": "added"
+      },
+      "single": {
+        "status": "added"
+      },
+      "typical": {
+        "status": "added"
+      },
+      "many": {
+        "status": "n-a",
+        "reason": "Fixed five-section recap, not a variable-length list; nothing to overflow or truncate."
+      },
+      "loading": {
+        "status": "n-a",
+        "reason": "Recap is generated synchronously from already-loaded TodayState (deterministic mock summarizer); no async pending state."
+      },
+      "edge": {
+        "status": "added"
+      },
+      "error": {
+        "status": "n-a",
+        "reason": "Summarizer is a pure total function that always returns a review; the no-data path is the empty archetype, not an error."
+      },
+      "key-interaction": {
+        "status": "added"
+      }
     }
   }
 }

@@ -42,27 +42,45 @@ public struct AskCoachView: View {
     @State private var messages: [ChatMessage] = []
     @State private var draft: String = ""
     @State private var nextId: Int = 0
+    @State private var showReview: Bool
 
     public init(model: RunBuddyModel) {
         self.model = model
+        // Scenario hook: when `rbShowWeeklyReview` is seeded, present the recap
+        // from the very first frame (initialized here, not in `.onAppear`) so a
+        // launch-time capture lands on a fully-rendered screen, never mid-transition.
+        _showReview = State(initialValue: UserDefaults.standard.bool(forKey: "rbShowWeeklyReview"))
     }
 
     public var body: some View {
-        VStack(spacing: 0) {
-            AskCoachHeader()
-            Divider().opacity(0.4)
-            if messages.isEmpty {
-                AskCoachEmptyState()
-            } else {
-                ChatThread(messages: messages)
+        ZStack {
+            VStack(spacing: 0) {
+                AskCoachHeader(onWeeklyReview: { showReview = true })
+                Divider().opacity(0.4)
+                if messages.isEmpty {
+                    AskCoachEmptyState()
+                } else {
+                    ChatThread(messages: messages)
+                }
+                AskCoachInputBar(draft: $draft, onSend: send)
             }
-            AskCoachInputBar(draft: $draft, onSend: send)
+            .background(
+                LinearGradient(colors: [Palette.bgTop, Palette.bgBottom],
+                               startPoint: .top, endPoint: .bottom)
+                    .ignoresSafeArea()
+            )
+
+            // Weekly Review presents as a full-cover overlay (cross-platform; a
+            // SwiftUI `fullScreenCover` is unavailable on macOS). No transition —
+            // a launch-seeded capture must render fully on the first frame.
+            if showReview {
+                WeeklyReviewView(
+                    review: WeeklyReviewEngine.generate(from: model.today),
+                    onClose: { showReview = false }
+                )
+                .zIndex(1)
+            }
         }
-        .background(
-            LinearGradient(colors: [Palette.bgTop, Palette.bgBottom],
-                           startPoint: .top, endPoint: .bottom)
-                .ignoresSafeArea()
-        )
         .onAppear(perform: seedFromScenario)
     }
 
@@ -91,7 +109,9 @@ public struct AskCoachView: View {
     }
 
     /// Scenario hook: if `rbAskSeedQuestion` is seeded, replay it through the
-    /// engine once so the captured frame shows a real exchange.
+    /// engine once so the captured frame shows a real exchange. (The Weekly
+    /// Review's `rbShowWeeklyReview` hook is handled in `init` so it renders from
+    /// the first frame — see `showReview`.)
     private func seedFromScenario() {
         guard messages.isEmpty else { return }
         let seeded = UserDefaults.standard.string(forKey: "rbAskSeedQuestion") ?? ""

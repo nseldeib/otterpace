@@ -1,0 +1,29 @@
+{
+  "name": "Weekly Review — Sparse / Mostly Rest",
+  "id": "438af9de-e07a-4a68-acc1-76b4ef4edf53",
+  "url": "/",
+  "dimensions": [
+    "iPhone 16"
+  ],
+  "mocks": {},
+  "deviceState": {
+    "preferences": {
+      "rbConnected": true,
+      "rbRestDaysThisWeek": 5,
+      "rbShowWeeklyReview": true,
+      "rbStartTab": "coach",
+      "rbWeeklyMileage": 3.5,
+      "rbDaysRunThisWeek": 1,
+      "rbSteps": 4200,
+      "rbPreviewMode": "",
+      "rbLongestRunMiles": 3.5,
+      "rbWorkoutType": "",
+      "rbGoalSteps": 10000,
+      "rbLoadTrend": "recovering",
+      "rbAskSeedQuestion": "",
+      "rbDate": "2026-06-22"
+    }
+  },
+  "scenarioType": "application",
+  "pageFilePath": "Sources/AppCore/WeeklyReviewView.swift"
+}

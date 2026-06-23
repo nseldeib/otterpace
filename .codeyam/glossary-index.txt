@@ -1,4 +1,4 @@
-# regenerated from glossary.json on 2026-06-23T18:45:35Z; do not hand-edit
+# regenerated from glossary.json on 2026-06-23T20:29:50Z; do not hand-edit
 AskCoachEmptyState :: Sources/AppCore/AskCoachEmptyState.swift :: tags=
 AskCoachHeader :: Sources/AppCore/AskCoachHeader.swift :: tags=
 AskCoachInputBar :: Sources/AppCore/AskCoachInputBar.swift :: tags=
@@ -28,6 +28,13 @@ TodayDashboard :: Sources/AppCore/TodayView.swift :: tags=
 TodayHeader :: Sources/AppCore/TodayHeader.swift :: tags=
 TrendBadge :: Sources/AppCore/TrendBadge.swift :: tags=
 WeeklyLoadCard :: Sources/AppCore/WeeklyLoadCard.swift :: tags=
+WeeklyReviewEngine :: Sources/AppCore/WeeklyReviewEngine.swift :: tags= :: test=Tests/AppCoreTests/WeeklyReviewEngineTests.swift
+WeeklyReviewFocusCallout :: Sources/AppCore/WeeklyReviewFocusCallout.swift :: tags=
+WeeklyReviewHeader :: Sources/AppCore/WeeklyReviewHeader.swift :: tags=
+WeeklyReviewHero :: Sources/AppCore/WeeklyReviewHero.swift :: tags=
+WeeklyReviewRiskSection :: Sources/AppCore/WeeklyReviewRiskSection.swift :: tags=
+WeeklyReviewSection :: Sources/AppCore/WeeklyReviewSection.swift :: tags=
+WeeklyReviewView :: Sources/AppCore/WeeklyReviewView.swift :: tags=
 WorkoutCard :: Sources/AppCore/WorkoutCard.swift :: tags=
 formatted :: Sources/AppCore/Formatters.swift :: tags= :: test=Tests/AppCoreTests/FormattersTests.swift
 movementLabel :: Sources/AppCore/Formatters.swift :: tags= :: test=Tests/AppCoreTests/FormattersTests.swift

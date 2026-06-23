@@ -1,18 +1,6 @@
 {
   "files": {
-    ".claude/hooks/editor-pretool-hook.py": {
-      "imports": [],
-      "importedBy": []
-    },
-    "Tests/AppCoreTests/CoachEngineTests.swift": {
-      "imports": [],
-      "importedBy": []
-    },
-    ".claude/hooks/_step_metadata.py": {
-      "imports": [],
-      "importedBy": []
-    },
-    ".claude/hooks/editor-step-hook.py": {
+    "ui/src/helpers/stepLabels.generated.ts": {
       "imports": [],
       "importedBy": []
     },
@@ -20,17 +8,19 @@
       "imports": [],
       "importedBy": []
     },
-    ".claude/skills/review-session/scripts/find-last-session-helpers.mjs": {
-      "imports": [],
-      "importedBy": [
-        ".claude/skills/review-session/scripts/find-last-session.mjs"
-      ]
-    },
-    "ui/src/helpers/stepLabels.generated.ts": {
+    ".claude/skills/review-session/scripts/extract-session-helpers.mjs": {
       "imports": [],
       "importedBy": []
     },
-    "Tests/AppCoreTests/MainTabTests.swift": {
+    "Tests/AppCoreTests/WeeklyReviewEngineTests.swift": {
+      "imports": [],
+      "importedBy": []
+    },
+    ".claude/hooks/_step_metadata.py": {
+      "imports": [],
+      "importedBy": []
+    },
+    "Tests/AppCoreTests/CoachEngineTests.swift": {
       "imports": [],
       "importedBy": []
     },
@@ -42,7 +32,21 @@
       "imports": [],
       "importedBy": []
     },
-    ".claude/skills/review-session/scripts/extract-session-helpers.mjs": {
+    "Tests/AppCoreTests/MainTabTests.swift": {
+      "imports": [],
+      "importedBy": []
+    },
+    ".claude/skills/review-session/scripts/find-last-session-helpers.mjs": {
+      "imports": [],
+      "importedBy": [
+        ".claude/skills/review-session/scripts/find-last-session.mjs"
+      ]
+    },
+    ".claude/hooks/editor-pretool-hook.py": {
+      "imports": [],
+      "importedBy": []
+    },
+    ".claude/hooks/editor-step-hook.py": {
       "imports": [],
       "importedBy": []
     },
@@ -63,5 +67,5 @@
       "importedBy": []
     }
   },
-  "lastUpdated": "2026-06-23T19:23:08Z"
+  "lastUpdated": "2026-06-23T20:57:42Z"
 }

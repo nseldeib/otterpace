@@ -248,6 +248,66 @@
     }
   },
   {
+    "description": "Pure deterministic generator that turns the weeks WeeklyLoad context into a five-section weekly recap — what went well, what changed, training risk, suggested next week, and one focus area — plus a Buddy mood and a safety flag, classifying the week as empty, spiking, sparse, or solid. Mirrors CoachEngine; honors the conservative, never-shame-based, injury-aware coaching rules.",
+    "filePath": "Sources/AppCore/WeeklyReviewEngine.swift",
+    "name": "WeeklyReviewEngine",
+    "testFile": "Tests/AppCoreTests/WeeklyReviewEngineTests.swift"
+  },
+  {
+    "description": "The recap's closing one-focus-area callout — a single prominent next-action on the brand/gold gradient.",
+    "filePath": "Sources/AppCore/WeeklyReviewFocusCallout.swift",
+    "name": "WeeklyReviewFocusCallout",
+    "untestabilityReason": {
+      "justification": "Native SwiftUI view; no component-isolation harness on this stack, so it is shown via the application scenarios.",
+      "kind": "no-isolation-harness"
+    }
+  },
+  {
+    "description": "The Weekly Review title bar: Buddy avatar, screen name with a generated-recap subtitle, and a Done button that dismisses the recap.",
+    "filePath": "Sources/AppCore/WeeklyReviewHeader.swift",
+    "name": "WeeklyReviewHeader",
+    "untestabilityReason": {
+      "justification": "Native SwiftUI view; no component-isolation harness on this stack, so it is shown via the application scenarios.",
+      "kind": "no-isolation-harness"
+    }
+  },
+  {
+    "description": "The recap hero: Buddy at the review mood, a mood chip, and the headline that sets the week's tone.",
+    "filePath": "Sources/AppCore/WeeklyReviewHero.swift",
+    "name": "WeeklyReviewHero",
+    "untestabilityReason": {
+      "justification": "Native SwiftUI view; no component-isolation harness on this stack, so it is shown via the application scenarios.",
+      "kind": "no-isolation-harness"
+    }
+  },
+  {
+    "description": "The training-risk section, taking the amber shield-marked safety treatment when the week's load warrants caution and a calm green treatment when risk is low.",
+    "filePath": "Sources/AppCore/WeeklyReviewRiskSection.swift",
+    "name": "WeeklyReviewRiskSection",
+    "untestabilityReason": {
+      "justification": "Native SwiftUI view; no component-isolation harness on this stack, so it is shown via the application scenarios.",
+      "kind": "no-isolation-harness"
+    }
+  },
+  {
+    "description": "One labeled prose section in the Weekly Review — a tinted icon, an uppercase title, and the recap copy on a standard card. Reused across the recap's standard sections.",
+    "filePath": "Sources/AppCore/WeeklyReviewSection.swift",
+    "name": "WeeklyReviewSection",
+    "untestabilityReason": {
+      "justification": "Native SwiftUI view; no component-isolation harness on this stack, so it is shown via the application scenarios.",
+      "kind": "no-isolation-harness"
+    }
+  },
+  {
+    "description": "The read-only Weekly Review screen: composes the header, hero, the four prose sections, the training-risk section, and the focus-area callout over a WeeklyReview value, branching between the activity recap and the empty first-week prompt.",
+    "filePath": "Sources/AppCore/WeeklyReviewView.swift",
+    "name": "WeeklyReviewView",
+    "untestabilityReason": {
+      "justification": "Native SwiftUI view; no component-isolation harness on this stack, so it is shown via the application scenarios.",
+      "kind": "no-isolation-harness"
+    }
+  },
+  {
     "description": "Summary of the most recent run, walk, or ride: distance and pace headline plus duration, date, and source.",
     "filePath": "Sources/AppCore/WorkoutCard.swift",
     "name": "WorkoutCard",

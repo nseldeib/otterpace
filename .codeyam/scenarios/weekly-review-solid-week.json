@@ -1,0 +1,29 @@
+{
+  "name": "Weekly Review — Solid Week",
+  "id": "891c5288-bd62-4f15-82a2-666622a7a7f0",
+  "url": "/",
+  "dimensions": [
+    "iPhone 16"
+  ],
+  "mocks": {},
+  "deviceState": {
+    "preferences": {
+      "rbShowWeeklyReview": true,
+      "rbLoadTrend": "building",
+      "rbGoalSteps": 10000,
+      "rbConnected": true,
+      "rbLongestRunMiles": 8.0,
+      "rbStartTab": "coach",
+      "rbDate": "2026-06-22",
+      "rbDaysRunThisWeek": 4,
+      "rbSteps": 9100,
+      "rbWeeklyMileage": 22.0,
+      "rbWorkoutType": "",
+      "rbAskSeedQuestion": "",
+      "rbRestDaysThisWeek": 2,
+      "rbPreviewMode": ""
+    }
+  },
+  "scenarioType": "application",
+  "pageFilePath": "Sources/AppCore/WeeklyReviewView.swift"
+}
