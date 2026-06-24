@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { exchangeCode, upsertToken } from "../_lib/strava";
+import { exchangeCode, upsertToken } from "../_lib/strava.js";
 
 // POST { code, deviceKey } — exchange the OAuth code for tokens (server-side,
 // using the client secret) and store them in Supabase keyed by the device key.

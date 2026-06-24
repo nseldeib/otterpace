@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { deleteToken } from "../_lib/strava";
+import { deleteToken } from "../_lib/strava.js";
 
 // POST { deviceKey } — forget this device's Strava tokens (server-side delete).
 export default async function handler(req: VercelRequest, res: VercelResponse) {

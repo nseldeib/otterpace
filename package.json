@@ -1,6 +1,7 @@
 {
   "name": "otterpace-site",
   "private": true,
+  "type": "module",
   "description": "Otterpace marketing site (site/) + AI coach API (api/), deployed on Vercel.",
   "dependencies": {
     "@anthropic-ai/sdk": "^0.106.0"

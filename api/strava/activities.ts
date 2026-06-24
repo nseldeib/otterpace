@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { getToken, freshAccessToken, fetchMappedActivities } from "../_lib/strava";
+import { getToken, freshAccessToken, fetchMappedActivities } from "../_lib/strava.js";
 
 // GET ?deviceKey=... — read the device's Strava token from Supabase (refreshing
 // it server-side if expired), fetch recent activities, and return them mapped to
