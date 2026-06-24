@@ -18,7 +18,7 @@ codeyam CLI / simulator). Work top to bottom.
 
 **Decisions you made**
 - **App name: Otterpace** (renaming from "RunBuddy" — see "App name" section below). The otter mascot stays named **Buddy**.
-- Bundle ID: set the real one in Xcode (placeholder is `com.example.App`); suggested `com.otterpace.app` — reverse-DNS of the **otterpace.com** domain you own, keeping Otterpace's identity separate from CodeYam.
+- Bundle ID: **set to `com.otterpace.app`** in the project (was `com.example.App`). A bundle ID is just an identifier — **no DNS / domain setup is required** to use it or to ship. You still need to register it as an App ID under your Apple Developer account (Xcode does this automatically when you enable signing).
 - Code signing: handle in Xcode with your team.
 
 ## App name: Otterpace
@@ -49,7 +49,8 @@ Mascot **Buddy** is unchanged — only the product/app name changes.
 - [x] `otterpace.com` registered (Namecheap).
 
 **Still yours, in Xcode / App Store Connect:**
-- [ ] `App.xcodeproj` → bundle ID `com.otterpace.app` (reverse-DNS of otterpace.com) — replaces `com.example.App`. Register this App ID under your Apple Developer account; keep it independent of any CodeYam identifiers.
+- [x] `App.xcodeproj` → bundle ID set to `com.otterpace.app` (replaced `com.example.App`). Verified the app still builds, launches, and captures.
+- [ ] Register `com.otterpace.app` as an App ID under your Apple Developer account (Xcode "Automatically manage signing" does this for you when you pick your team). No DNS needed.
 - [ ] App Store Connect → create the app record with name **Otterpace**.
 
 ---
