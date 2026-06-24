@@ -9,19 +9,19 @@
   "deviceState": {
     "preferences": {
       "rbPreviewMode": "",
-      "otterpaceRemindInactivity": false,
+      "rbShowHistory": false,
+      "rbGoalSteps": 10000,
+      "rbShowSettings": true,
       "rbShowWeeklyReview": false,
       "rbStartScreen": "",
-      "rbStartTab": "today",
-      "rbSteps": 8000,
-      "rbDate": "2026-06-22",
-      "rbGoalSteps": 10000,
-      "rbContentSize": "",
       "otterpaceRemindDaily": false,
-      "otterpaceRemindGoal": false,
+      "rbSteps": 8000,
+      "rbStartTab": "today",
       "rbConnected": true,
-      "rbShowHistory": false,
-      "rbShowSettings": true
+      "otterpaceRemindGoal": false,
+      "otterpaceRemindInactivity": false,
+      "rbContentSize": "",
+      "rbDate": "2026-06-22"
     }
   },
   "scenarioType": "application",

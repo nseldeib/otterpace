@@ -252,4 +252,16 @@ public final class OtterpaceModel: ObservableObject {
         UserPreferences.setGoalSteps(goal)
         today.goalSteps = goal
     }
+
+    /// Ingest activities imported from Strava (an optional data source alongside
+    /// Apple Health). Populates the workout history + latest workout, and flips
+    /// the app into the connected dashboard so the imported runs are visible even
+    /// for a Strava-only user.
+    @MainActor
+    public func ingestStravaWorkouts(_ workouts: [LatestWorkout]) {
+        guard !workouts.isEmpty else { return }
+        today.workouts = workouts
+        today.latestWorkout = workouts.first(where: { $0.type == "run" }) ?? workouts.first
+        today.healthKitConnected = true
+    }
 }

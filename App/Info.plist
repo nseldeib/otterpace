@@ -24,6 +24,25 @@
 	<true/>
 	<key>NSHealthShareUsageDescription</key>
 	<string>Otterpace reads your steps, distance, and active energy from Apple Health — on your device — so Buddy can coach you toward your daily goal without overtraining.</string>
+	<!-- OAuth redirect target for "Connect Strava" (otterpace://strava-callback). -->
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.otterpace.app.strava</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>otterpace</string>
+			</array>
+		</dict>
+	</array>
+	<!-- Fill these in before shipping: your Strava API client ID and PostHog project key. -->
+	<key>StravaClientID</key>
+	<string></string>
+	<key>PostHogProjectKey</key>
+	<string></string>
+	<key>PostHogHost</key>
+	<string>https://us.i.posthog.com</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

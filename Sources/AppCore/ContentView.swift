@@ -74,6 +74,7 @@ public struct ContentView: View {
             }
         }
         .modifier(DynamicTypeOverride(raw: contentSizeOverride))
+        .onAppear { if previewMode.isEmpty { Analytics.shared.capture("app_opened") } }
         .onChange(of: scenePhase) { phase in
             // Never schedule during a preview/scenario capture.
             guard previewMode.isEmpty else { return }

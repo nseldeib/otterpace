@@ -23,6 +23,9 @@ public struct SettingsView: View {
     @State private var reminders = ReminderSettings()
     @State private var notifAuthorized = false
 
+    // Optional Strava import.
+    @StateObject private var strava = StravaService()
+
     public init(model: OtterpaceModel, session: SessionStore, onClose: @escaping () -> Void = {}) {
         self.model = model
         self.session = session
@@ -42,6 +45,7 @@ public struct SettingsView: View {
                     VStack(spacing: 16) {
                         accountCard
                         healthCard
+                        stravaCard
                         coachCard
                         remindersCard
                         goalCard
@@ -119,6 +123,41 @@ public struct SettingsView: View {
             case .notDetermined, .unavailable:
                 row(icon: "heart", tint: Palette.subtle, title: "Not connected")
                 actionRow("Connect Apple Health", icon: "heart.fill", tint: Palette.brand) { model.connect() }
+            }
+        }
+    }
+
+    // MARK: Strava (optional import)
+
+    @ViewBuilder private var stravaCard: some View {
+        card("Strava") {
+            if !strava.isConfigured {
+                row(icon: "bolt.horizontal.circle", tint: Palette.subtle, title: "Not set up",
+                    detail: "Add a Strava client ID to enable importing")
+            } else if strava.isConnected {
+                row(icon: "bolt.fill", tint: Palette.go, title: "Connected", detail: "Importing your activities")
+                actionRow("Disconnect", icon: "xmark.circle", tint: Palette.brandDeep, destructive: true) {
+                    Task { await strava.disconnect() }
+                }
+            } else {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Connect Strava to import your runs and rides as an alternative to Apple Health.")
+                        .font(Typography.callout).foregroundColor(Palette.ink)
+                        .fixedSize(horizontal: false, vertical: true)
+                    actionRow(strava.isWorking ? "Connecting…" : "Connect Strava", icon: "bolt.fill", tint: Palette.brand) {
+                        Task {
+                            await strava.connect()
+                            if strava.isConnected {
+                                model.ingestStravaWorkouts(await strava.fetchActivities())
+                                Analytics.shared.capture("strava_connected")
+                            }
+                        }
+                    }
+                }
+            }
+            if let err = strava.lastError {
+                Text(err).font(Typography.caption).foregroundColor(Palette.amber)
+                    .fixedSize(horizontal: false, vertical: true)
             }
         }
     }
