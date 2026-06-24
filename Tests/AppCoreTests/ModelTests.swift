@@ -8,7 +8,7 @@ final class ModelTests: XCTestCase {
     // The production default is the empty, not-yet-connected day-one state, so a
     // fresh model with no seed shows the Connect hero rather than a zeroed dashboard.
     func testEmptyStateIsDisconnected() {
-        let model = RunBuddyModel(today: .empty)
+        let model = OtterpaceModel(today: .empty)
         XCTAssertFalse(model.today.healthKitConnected)
         XCTAssertEqual(model.today.goalSteps, 10000)
         XCTAssertEqual(model.goalProgress, 0)
@@ -17,12 +17,12 @@ final class ModelTests: XCTestCase {
     // Goal progress is the steps/goal ratio, clamped to 1.0 even past the goal,
     // and `stepsRemaining` never goes negative — the ring and "to go" copy depend on this.
     func testGoalProgressClampsAndRemaining() {
-        let partial = RunBuddyModel(today: TodayState(healthKitConnected: true, steps: 6420, goalSteps: 10000))
+        let partial = OtterpaceModel(today: TodayState(healthKitConnected: true, steps: 6420, goalSteps: 10000))
         XCTAssertEqual(partial.goalProgress, 0.642, accuracy: 0.0001)
         XCTAssertEqual(partial.stepsRemaining, 3580)
         XCTAssertFalse(partial.goalReached)
 
-        let over = RunBuddyModel(today: TodayState(healthKitConnected: true, steps: 12500, goalSteps: 10000))
+        let over = OtterpaceModel(today: TodayState(healthKitConnected: true, steps: 12500, goalSteps: 10000))
         XCTAssertEqual(over.goalProgress, 1.0)
         XCTAssertEqual(over.stepsRemaining, 0)
         XCTAssertTrue(over.goalReached)
@@ -32,22 +32,22 @@ final class ModelTests: XCTestCase {
     // ring can swap "goal hit!" for the celebratory "Goal crushed!".
     func testGoalExceededOnlyWhenPastGoal() {
         // Below the goal: neither reached nor exceeded.
-        let under = RunBuddyModel(today: TodayState(healthKitConnected: true, steps: 6420, goalSteps: 10000))
+        let under = OtterpaceModel(today: TodayState(healthKitConnected: true, steps: 6420, goalSteps: 10000))
         XCTAssertFalse(under.goalReached)
         XCTAssertFalse(under.goalExceeded)
 
         // Exactly at the goal: reached but NOT exceeded.
-        let exact = RunBuddyModel(today: TodayState(healthKitConnected: true, steps: 10000, goalSteps: 10000))
+        let exact = OtterpaceModel(today: TodayState(healthKitConnected: true, steps: 10000, goalSteps: 10000))
         XCTAssertTrue(exact.goalReached)
         XCTAssertFalse(exact.goalExceeded)
 
         // Past the goal: both reached and exceeded.
-        let over = RunBuddyModel(today: TodayState(healthKitConnected: true, steps: 14200, goalSteps: 10000))
+        let over = OtterpaceModel(today: TodayState(healthKitConnected: true, steps: 14200, goalSteps: 10000))
         XCTAssertTrue(over.goalReached)
         XCTAssertTrue(over.goalExceeded)
 
         // A zero goal can never be exceeded (guards against divide-by-zero framing).
-        let zeroGoal = RunBuddyModel(today: TodayState(healthKitConnected: true, steps: 500, goalSteps: 0))
+        let zeroGoal = OtterpaceModel(today: TodayState(healthKitConnected: true, steps: 500, goalSteps: 0))
         XCTAssertFalse(zeroGoal.goalExceeded)
     }
 
@@ -66,7 +66,7 @@ final class ModelTests: XCTestCase {
         defaults.set("A short walk seals the deal.", forKey: "rbCoachBody")
         defaults.set("walk", forKey: "rbCoachType")
 
-        let state = RunBuddyModel.readState(defaults: defaults)
+        let state = OtterpaceModel.readState(defaults: defaults)
         XCTAssertTrue(state.healthKitConnected)
         XCTAssertEqual(state.steps, 8200)
         XCTAssertEqual(state.goalSteps, 10000)
@@ -83,7 +83,7 @@ final class ModelTests: XCTestCase {
     func testReadStateEmptyDefaultsToDisconnected() {
         let defaults = UserDefaults(suiteName: "runbuddy.tests.empty")!
         defaults.removePersistentDomain(forName: "runbuddy.tests.empty")
-        let state = RunBuddyModel.readState(defaults: defaults)
+        let state = OtterpaceModel.readState(defaults: defaults)
         XCTAssertFalse(state.healthKitConnected)
         XCTAssertEqual(state.goalSteps, 10000)
         XCTAssertNil(state.coach)
@@ -91,7 +91,7 @@ final class ModelTests: XCTestCase {
 
     // Connecting Apple Health from the day-one hero flips the model into the dashboard.
     func testConnectFlipsState() {
-        let model = RunBuddyModel(today: .empty)
+        let model = OtterpaceModel(today: .empty)
         model.connect()
         XCTAssertTrue(model.today.healthKitConnected)
     }

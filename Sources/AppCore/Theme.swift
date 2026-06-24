@@ -1,6 +1,6 @@
 import SwiftUI
 
-// MARK: - RunBuddy palette
+// MARK: - Otterpace palette
 //
 // Warm, friendly, energetic — never clinical. Coral is the brand accent,
 // green signals healthy "go" states, amber/blue carry caution and rest.

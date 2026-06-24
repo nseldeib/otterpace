@@ -37,14 +37,14 @@ public struct ChatMessage: Identifiable, Equatable {
 }
 
 public struct AskCoachView: View {
-    @ObservedObject var model: RunBuddyModel
+    @ObservedObject var model: OtterpaceModel
 
     @State private var messages: [ChatMessage] = []
     @State private var draft: String = ""
     @State private var nextId: Int = 0
     @State private var showReview: Bool
 
-    public init(model: RunBuddyModel) {
+    public init(model: OtterpaceModel) {
         self.model = model
         // Scenario hook: when `rbShowWeeklyReview` is seeded, present the recap
         // from the very first frame (initialized here, not in `.onAppear`) so a

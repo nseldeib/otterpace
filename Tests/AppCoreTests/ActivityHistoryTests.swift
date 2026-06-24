@@ -75,7 +75,7 @@ final class ActivityHistoryTests: XCTestCase {
         defer { d.removePersistentDomain(forName: suite) }
         d.set(true, forKey: "rbConnected")
         d.set("[{\"type\":\"run\",\"distanceMiles\":4.2,\"durationMinutes\":44,\"pace\":\"10:00/mi\",\"date\":\"2026-06-21\",\"source\":\"strava\"}]", forKey: "rbWorkoutsJSON")
-        let state = RunBuddyModel.readState(defaults: d)
+        let state = OtterpaceModel.readState(defaults: d)
         XCTAssertEqual(state.workouts.count, 1)
         XCTAssertEqual(state.workouts.first?.type, "run")
         XCTAssertEqual(state.workouts.first?.distanceMiles ?? 0, 4.2, accuracy: 0.001)
@@ -86,6 +86,6 @@ final class ActivityHistoryTests: XCTestCase {
         let suite = "ActivityHistoryTests.\(UUID().uuidString)"
         let d = UserDefaults(suiteName: suite)!
         defer { d.removePersistentDomain(forName: suite) }
-        XCTAssertTrue(RunBuddyModel.readState(defaults: d).workouts.isEmpty)
+        XCTAssertTrue(OtterpaceModel.readState(defaults: d).workouts.isEmpty)
     }
 }

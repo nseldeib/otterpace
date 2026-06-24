@@ -239,6 +239,12 @@
     }
   },
   {
+    "description": "Observable model for the Today dashboard. Reads the day's TodayState from flat rb-prefixed UserDefaults keys seeded at launch, and exposes derived values: goalProgress clamped to 1.0, stepsRemaining, goalReached, and a connect action that flips the day-one hero into the dashboard.",
+    "filePath": "Sources/AppCore/Model.swift",
+    "name": "OtterpaceModel",
+    "testFile": "Tests/AppCoreTests/ModelTests.swift"
+  },
+  {
     "description": "Buddy the otter mascot in the puffy 3D style, drawn across all seven moods with small round ears, a broad soft muzzle, and glossy eyes.",
     "filePath": "Sources/AppCore/PuffyBuddy.swift",
     "name": "PuffyBuddy",
@@ -264,12 +270,6 @@
       "justification": "Native SwiftUI view; no component-isolation harness on this stack, so it is shown via the buddy-puffy-loader application scenario.",
       "kind": "no-isolation-harness"
     }
-  },
-  {
-    "description": "Observable model for the Today dashboard. Reads the day's TodayState from flat rb-prefixed UserDefaults keys seeded at launch, and exposes derived values: goalProgress clamped to 1.0, stepsRemaining, goalReached, and a connect action that flips the day-one hero into the dashboard.",
-    "filePath": "Sources/AppCore/Model.swift",
-    "name": "RunBuddyModel",
-    "testFile": "Tests/AppCoreTests/ModelTests.swift"
   },
   {
     "description": "A single labeled metric tile with an icon, value, and caption.",

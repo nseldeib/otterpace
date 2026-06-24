@@ -13,10 +13,10 @@ import SwiftUI
 // them and branches between the populated history and the empty prompt.
 
 public struct ActivityHistoryView: View {
-    @ObservedObject var model: RunBuddyModel
+    @ObservedObject var model: OtterpaceModel
     var onClose: () -> Void
 
-    public init(model: RunBuddyModel, onClose: @escaping () -> Void = {}) {
+    public init(model: OtterpaceModel, onClose: @escaping () -> Void = {}) {
         self.model = model
         self.onClose = onClose
     }

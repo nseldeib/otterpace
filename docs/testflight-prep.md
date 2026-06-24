@@ -17,9 +17,40 @@ codeyam CLI / simulator). Work top to bottom.
 - Repo is clean (no stray tracked files).
 
 **Decisions you made**
-- Bundle ID: set the real one in Xcode (placeholder is `com.example.App`).
-- Display name: **RunBuddy**.
+- **App name: Otterpace** (renaming from "RunBuddy" — see "App name" section below). The otter mascot stays named **Buddy**.
+- Bundle ID: set the real one in Xcode (placeholder is `com.example.App`); suggested `com.codeyam.otterpace`.
 - Code signing: handle in Xcode with your team.
+
+## App name: Otterpace
+
+Chosen after vetting otter-themed candidates. "RunBuddy" is descriptive but
+crowded; "Otterpace" leads with the unique mascot, reads instantly as a running
+coach, and came back clean:
+
+| Check | Result |
+|---|---|
+| App Store (fitness) | ✅ no "Otterpace" app found |
+| Trademark | ✅ none in fitness; Otter.ai / OtterBox / Otter POS are unrelated categories |
+| `otterpace.com` | ✅ secured — registered on Namecheap |
+
+Rejected: OtterRun (collides with the *Otter African Trail Run* event + `otterrun.com` is parked), Lutra (existing "LUTRA" AI-SaaS trademark + water-treatment lutra.com), PaceOtter (crowded "Pace___" App Store field), OtterBuddyRun (long + redundant "Buddy").
+
+### Rename checklist (RunBuddy → Otterpace)
+
+Mascot **Buddy** is unchanged — only the product/app name changes.
+
+**In-repo edits — DONE ✅** (committed):
+- [x] `Info.plist` → `CFBundleDisplayName = Otterpace` (home screen now reads "Otterpace").
+- [x] `Sources/AppCore/TodayHeader.swift` → wordmark "Otterpace".
+- [x] `Sources/AppCore/AppIconArtwork.swift` → "Otterpace app icon" label + showcase title.
+- [x] `RunBuddyModel` → `OtterpaceModel` (model class + all call sites + tests + glossary).
+- [x] `README.md`, code comments → Otterpace.
+- [x] `.codeyam/editor.json` → `projectTitle` + spec references → Otterpace.
+- [x] `otterpace.com` registered (Namecheap).
+
+**Still yours, in Xcode / App Store Connect:**
+- [ ] `App.xcodeproj` → bundle ID `com.codeyam.otterpace` (or your choice) — replaces `com.example.App`.
+- [ ] App Store Connect → create the app record with name **Otterpace**.
 
 ---
 
@@ -36,8 +67,8 @@ codeyam CLI / simulator). Work top to bottom.
 Open `App.xcodeproj` in Xcode → select the **App** target → **General** /
 **Signing & Capabilities** / **Build Settings**:
 
-- [ ] **Display name**: set to `RunBuddy`.
-      - Quickest: add `CFBundleDisplayName = RunBuddy` to `App/Info.plist`
+- [ ] **Display name**: set to `Otterpace` (see the rename checklist above).
+      - Quickest: add `CFBundleDisplayName = Otterpace` to `App/Info.plist`
         (one key — does not touch the bundle ID), or set the target's
         "Display Name" field. Today the home screen shows "App".
 - [ ] **Bundle Identifier**: change `PRODUCT_BUNDLE_IDENTIFIER` from

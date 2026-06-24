@@ -1,11 +1,11 @@
 import SwiftUI
 
-// Root of the RunBuddy app. Reads the seeded `TodayState` at launch and shows
+// Root of the Otterpace app. Reads the seeded `TodayState` at launch and shows
 // either the day-one "Connect Apple Health" hero (production default) or the
 // full Today dashboard once activity data is available.
 
 public struct ContentView: View {
-    @StateObject private var model = RunBuddyModel()
+    @StateObject private var model = OtterpaceModel()
 
     // Scenario-only override: when a preview scenario seeds `rbPreviewMode`, the
     // app renders the Buddy style/loader showcase instead of the normal flow.

@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - App icon artwork
 //
-// The RunBuddy app icon, composed in code so it stays pixel-consistent with the
+// The Otterpace app icon, composed in code so it stays pixel-consistent with the
 // in-app mascot and is regenerable when the art changes. Buddy the otter on a
 // full-bleed, opaque coral background (the brand `Palette.brand → brandDeep`
 // gradient), with the translucent mood halo suppressed so the silhouette reads
@@ -43,7 +43,7 @@ public struct AppIconArtwork: View {
         .frame(width: canvas, height: canvas)
         .clipped()
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel("RunBuddy app icon")
+        .accessibilityLabel("Otterpace app icon")
     }
 }
 
@@ -59,7 +59,7 @@ public struct AppIconPreviewGallery: View {
     public var body: some View {
         ScrollView {
             VStack(spacing: 26) {
-                Text("RunBuddy — App Icon")
+                Text("Otterpace — App Icon")
                     .font(.system(size: 24, weight: .heavy, design: .rounded))
                     .foregroundColor(Palette.ink)
                     .padding(.top, 16)

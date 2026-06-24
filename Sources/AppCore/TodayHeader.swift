@@ -1,6 +1,6 @@
 import SwiftUI
 
-// The dashboard's top header: the "Today" title with the day, and the RunBuddy
+// The dashboard's top header: the "Today" title with the day, and the Otterpace
 // wordmark.
 struct TodayHeader: View {
     let date: String
@@ -16,7 +16,7 @@ struct TodayHeader: View {
                     .foregroundColor(Palette.subtle)
             }
             Spacer()
-            Text("RunBuddy")
+            Text("Otterpace")
                 .font(Typography.headline)
                 .foregroundColor(Palette.brand)
         }

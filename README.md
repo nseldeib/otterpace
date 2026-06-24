@@ -1,8 +1,8 @@
-# RunBuddy 🐾
+# Otterpace 🐾
 
 An open-source, AI running coach for iOS — built in the open as a CodeYam showcase.
 
-RunBuddy is a friendly running coach in your pocket: it pulls your activity from
+Otterpace is a friendly running coach in your pocket: it pulls your activity from
 Apple HealthKit (and, soon, Strava), keeps you moving toward your daily 10,000
 steps, and gives injury-aware, never-shame-based coaching through **Buddy**, a
 mood-reactive otter mascot.
@@ -43,7 +43,7 @@ scenario carries its own seeded state.
 
 - `App/` — the iOS app entry point (`@main`) and `Info.plist`
 - `Sources/AppCore/` — the SwiftUI views and model, as a shared SwiftPM library:
-  `RunBuddyModel` + `TodayState` (data + derived logic), `PuffyBuddy` (the otter
+  `OtterpaceModel` + `TodayState` (data + derived logic), `PuffyBuddy` (the otter
   mascot) + `PuffyBuddyLoader` (its loading state), one file per dashboard
   component (`StepRing`, `CoachCard`, `WeeklyLoadCard`, …), and the Ask Coach
   surface (`AskCoachView` + `CoachEngine` and its `ChatBubble` / `ChatThread` /

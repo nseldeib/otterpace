@@ -2,7 +2,7 @@ import SwiftUI
 
 // The hero card pairing Buddy (with its mood chip) and the step-goal ring.
 struct BuddySummaryCard: View {
-    @ObservedObject var model: RunBuddyModel
+    @ObservedObject var model: OtterpaceModel
 
     private var mood: BuddyMood {
         BuddyMood(raw: model.today.coach?.buddyMood ?? "ready")

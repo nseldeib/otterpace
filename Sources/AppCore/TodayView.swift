@@ -6,7 +6,7 @@ import SwiftUI
 // Buddy + step ring, quick stats, and the AI coach / latest activity / weekly
 // load cards. Each section lives in its own file; this view only arranges them.
 public struct TodayDashboard: View {
-    @ObservedObject var model: RunBuddyModel
+    @ObservedObject var model: OtterpaceModel
     var onAskCoach: () -> Void
 
     // Activity History presents as a full-cover overlay (cross-platform; a
@@ -15,7 +15,7 @@ public struct TodayDashboard: View {
     // frame, never mid-transition — same pattern as the Weekly Review overlay.
     @State private var showHistory: Bool
 
-    public init(model: RunBuddyModel, onAskCoach: @escaping () -> Void = {}) {
+    public init(model: OtterpaceModel, onAskCoach: @escaping () -> Void = {}) {
         self.model = model
         self.onAskCoach = onAskCoach
         _showHistory = State(initialValue: UserDefaults.standard.bool(forKey: "rbShowHistory"))

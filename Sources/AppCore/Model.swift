@@ -2,7 +2,7 @@ import Foundation
 
 // MARK: - Domain types
 //
-// RunBuddy's Today dashboard renders a single `TodayState` snapshot. In a real
+// Otterpace's Today dashboard renders a single `TodayState` snapshot. In a real
 // build this is assembled from HealthKit (and optionally Strava); in the
 // CodeYam preview it is injected at launch through the scenario's
 // `deviceState.preferences` under the shared key `seedStateJSON` (a JSON-encoded
@@ -107,7 +107,7 @@ public struct TodayState: Codable, Equatable {
 
 // MARK: - Observable model
 
-public final class RunBuddyModel: ObservableObject {
+public final class OtterpaceModel: ObservableObject {
     @Published public var today: TodayState
 
     public init(today: TodayState) {
@@ -120,7 +120,7 @@ public final class RunBuddyModel: ObservableObject {
     /// unseeded launch) every key is absent, yielding the empty, not-yet-connected
     /// state that renders the Connect hero.
     public convenience init() {
-        self.init(today: RunBuddyModel.readState())
+        self.init(today: OtterpaceModel.readState())
     }
 
     /// Read the snapshot from flat `rb*` UserDefaults keys. Each scenario writes
