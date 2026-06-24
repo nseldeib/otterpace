@@ -84,3 +84,8 @@ blob-report/
 
 # Local Claude Code tooling (skills, hooks, settings) — not part of the shipped project
 .claude/
+
+# Node / Vercel (site + coach API)
+node_modules/
+.vercel/
+package-lock.json

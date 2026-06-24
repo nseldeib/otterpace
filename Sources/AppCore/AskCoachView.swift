@@ -44,6 +44,12 @@ public struct AskCoachView: View {
     @State private var nextId: Int = 0
     @State private var showReview: Bool
 
+    // The real-LLM coach + the user's BYO key store. When a key is connected,
+    // interactive sends go to the backend; otherwise (and on any failure) we fall
+    // back to the deterministic `CoachEngine` mock so the chat always answers.
+    private let keyStore = CoachKeyStore()
+    private let remote = RemoteCoach()
+
     public init(model: OtterpaceModel) {
         self.model = model
         // Scenario hook: when `rbShowWeeklyReview` is seeded, present the recap
@@ -90,15 +96,63 @@ public struct AskCoachView: View {
         let question = draft.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !question.isEmpty else { return }
         draft = ""
-        ask(question)
+        submit(question)
     }
 
-    /// Append the user's question and Buddy's curated reply.
-    private func ask(_ question: String) {
+    /// Interactive send. Uses the real AI coach when the user has connected a key;
+    /// otherwise — and on any network/server failure — falls back to the
+    /// deterministic mock so the chat always answers. Scenario seeding never comes
+    /// through here (it calls `ask` directly), so captures stay network-free.
+    private func submit(_ question: String) {
         append(ChatMessage(id: takeId(), role: .user, text: question))
+
+        guard let apiKey = keyStore.key else {
+            ask(question, appendUser: false)
+            return
+        }
+
+        let placeholderId = takeId()
+        append(ChatMessage(id: placeholderId, role: .coach, text: "Buddy is thinking…", mood: .ready))
+        let context = model.today
+
+        Task { @MainActor in
+            let reply: CoachReply
+            do {
+                reply = try await remote.reply(to: question, context: context, apiKey: apiKey)
+            } catch CoachError.invalidKey {
+                reply = offlineFallback(question, note: "Your AI coach key was rejected — reconnect it in Settings → AI Coach. Here's my offline take:")
+            } catch {
+                reply = offlineFallback(question)
+            }
+            replaceCoach(placeholderId, with: reply)
+        }
+    }
+
+    /// Deterministic mock exchange. Used by scenario seeding (and as the no-key
+    /// path). `appendUser` is false when the caller already appended the question.
+    private func ask(_ question: String, appendUser: Bool = true) {
+        if appendUser {
+            append(ChatMessage(id: takeId(), role: .user, text: question))
+        }
         let reply = CoachEngine.reply(to: question, context: model.today)
         append(ChatMessage(id: takeId(), role: .coach, text: reply.text,
                            mood: reply.mood, safetyFlag: reply.safetyFlag))
+    }
+
+    /// Mock reply, optionally prefixed with a note (used when the remote coach
+    /// fails so the user still gets a useful, on-device answer).
+    private func offlineFallback(_ question: String, note: String? = nil) -> CoachReply {
+        var reply = CoachEngine.reply(to: question, context: model.today)
+        if let note { reply.text = note + "\n\n" + reply.text }
+        return reply
+    }
+
+    /// Swap a "thinking…" placeholder for the finished coach reply.
+    private func replaceCoach(_ id: Int, with reply: CoachReply) {
+        guard let idx = messages.firstIndex(where: { $0.id == id }) else { return }
+        messages[idx].text = reply.text
+        messages[idx].mood = reply.mood
+        messages[idx].safetyFlag = reply.safetyFlag
     }
 
     private func append(_ m: ChatMessage) { messages.append(m) }
