@@ -136,6 +136,14 @@ Ref: `docs/testflight-prep.md`.
   privacy policy + Code of Conduct.
 - Backend deps are pinned (`@anthropic-ai/sdk ^0.106`, `@vercel/node ^5.8`) and
   type-check clean (`npm install && npm run typecheck`); re-check after any bump.
+- **`npm audit` noise is expected and safe to ignore.** `npm audit --omit=dev`
+  reports **0 vulnerabilities** — the only runtime dependency (`@anthropic-ai/sdk`)
+  is clean. All flagged advisories (`undici`, `path-to-regexp`, `minimatch`, `ajv`,
+  `js-yaml`, `smol-toml`, `@vercel/*`) are in the `@vercel/node` tree, which is a
+  **devDependency** imported `import type` only — erased at compile time, never in
+  the deployed bundle (Vercel supplies the function runtime). **Do not run
+  `npm audit fix --force`** — it downgrades `@vercel/node` 5.8 → 4.0 (a breaking
+  major downgrade) for no production benefit.
 - ☐ App Store listing copy, screenshots, keywords.
 
 ---
