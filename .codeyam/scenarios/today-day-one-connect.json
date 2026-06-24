@@ -8,13 +8,14 @@
   "mocks": {},
   "deviceState": {
     "preferences": {
-      "rbContentSize": "",
-      "rbConnected": false,
       "rbPreviewMode": "",
-      "rbShowWeeklyReview": false,
       "rbShowHistory": false,
+      "rbConnected": false,
+      "rbShowWeeklyReview": false,
+      "rbContentSize": "",
       "rbStartTab": "today",
-      "rbAskSeedQuestion": ""
+      "rbAskSeedQuestion": "",
+      "rbShowSettings": false
     }
   },
   "scenarioType": "application",

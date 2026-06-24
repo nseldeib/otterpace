@@ -9,16 +9,16 @@
   "deviceState": {
     "preferences": {
       "rbContentSize": "",
-      "rbShowSettings": true,
-      "rbStartScreen": "",
-      "rbDate": "2026-06-22",
-      "rbShowWeeklyReview": false,
-      "rbStartTab": "today",
       "rbSteps": 8000,
+      "rbShowWeeklyReview": false,
+      "rbConnected": true,
+      "rbPreviewMode": "",
+      "rbDate": "2026-06-22",
+      "rbShowSettings": true,
       "rbShowHistory": false,
       "rbGoalSteps": 10000,
-      "rbPreviewMode": "",
-      "rbConnected": true
+      "rbStartTab": "today",
+      "rbStartScreen": ""
     }
   },
   "scenarioType": "application",
