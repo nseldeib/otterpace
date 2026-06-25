@@ -28,6 +28,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
     res.status(200).json({ connected: true, athleteName: tok.athlete?.firstname ?? null });
   } catch (err) {
-    res.status(502).json({ error: "exchange_failed", detail: (err as Error).message });
+    console.error("strava/exchange", (err as Error).message); // server-side only — don't leak internals to the client
+    res.status(502).json({ error: "exchange_failed" });
   }
 }

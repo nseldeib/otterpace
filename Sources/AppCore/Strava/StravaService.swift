@@ -57,6 +57,12 @@ public final class StravaService: NSObject, ObservableObject {
     private let deviceKey = StravaDeviceKey()
     private let defaults: UserDefaults
 
+    #if os(iOS)
+    /// Held for the lifetime of the OAuth flow so ARC can't deallocate the session
+    /// mid-login (which would hang the continuation forever). Overwritten next connect.
+    private var authSession: ASWebAuthenticationSession?
+    #endif
+
     public init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
         self.isConnected = defaults.bool(forKey: StravaConfig.connectedDefaultsKey)
@@ -171,6 +177,7 @@ public final class StravaService: NSObject, ObservableObject {
             }
             session.presentationContextProvider = self
             session.prefersEphemeralWebBrowserSession = false
+            authSession = session  // retain for the flow's lifetime (else ARC can hang the login)
             if !session.start() { continuation.resume(throwing: StravaError.failed) }
         }
     }

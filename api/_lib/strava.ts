@@ -141,7 +141,7 @@ export async function fetchMappedActivities(accessToken: string, perPage = 30): 
   });
   if (!res.ok) throw new Error(`strava_activities_failed:${res.status}`);
   const acts = (await res.json()) as StravaActivity[];
-  return acts.map(mapActivity);
+  return acts.map(mapActivity).filter((w): w is MappedWorkout => w !== null);
 }
 
 export interface MappedWorkout {
@@ -156,7 +156,11 @@ export interface MappedWorkout {
 
 const METERS_PER_MILE = 1609.344;
 
-function mapActivity(a: StravaActivity): MappedWorkout {
+function mapActivity(a: StravaActivity): MappedWorkout | null {
+  // Skip anything without a usable date — an empty/garbage date breaks the app's
+  // week-grouping and newest-first sorting downstream.
+  const date = (a.start_date_local || "").slice(0, 10);
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return null;
   const miles = a.distance > 0 ? a.distance / METERS_PER_MILE : 0;
   return {
     id: String(a.id),
@@ -164,7 +168,7 @@ function mapActivity(a: StravaActivity): MappedWorkout {
     distanceMiles: round1(miles),
     durationMinutes: Math.round(a.moving_time / 60),
     pace: a.average_speed > 0 ? pacePerMile(a.average_speed) : "",
-    date: (a.start_date_local || "").slice(0, 10),
+    date,
     source: "strava",
   };
 }

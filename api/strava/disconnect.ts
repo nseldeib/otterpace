@@ -17,6 +17,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     await deleteToken(deviceKey);
     res.status(200).json({ ok: true });
   } catch (err) {
-    res.status(502).json({ error: "disconnect_failed", detail: (err as Error).message });
+    console.error("strava/disconnect", (err as Error).message); // server-side only
+    res.status(502).json({ error: "disconnect_failed" });
   }
 }

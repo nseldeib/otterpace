@@ -21,6 +21,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const activities = await fetchMappedActivities(accessToken);
     res.status(200).json({ connected: true, activities });
   } catch (err) {
-    res.status(502).json({ error: "activities_failed", detail: (err as Error).message });
+    console.error("strava/activities", (err as Error).message); // server-side only
+    res.status(502).json({ error: "activities_failed" });
   }
 }

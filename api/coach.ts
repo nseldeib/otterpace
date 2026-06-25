@@ -105,8 +105,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return;
     }
 
-    // output_config.format guarantees the text block is valid JSON for our schema.
-    const parsed = JSON.parse(textBlock.text);
+    // output_config.format normally yields valid JSON, but a truncated response
+    // (stop_reason "max_tokens") or any malformed output would throw on parse.
+    // Degrade gracefully instead of 500-ing — the user's key worked and was billed,
+    // so don't silently drop them to the offline mock.
+    let parsed: { text?: unknown; mood?: unknown; safetyFlag?: unknown };
+    try {
+      parsed = JSON.parse(textBlock.text);
+    } catch {
+      res.status(200).json({
+        text: "I got a little tangled forming that answer — mind asking again, maybe a bit more specifically?",
+        mood: "ready",
+        safetyFlag: false,
+      });
+      return;
+    }
     res.status(200).json({
       text: String(parsed.text ?? ""),
       mood: String(parsed.mood ?? "ready"),

@@ -91,7 +91,11 @@ public struct RemoteCoach {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue(apiKey, forHTTPHeaderField: "x-anthropic-key")
-        request.httpBody = try JSONEncoder().encode(RequestBody(question: question, context: context))
+        do {
+            request.httpBody = try JSONEncoder().encode(RequestBody(question: question, context: context))
+        } catch {
+            throw CoachError.server
+        }
 
         let data: Data
         let response: URLResponse
@@ -104,7 +108,7 @@ public struct RemoteCoach {
         guard let http = response as? HTTPURLResponse else { throw CoachError.network }
         switch http.statusCode {
         case 200: break
-        case 400, 401: throw CoachError.invalidKey
+        case 401: throw CoachError.invalidKey  // only a rejected key surfaces to the user; a 400 (bad request) is our bug, not theirs
         case 429: throw CoachError.rateLimited
         default: throw CoachError.server
         }

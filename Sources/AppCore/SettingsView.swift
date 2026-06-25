@@ -45,7 +45,7 @@ public struct SettingsView: View {
                     VStack(spacing: 16) {
                         accountCard
                         healthCard
-                        stravaCard
+                        if strava.isConfigured { stravaCard }
                         coachCard
                         remindersCard
                         goalCard
@@ -131,10 +131,7 @@ public struct SettingsView: View {
 
     @ViewBuilder private var stravaCard: some View {
         card("Strava") {
-            if !strava.isConfigured {
-                row(icon: "bolt.horizontal.circle", tint: Palette.subtle, title: "Not set up",
-                    detail: "Add a Strava client ID to enable importing")
-            } else if strava.isConnected {
+            if strava.isConnected {
                 row(icon: "bolt.fill", tint: Palette.go, title: "Connected", detail: "Importing your activities")
                 actionRow("Disconnect", icon: "xmark.circle", tint: Palette.brandDeep, destructive: true) {
                     Task { await strava.disconnect() }

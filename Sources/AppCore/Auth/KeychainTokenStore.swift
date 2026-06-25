@@ -28,6 +28,9 @@ public struct KeychainTokenStore: TokenStoring {
         SecItemDelete(baseQuery(account) as CFDictionary)
         var add = baseQuery(account)
         add[kSecValueData as String] = Data(value.utf8)
+        // Device-only + available after first unlock: the Anthropic key and Strava
+        // device key stay on this device and out of iCloud Keychain / backups.
+        add[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly
         SecItemAdd(add as CFDictionary, nil)
     }
 

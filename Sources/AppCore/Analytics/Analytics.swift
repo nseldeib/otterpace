@@ -59,6 +59,8 @@ public final class Analytics {
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = body
-        URLSession.shared.dataTask(with: request).resume()
+        // Fire-and-forget on a detached task: a failed send must never affect the
+        // app, and we don't read/log the response (it could echo request data).
+        Task.detached { _ = try? await URLSession.shared.data(for: request) }
     }
 }
