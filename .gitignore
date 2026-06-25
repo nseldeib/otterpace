@@ -89,3 +89,7 @@ node_modules/
 .vercel/
 package-lock.json
 .vercel
+
+# Xcode per-user state — generated locally, never shared
+xcuserdata/
+*.xcuserstate
