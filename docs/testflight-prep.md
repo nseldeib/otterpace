@@ -89,6 +89,9 @@ surprises.)*
 - Destination **Any iOS Device (arm64)** — Archive is disabled for simulators.
 - **Product → Archive** → Organizer → **Distribute App → App Store Connect →
   Upload** (keep defaults: automatic signing, upload symbols).
+- **CLI alternative** (no Organizer clicking): export the archive with
+  `ExportOptions.plist` and upload with an **App Store Connect API key** — see
+  **[C. App Store Connect API key](#c-app-store-connect-api-key-cli-upload)** below.
 
 ### 5. After upload
 - The build appears in App Store Connect → **TestFlight** as "Processing"
@@ -105,3 +108,57 @@ surprises.)*
 ### 6. Smoke-test the TestFlight build
 On a real device, run the runbook **Phase 6** checklist end-to-end: HealthKit,
 Sign in with Apple, AI coach, Strava, reminders, analytics.
+
+---
+
+## C. App Store Connect API key (CLI upload)
+
+Lets you upload builds from the terminal instead of Xcode Organizer. Requires the
+**App Store Connect API Access Request** to be **approved** for your team (one-time;
+the Account Holder approves it under *Users and Access → Integrations*). Once
+approved, the **App Store Connect API** section is unlocked.
+
+### 1. Generate the key (one-time)
+[App Store Connect](https://appstoreconnect.apple.com) → **Users and Access →
+Integrations → App Store Connect API → Keys → +**:
+- Name e.g. `otterpace-ci`; **Access: App Manager** (sufficient for TestFlight uploads).
+- **Generate** → **Download API Key** — this `.p8` can be downloaded **only once**.
+  Apple never lets you re-download it; if lost, revoke and make a new one.
+- Capture three values you'll need every upload:
+  - **Key ID** — shown next to the key (e.g. `AB12CD34EF`).
+  - **Issuer ID** — at the top of the Keys page (a UUID, shared by all your keys).
+  - the **`.p8`** file itself.
+
+### 2. Store the key safely (never commit it)
+Put the file where the Apple tools look by default:
+```
+mkdir -p ~/.appstoreconnect/private_keys
+mv ~/Downloads/AuthKey_<KEY_ID>.p8 ~/.appstoreconnect/private_keys/
+```
+With it there, `altool`/`notarytool` find it from the Key ID alone — no path flag
+needed. **Keep `.p8` out of the repo** (the `.gitignore` ignores `*.p8` and
+`AuthKey_*.p8`). Treat the key like a password.
+
+### 3. Export the archive, then upload
+`ExportOptions.plist` is already set to `app-store-connect` / team `4D67UCFK3J`.
+```
+# Export the .ipa from the archive made in B.4
+xcodebuild -exportArchive \
+  -archivePath build/Otterpace.xcarchive \
+  -exportOptionsPlist ExportOptions.plist \
+  -exportPath build/export
+
+# Validate (optional but catches errors before the long upload)
+xcrun altool --validate-app -f build/export/Otterpace.ipa -t ios \
+  --apiKey <KEY_ID> --apiIssuer <ISSUER_ID>
+
+# Upload to TestFlight
+xcrun altool --upload-app -f build/export/Otterpace.ipa -t ios \
+  --apiKey <KEY_ID> --apiIssuer <ISSUER_ID>
+```
+`--apiKey` is the **Key ID** (not a path); `altool` resolves it to
+`~/.appstoreconnect/private_keys/AuthKey_<KEY_ID>.p8`.
+
+### 4. Confirm
+The build appears in App Store Connect → **TestFlight** as "Processing" (5–30 min),
+then continue with **B.5** (Test Information, internal testers) and **B.6** (smoke test).
