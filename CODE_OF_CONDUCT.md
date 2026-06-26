@@ -45,12 +45,9 @@ an individual is officially representing the community in public spaces.
 ## Enforcement
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
-reported to the project maintainers at **conduct@otterpace.app**, or by opening a
+reported to the project maintainers at **hello@codeyam.com**, or by opening a
 confidential report through GitHub. All complaints will be reviewed and
 investigated promptly and fairly.
-
-> Maintainers: update the contact address above to a monitored inbox before
-> publishing widely.
 
 ## Attribution
 

@@ -129,12 +129,26 @@ editor's runner. Full walkthrough: **[docs/built-with-codeyam.md](docs/built-wit
 
 ## Running
 
-Requires Xcode with an iOS simulator runtime installed.
+Requires Xcode (16+) with an iOS simulator runtime installed. No private tooling
+is needed to build, run, or test the app.
 
-    # Boot the simulator, build, and launch the app
-    codeyam-editor editor start-simulator swift-ios-swiftui
+    # Open in Xcode, then pick an iPhone simulator and press ⌘R
+    open App.xcodeproj
 
-    # Capture the Today dashboard in a given scenario state
+    # Run the unit test suite from the command line (no simulator needed)
+    swift test
+
+The app runs fully on a simulator with no backend: HealthKit returns no data in
+the simulator, so you'll see the day-one "Connect Apple Health" state. For live
+steps/workouts, run on a real device and grant Health access. The AI coach,
+Strava, and account sync are all optional and only activate once you configure
+their keys (see `docs/`).
+
+### Optional: CodeYam scenario previews (maintainers)
+
+This repo is also built with [CodeYam](https://codeyam.com). With the CodeYam
+editor installed you can render the dashboard in seeded states without a device:
+
     codeyam-editor editor preview '{"dimension":"iPhone 16","path":"/","scenarioSlug":"today-goal-crushed"}'
 
 Scenarios live in `.codeyam/scenarios/` and seed the dashboard's state at launch —

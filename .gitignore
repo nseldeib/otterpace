@@ -84,6 +84,9 @@ blob-report/
 # Local Claude Code tooling (skills, hooks, settings) — not part of the shipped project
 .claude/
 
+# CodeYam editor UI scaffolding — generated tooling artifacts, not app code
+ui/
+
 # Node / Vercel (site + coach API)
 node_modules/
 .vercel/
