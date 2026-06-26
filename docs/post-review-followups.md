@@ -45,17 +45,18 @@ signing, iPhone-only). To ship a build:
 
 ## B. Deferred findings (low-severity — your call)
 
-### B1. CUT-3 — PostHog analytics ships disabled
-`PostHogProjectKey` is empty, so analytics is a no-op. Decide: **(a)** keep the
-no-op stub (zero data collection, honest default), or **(b)** remove the analytics
-wiring entirely until it's configured. Recommendation: keep the stub — it's already
-disclosed in the privacy policy and costs nothing.
+### ✅ CUT-3 — PostHog analytics ships disabled — RESOLVED
+Confirmed `Analytics` is already a clean no-op when `PostHogProjectKey` is empty
+(`enabled = !projectKey.isEmpty`, guarded in `capture`). Decision: **keep the no-op
+stub** — it's disclosed in the privacy policy and makes zero network calls until a
+key is configured. No code change needed.
 
-### B2. SW-4 — Strava connect can land on a silent empty dashboard
-`StravaService.fetchActivities()` returns `[]` on both "no activities" and "fetch
-failed", so a failed import after a successful connect shows an empty state with no
-error. Plan: have `fetchActivities()` distinguish the two (throw or return optional)
-so `SettingsView` can surface `strava.lastError` / a retry.
+### ✅ SW-4 — Strava connect could land on a silent empty dashboard — RESOLVED
+`StravaService.fetchActivities()` now **throws** on a real failure (network/non-200/
+decode) instead of returning `[]`, so a failed import after a successful connect is
+surfaced in `SettingsView` with the error message and a **Retry import** action,
+rather than silently showing an empty dashboard. A legitimate zero-activities import
+still returns `[]` (no error).
 
 ### B3. BE-6 — prefs health-field denylist is top-level only
 `prefsContainHealthFields` only inspects top-level keys, so a nested health field

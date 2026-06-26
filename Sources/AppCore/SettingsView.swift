@@ -276,6 +276,11 @@ public struct SettingsView: View {
         card("Strava") {
             if strava.isConnected {
                 row(icon: "bolt.fill", tint: Palette.go, title: "Connected", detail: "Importing your activities")
+                if strava.lastError != nil {
+                    actionRow(strava.isWorking ? "Retrying…" : "Retry import", icon: "arrow.clockwise", tint: Palette.brand) {
+                        Task { await retryStravaImport() }
+                    }
+                }
                 actionRow("Disconnect", icon: "xmark.circle", tint: Palette.brandDeep, destructive: true) {
                     Task { await strava.disconnect() }
                 }
@@ -287,9 +292,15 @@ public struct SettingsView: View {
                     actionRow(strava.isWorking ? "Connecting…" : "Connect Strava", icon: "bolt.fill", tint: Palette.brand) {
                         Task {
                             await strava.connect()
-                            if strava.isConnected {
-                                model.ingestStravaWorkouts(await strava.fetchActivities())
-                                Analytics.shared.capture("strava_connected")
+                            guard strava.isConnected else { return }
+                            Analytics.shared.capture("strava_connected")
+                            do {
+                                model.ingestStravaWorkouts(try await strava.fetchActivities())
+                            } catch {
+                                // Connected, but the first import failed — surface it
+                                // (with a Retry import action) instead of silently
+                                // landing on an empty dashboard.
+                                strava.lastError = "Connected to Strava, but importing your activities failed. Tap Retry import to try again."
                             }
                         }
                     }
@@ -299,6 +310,18 @@ public struct SettingsView: View {
                 Text(err).font(Typography.caption).foregroundColor(Palette.amber)
                     .fixedSize(horizontal: false, vertical: true)
             }
+        }
+    }
+
+    /// Retry a failed Strava import (shown only when connected with a lastError).
+    private func retryStravaImport() async {
+        strava.isWorking = true
+        strava.lastError = nil
+        defer { strava.isWorking = false }
+        do {
+            model.ingestStravaWorkouts(try await strava.fetchActivities())
+        } catch {
+            strava.lastError = "Importing your activities failed again. Please try again later."
         }
     }
 
