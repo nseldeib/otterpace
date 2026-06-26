@@ -12,12 +12,16 @@ can't be done from the codeyam CLI.
 - All features built: HealthKit, Sign in with Apple (+ account deletion),
   AI coach (BYO key), Strava import, movement reminders, analytics.
 - App icon (1024² opaque, asset catalog wired) + branded launch screen.
-- Version `1.0` / build `1`; `ITSAppUsesNonExemptEncryption = NO` set (skips the
-  export-compliance prompt — Otterpace uses only standard HTTPS/TLS).
-- `swift test` green (83/83); backend type-checks clean.
+- Version `1.0`, build auto-bumps per upload (currently `2`, uploaded to
+  TestFlight); `ITSAppUsesNonExemptEncryption = NO` set (skips the export-compliance
+  prompt — Otterpace uses only standard HTTPS/TLS).
+- Release build config + wired entitlements + automatic (cloud-managed) signing;
+  one-command upload via `Scripts/testflight-upload.sh` (see § C).
+- `swift test` green (138); backend `npm test` green (91); type-checks clean.
 
 **Yours, outside the repo (this doc):** Apple Developer App ID + capabilities,
-the App Store Connect app record, DNS, archive/upload, privacy label.
+the App Store Connect app record, DNS, privacy label. (Archive + upload are now
+automated by `Scripts/testflight-upload.sh` once the ASC API key is in place.)
 
 ---
 
@@ -117,6 +121,23 @@ Lets you upload builds from the terminal instead of Xcode Organizer. Requires th
 **App Store Connect API Access Request** to be **approved** for your team (one-time;
 the Account Holder approves it under *Users and Access → Integrations*). Once
 approved, the **App Store Connect API** section is unlocked.
+
+### Fast path — one command (`Scripts/testflight-upload.sh`) ✅ now the default
+
+Once the API key is set up (steps 1–2 below, done once), every release is a single
+command. It **auto-bumps the build number**, then archives → exports → validates →
+uploads:
+
+```sh
+export ASC_KEY_ID=<KEY_ID>          # e.g. LHDZUB2V8A
+export ASC_ISSUER_ID=<ISSUER_ID>    # the UUID atop the Keys page
+Scripts/testflight-upload.sh                 # auto-bumps CURRENT_PROJECT_VERSION
+Scripts/testflight-upload.sh --no-bump       # reuse the current build number
+```
+
+Signing is automatic (cloud-managed Apple Distribution — no certs to manage). The
+build-number bump is left as an uncommitted change for you to commit. The manual
+step-by-step below documents what the script does and stays valid as a fallback.
 
 ### 1. Generate the key (one-time)
 [App Store Connect](https://appstoreconnect.apple.com) → **Users and Access →
