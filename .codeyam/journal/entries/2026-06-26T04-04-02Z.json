@@ -1,0 +1,363 @@
+{
+  "timestamp": "2026-06-26T04:04:02Z",
+  "title": "Overall UI/UX Polish & Navigation",
+  "type": "feature",
+  "userRequest": "## Summary\n\nDogfooding surfaced that, while individual screens work, the app doesn't yet\nfeel like one cohesive, polished product: spacing, typography, card chrome, and\nmotion vary screen-to-screen, and the navigation between Today, Ask Coach,\nSettings, sign-in, history, and the weekly review is functional but not\ndeliberate. This plan is a broad UI/UX pass — both a visual-consistency /\nmicro-interaction polish across every existing screen *and* a navigation/flow\ncleanup — building on the completed `polish-today-states` and\n`accessible-responsive-design` plans. It adds no new product features; it makes\nwhat's there feel intentional and connected.\n\n## Key Decisions\n\n- **Consolidate the design language in `Theme.swift` / `ViewStyles.swift`** —\n  the app already centralizes color (`Palette`), type (`Typography`), and the\n  `cardStyle()` chrome. Rather than tweak views ad hoc, codify a spacing scale\n  and any missing shared modifiers there, then apply them consistently. This\n  keeps the polish DRY and reviewable.\n- **Polish + navigation together** — per the dogfooding ask, cover both the\n  surface (spacing, motion, states) and the structure (how screens connect: tab\n  bar, settings access, sign-in entry, transitions).\n- **No new features, preserve behavior & accessibility** — every change is\n  presentational or navigational; keep the existing `TodayState`/`SessionStore`\n  data flow, Dynamic Type support, and Reduce-Motion handling intact.\n\n## Implementation\n\n### 1. Shared design tokens & chrome\n\n**File**: `Sources/AppCore/Theme.swift`, `Sources/AppCore/ViewStyles.swift`\n\n- Define a small, named spacing scale (e.g. `Layout.gutter`, section spacing) and\n  any shared modifiers missing today (section header style, consistent card\n  padding, pill/button styles used across screens), so screens stop hardcoding\n  one-off paddings.\n- Audit `Typography` usage for consistent hierarchy (titles, section headers,\n  body, captions) and fill gaps.\n\n### 2. Per-screen visual polish\n\n**Files**: `Sources/AppCore/TodayView.swift`, `AskCoachView.swift`,\n`SettingsView.swift`, `Auth/SignInView.swift`, `ConnectHero.swift`, and the\ndashboard component views (`StatsRow`/`StatTile`, `WeeklyLoadCard`, `CoachCard`,\n`BuddySummaryCard`, plus the Activity History and Weekly Review surfaces).\n\nApply the shared tokens for consistent rhythm; tighten alignment and card\nspacing; unify empty/loading states (reuse `PuffyBuddyLoader`); make sure Buddy,\ncards, and CTAs feel like one family across screens.\n\n### 3. Motion & micro-interactions\n\n**Files**: the same view files, plus any shared transition helpers.\n\n- Add tasteful, consistent transitions for screen/tab changes, card appearance,\n  and button presses, all gated by `@Environment(\\.accessibilityReduceMotion)`.\n- Coordinate with the separate `dogfood-tracker-wheel-gradient-animation` plan so\n  the ring's motion language matches the rest of the app (shared easing/spring).\n\n### 4. Navigation & flow\n\n**File**: `Sources/AppCore/ContentView.swift` (+ `TodayView`/`AskCoachView`\nheaders and `SettingsView` entry points)\n\n- Review the Today/Coach tab bar and the paths into Settings, sign-in, history,\n  and the weekly review; make entry points consistent (e.g. a single, predictable\n  way to reach Settings and to start a coach chat) and the transitions between\n  them smooth.\n- Ensure the production sign-in → dashboard flow and the scenario-seeded fast\n  paths (`rbStartTab`, `rbStartScreen`, `rbShowSettings`, …) still behave.\n\n## Reused existing code\n\n- `Palette` / `Typography` from `Sources/AppCore/Theme.swift` and `cardStyle()`\n  from `Sources/AppCore/ViewStyles.swift` — the design-token home this pass\n  extends.\n- `PuffyBuddy` / `PuffyBuddyLoader` — the mascot + loading states reused for\n  consistent empty/loading treatment.\n- `ContentView`'s existing tab + scenario-seed wiring\n  (`rbStartTab`/`rbStartScreen`/`rbShowSettings`/`rbPreviewMode`) — navigation\n  changes must keep these preview hooks working.\n- Prior art: the completed `polish-today-states` and\n  `accessible-responsive-design` plans set the bar this pass extends app-wide.\n\n## Scenarios to Demonstrate\n\n- **Screen-by-screen consistency**: Today, Ask Coach, Settings, Sign-in,\n  Activity History, Weekly Review — each shown with the unified spacing/type/chrome.\n- **Empty & loading states**: day-one `today-day-one-connect`, empty chat\n  (`ask-coach-empty-chat`), and a loading state via `PuffyBuddyLoader`.\n- **Navigation flow**: Today ⇄ Coach tab switch, opening Settings, and the\n  sign-in → dashboard transition.\n- **Dynamic Type + Reduce Motion**: largest text size and Reduce-Motion on, to\n  confirm polish doesn't regress accessibility.",
+  "description": "App-wide presentation pass that makes Otterpace feel like one cohesive product. Introduced a shared Layout spacing/chrome scale and Motion easing tokens in Theme.swift, plus screenScrollContent(), cardSectionLabel(), and a Reduce-Motion-gated overlayTransition() modifier in ViewStyles.swift, then applied them so every screen shares one gutter/card rhythm and the recurring card section-label styling lives in one place. Settings, Activity History, and Weekly Review now slide in with consistent, accessibility-aware motion. No new features or behavior changes; Dynamic Type and Reduce Motion handling preserved.",
+  "modifiedFiles": [
+    {
+      "path": ".codeyam/dependency-graph.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/plans/dogfood-overall-ui-ux-polish.md\t.codeyam/plans/completed/dogfood-overall-ui-ux-polish.md",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/accessibility-large-text-coach-safety--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/accessibility-large-text-coach-safety--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/accessibility-large-text-today--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/accessibility-large-text-today--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/activity-history-empty--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/activity-history-empty--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/activity-history-long-values--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/activity-history-long-values--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/activity-history-rich-multi-week--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/activity-history-rich-multi-week--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/activity-history-sparse--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/activity-history-sparse--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/ask-coach-empty-chat--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/ask-coach-empty-chat--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/ask-coach-hit-10k--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/ask-coach-hit-10k--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/ask-coach-knee-pain--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/ask-coach-knee-pain--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/ask-coach-mileage-spike--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/ask-coach-mileage-spike--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/ask-coach-run-or-rest--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/ask-coach-run-or-rest--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-almost-there--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-almost-there--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-custom-goal--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-custom-goal--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-day-one-connect--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-day-one-connect--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-fresh-start--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-fresh-start--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-goal-crushed--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-goal-crushed--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-long-content--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-long-content--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-midday-nudge--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-midday-nudge--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-recovery-caution--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-recovery-caution--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-zero-step-morning--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-zero-step-morning--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/weekly-review-empty-first-week--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/weekly-review-empty-first-week--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/weekly-review-solid-week--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/weekly-review-solid-week--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/weekly-review-sparse-mostly-rest--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/weekly-review-sparse-mostly-rest--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/weekly-review-spiking-load--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/weekly-review-spiking-load--iphone-16.png.hash",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/ActivityHistoryView.swift",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/AskCoachView.swift",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/BuddySummaryCard.swift",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/CoachCard.swift",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/ContentView.swift",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/Theme.swift",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/TodayView.swift",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/ViewStyles.swift",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/WeeklyLoadCard.swift",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/WeeklyReviewView.swift",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/WorkoutCard.swift",
+      "status": "modified"
+    }
+  ],
+  "scenarioScreenshots": [
+    {
+      "name": "Accessibility — Large Text Coach Safety",
+      "screenshotPath": "accessibility-large-text-coach-safety--iphone-16.png"
+    },
+    {
+      "name": "Accessibility — Large Text Today",
+      "screenshotPath": "accessibility-large-text-today--iphone-16.png"
+    },
+    {
+      "name": "Activity History — Empty",
+      "screenshotPath": "activity-history-empty--iphone-16.png"
+    },
+    {
+      "name": "Activity History — Long Values",
+      "screenshotPath": "activity-history-long-values--iphone-16.png"
+    },
+    {
+      "name": "Activity History — Rich Multi-Week",
+      "screenshotPath": "activity-history-rich-multi-week--iphone-16.png"
+    },
+    {
+      "name": "Activity History — Sparse",
+      "screenshotPath": "activity-history-sparse--iphone-16.png"
+    },
+    {
+      "name": "Ask Coach — Empty Chat",
+      "screenshotPath": "ask-coach-empty-chat--iphone-16.png"
+    },
+    {
+      "name": "Ask Coach — Hit 10K",
+      "screenshotPath": "ask-coach-hit-10k--iphone-16.png"
+    },
+    {
+      "name": "Ask Coach — Knee Pain",
+      "screenshotPath": "ask-coach-knee-pain--iphone-16.png"
+    },
+    {
+      "name": "Ask Coach — Mileage Spike",
+      "screenshotPath": "ask-coach-mileage-spike--iphone-16.png"
+    },
+    {
+      "name": "Ask Coach — Run or Rest",
+      "screenshotPath": "ask-coach-run-or-rest--iphone-16.png"
+    },
+    {
+      "name": "Today - Almost There",
+      "screenshotPath": "today-almost-there--iphone-16.png"
+    },
+    {
+      "name": "Today - Day One (Connect)",
+      "screenshotPath": "today-day-one-connect--iphone-16.png"
+    },
+    {
+      "name": "Today - Fresh Start",
+      "screenshotPath": "today-fresh-start--iphone-16.png"
+    },
+    {
+      "name": "Today - Goal Crushed",
+      "screenshotPath": "today-goal-crushed--iphone-16.png"
+    },
+    {
+      "name": "Today - Long Content",
+      "screenshotPath": "today-long-content--iphone-16.png"
+    },
+    {
+      "name": "Today - Midday Nudge",
+      "screenshotPath": "today-midday-nudge--iphone-16.png"
+    },
+    {
+      "name": "Today - Recovery Caution",
+      "screenshotPath": "today-recovery-caution--iphone-16.png"
+    },
+    {
+      "name": "Today - Zero-Step Morning",
+      "screenshotPath": "today-zero-step-morning--iphone-16.png"
+    },
+    {
+      "name": "Today — Custom Goal",
+      "screenshotPath": "today-custom-goal--iphone-16.png"
+    },
+    {
+      "name": "Weekly Review — Empty (First Week)",
+      "screenshotPath": "weekly-review-empty-first-week--iphone-16.png"
+    },
+    {
+      "name": "Weekly Review — Solid Week",
+      "screenshotPath": "weekly-review-solid-week--iphone-16.png"
+    },
+    {
+      "name": "Weekly Review — Sparse / Mostly Rest",
+      "screenshotPath": "weekly-review-sparse-mostly-rest--iphone-16.png"
+    },
+    {
+      "name": "Weekly Review — Spiking Load",
+      "screenshotPath": "weekly-review-spiking-load--iphone-16.png"
+    }
+  ],
+  "testResults": {
+    "total": 129,
+    "passed": 129,
+    "failed": 0,
+    "runners": [
+      {
+        "name": "tests",
+        "total": 129,
+        "passed": 129
+      }
+    ]
+  }
+}

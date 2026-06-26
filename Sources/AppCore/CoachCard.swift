@@ -13,8 +13,7 @@ struct CoachCard: View {
                 Image(systemName: coach.safetyFlag ? "exclamationmark.shield.fill" : "sparkles")
                     .foregroundColor(coach.safetyFlag ? Palette.amber : Palette.brand)
                 Text("Coach Buddy")
-                    .font(Typography.captionStrong)
-                    .foregroundColor(Palette.subtle)
+                    .cardSectionLabel()
                 Spacer()
                 Text(coach.recommendationType.uppercased())
                     .font(Typography.caption2)
@@ -45,15 +44,15 @@ struct CoachCard: View {
             .padding(.top, 2)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(16)
+        .padding(Layout.cardPadding)
         .background(
-            RoundedRectangle(cornerRadius: 22, style: .continuous)
+            RoundedRectangle(cornerRadius: Layout.cardCorner, style: .continuous)
                 .fill(LinearGradient(
                     colors: [Palette.brand.opacity(0.10), Palette.gold.opacity(0.10)],
                     startPoint: .topLeading, endPoint: .bottomTrailing))
         )
         .overlay(
-            RoundedRectangle(cornerRadius: 22, style: .continuous)
+            RoundedRectangle(cornerRadius: Layout.cardCorner, style: .continuous)
                 .stroke(Palette.brand.opacity(0.18), lineWidth: 1)
         )
     }

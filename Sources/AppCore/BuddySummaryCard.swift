@@ -26,7 +26,7 @@ struct BuddySummaryCard: View {
             )
             .frame(maxWidth: .infinity)
         }
-        .padding(16)
+        .padding(Layout.cardPadding)
         .cardStyle()
     }
 }

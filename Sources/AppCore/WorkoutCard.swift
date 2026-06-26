@@ -15,8 +15,7 @@ struct WorkoutCard: View {
             }
             VStack(alignment: .leading, spacing: 3) {
                 Text("Latest \(workout.type)")
-                    .font(Typography.captionStrong)
-                    .foregroundColor(Palette.subtle)
+                    .cardSectionLabel()
                 Text(String(format: "%.1f mi · %@", workout.distanceMiles, workout.pace))
                     .font(Typography.headline)
                     .foregroundColor(Palette.ink)
@@ -29,7 +28,7 @@ struct WorkoutCard: View {
             }
             Spacer()
         }
-        .padding(16)
+        .padding(Layout.cardPadding)
         .cardStyle()
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(

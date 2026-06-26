@@ -37,12 +37,10 @@ public struct ActivityHistoryView: View {
                     Spacer()
                 } else {
                     ScrollView {
-                        VStack(alignment: .leading, spacing: 22) {
+                        VStack(alignment: .leading, spacing: Layout.xl) {
                             ForEach(weeks) { ActivityWeekSection(group: $0) }
                         }
-                        .padding(.horizontal, 18)
-                        .padding(.top, 14)
-                        .padding(.bottom, 28)
+                        .screenScrollContent()
                     }
                 }
             }

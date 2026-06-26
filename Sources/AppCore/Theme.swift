@@ -43,6 +43,47 @@ public enum Typography {
     public static let caption2 = Font.system(.caption2, design: .rounded).weight(.heavy)       // tiny uppercase tags
 }
 
+// MARK: - Layout
+//
+// One spacing/chrome scale for the whole app, so screens stop hardcoding
+// one-off paddings and corner radii. Every screen's scroll rhythm, every card's
+// inset, and the shared `cardStyle()` corner now read from here — change a value
+// once and it lands everywhere, and reviewers can see the rhythm at a glance.
+public enum Layout {
+    // Spacing scale — a small, named ramp. Reach for these instead of literals.
+    public static let xs: CGFloat = 6
+    public static let sm: CGFloat = 10
+    public static let md: CGFloat = 14
+    public static let lg: CGFloat = 18
+    public static let xl: CGFloat = 24
+
+    // Screen scroll rhythm — the page margins shared by every top-level surface.
+    public static let screenGutter: CGFloat = 18    // horizontal page margin
+    public static let screenTop: CGFloat = 14       // first content inset
+    public static let screenBottom: CGFloat = 28    // last content inset
+    public static let cardSpacing: CGFloat = 16     // gap between stacked cards
+
+    // Card chrome — the inset and corner shared by `cardStyle()` and the cards
+    // that paint their own background (CoachCard's gradient, the tiles).
+    public static let cardPadding: CGFloat = 16
+    public static let cardCorner: CGFloat = 22
+}
+
+// MARK: - Motion
+//
+// The app's shared easing language. Matches the StepRing's gentle ease-out so
+// the dashboard's ring, card appearance, and screen/overlay transitions all
+// move with one voice. Always pair these with a Reduce-Motion check (see
+// `OverlayTransition` in ViewStyles) — never animate position when the user has
+// asked for less motion.
+public enum Motion {
+    /// The standard ease-out used for content settling into place (rings, cards).
+    public static let standard = Animation.easeOut(duration: 0.35)
+    /// A slightly longer ease for full-screen overlays sliding in (history,
+    /// weekly review, settings).
+    public static let overlay = Animation.easeOut(duration: 0.4)
+}
+
 // MARK: - Buddy mood
 
 public enum BuddyMood: String, CaseIterable {

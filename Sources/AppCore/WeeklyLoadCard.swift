@@ -9,8 +9,7 @@ struct WeeklyLoadCard: View {
         VStack(alignment: .leading, spacing: 12) {
             HStack {
                 Text("This week")
-                    .font(Typography.captionStrong)
-                    .foregroundColor(Palette.subtle)
+                    .cardSectionLabel()
                 Spacer()
                 TrendBadge(trend: load.loadTrend)
             }
@@ -24,7 +23,7 @@ struct WeeklyLoadCard: View {
                 loadMetric("\(load.restDaysThisWeek)", "rest days")
             }
         }
-        .padding(16)
+        .padding(Layout.cardPadding)
         .cardStyle()
     }
 

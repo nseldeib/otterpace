@@ -26,7 +26,7 @@ public struct TodayDashboard: View {
     public var body: some View {
         ZStack {
             ScrollView {
-                VStack(spacing: 18) {
+                VStack(spacing: Layout.cardSpacing) {
                     TodayHeader(date: model.today.date, onSettings: onSettings)
                     BuddySummaryCard(model: model)
                     StatsRow(today: model.today)
@@ -39,15 +39,14 @@ public struct TodayDashboard: View {
                     if let load = model.today.weeklyLoad {
                         WeeklyLoadCard(load: load)
                     }
-                    ActivityHistoryButton(onTap: { showHistory = true })
+                    ActivityHistoryButton(onTap: { withAnimation(Motion.overlay) { showHistory = true } })
                 }
-                .padding(.horizontal, 18)
-                .padding(.top, 8)
-                .padding(.bottom, 28)
+                .screenScrollContent()
             }
 
             if showHistory {
-                ActivityHistoryView(model: model, onClose: { showHistory = false })
+                ActivityHistoryView(model: model, onClose: { withAnimation(Motion.overlay) { showHistory = false } })
+                    .overlayTransition()
                     .zIndex(1)
             }
         }

@@ -34,7 +34,7 @@ public struct WeeklyReviewView: View {
                 WeeklyReviewHeader(onClose: onClose)
                 Divider().opacity(0.4)
                 ScrollView {
-                    VStack(spacing: 16) {
+                    VStack(spacing: Layout.cardSpacing) {
                         WeeklyReviewHero(mood: review.buddyMood, headline: review.headline)
                         if review.hasActivity {
                             WeeklyReviewSection(icon: "checkmark.seal.fill", tint: Palette.go,
@@ -52,9 +52,7 @@ public struct WeeklyReviewView: View {
                         }
                         WeeklyReviewFocusCallout(focus: review.focusArea)
                     }
-                    .padding(.horizontal, 18)
-                    .padding(.top, 14)
-                    .padding(.bottom, 28)
+                    .screenScrollContent()
                 }
             }
         }

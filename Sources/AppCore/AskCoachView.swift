@@ -61,7 +61,7 @@ public struct AskCoachView: View {
     public var body: some View {
         ZStack {
             VStack(spacing: 0) {
-                AskCoachHeader(onWeeklyReview: { showReview = true })
+                AskCoachHeader(onWeeklyReview: { withAnimation(Motion.overlay) { showReview = true } })
                 Divider().opacity(0.4)
                 if messages.isEmpty {
                     AskCoachEmptyState()
@@ -82,8 +82,9 @@ public struct AskCoachView: View {
             if showReview {
                 WeeklyReviewView(
                     review: WeeklyReviewEngine.generate(from: model.today),
-                    onClose: { showReview = false }
+                    onClose: { withAnimation(Motion.overlay) { showReview = false } }
                 )
+                .overlayTransition()
                 .zIndex(1)
             }
         }

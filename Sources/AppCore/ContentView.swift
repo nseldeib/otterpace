@@ -68,16 +68,20 @@ public struct ContentView: View {
             } else if model.today.healthKitConnected {
                 connectedTabs
             } else if model.healthAuth == .denied {
-                HealthDeniedView(onOpenSettings: openSettings, onSettings: { showSettings = true })
+                HealthDeniedView(onOpenSettings: openSettings,
+                                 onSettings: { withAnimation(Motion.overlay) { showSettings = true } })
             } else {
-                ConnectHero(onConnect: { model.connect() }, onSettings: { showSettings = true })
+                ConnectHero(onConnect: { model.connect() },
+                            onSettings: { withAnimation(Motion.overlay) { showSettings = true } })
             }
 
             // Settings presents as a full-cover overlay, reachable from the
             // dashboard and the Connect hero (so sign out / delete account is
             // always findable). Skipped on the Buddy preview host + sign-in screen.
             if showSettings && previewMode.isEmpty && session.state != .undecided {
-                SettingsView(model: model, session: session, onClose: { showSettings = false })
+                SettingsView(model: model, session: session,
+                             onClose: { withAnimation(Motion.overlay) { showSettings = false } })
+                    .overlayTransition()
                     .zIndex(2)
             }
         }
@@ -108,7 +112,8 @@ public struct ContentView: View {
     // jumps here by flipping `tab` to `.coach`.
     private var connectedTabs: some View {
         TabView(selection: $tab) {
-            TodayDashboard(model: model, onAskCoach: { tab = .coach }, onSettings: { showSettings = true })
+            TodayDashboard(model: model, onAskCoach: { tab = .coach },
+                           onSettings: { withAnimation(Motion.overlay) { showSettings = true } })
                 .tag(MainTab.today)
                 .tabItem { Label("Today", systemImage: "sun.max.fill") }
 
