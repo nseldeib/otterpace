@@ -17,6 +17,7 @@ public struct SettingsView: View {
     // settings, and (off by default, consent-gated) health/activity data.
     private let consent = SyncConsentStore()
     private let accountSync = AccountSyncService()
+    private let accountSession = AccountSessionService()
     @State private var settingsSyncOn = false
     @State private var healthSyncOn = false
     @State private var showHealthConsent = false
@@ -84,7 +85,11 @@ public struct SettingsView: View {
         }
         .alert("Delete account?", isPresented: $confirmDelete) {
             Button("Delete", role: .destructive) {
-                Task { await accountSync.purgeOnAccountDeletion(session: session.state) }
+                // Delete synced data with the bearer still valid, THEN revoke it.
+                Task {
+                    await accountSync.purgeOnAccountDeletion(session: session.state)
+                    await accountSession.revoke()
+                }
                 session.deleteAccount()
             }
             Button("Cancel", role: .cancel) {}
@@ -133,6 +138,7 @@ public struct SettingsView: View {
                 row(icon: "applelogo", tint: Palette.ink, title: "Signed in with Apple")
                 syncSection
                 actionRow("Sign out", icon: "rectangle.portrait.and.arrow.right", tint: Palette.sky) {
+                    Task { await accountSession.revoke() }   // drop the backend bearer too
                     session.signOut()
                 }
                 actionRow("Delete account", icon: "trash", tint: Palette.brandDeep, destructive: true) {

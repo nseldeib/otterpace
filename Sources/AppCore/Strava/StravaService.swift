@@ -99,14 +99,14 @@ public final class StravaService: NSObject, ObservableObject {
     }
 
     /// Fetch imported activities from the backend proxy, mapped to `LatestWorkout`.
+    /// The device key rides in the `x-device-key` header (never the query string)
+    /// so it stays out of any proxy/CDN access logs.
     public func fetchActivities() async -> [LatestWorkout] {
         guard isConnected else { return [] }
-        var comps = URLComponents(url: StravaConfig.apiBase.appendingPathComponent("strava/activities"),
-                                  resolvingAgainstBaseURL: false)
-        comps?.queryItems = [URLQueryItem(name: "deviceKey", value: deviceKey.current())]
-        guard let url = comps?.url else { return [] }
+        var request = URLRequest(url: StravaConfig.apiBase.appendingPathComponent("strava/activities"))
+        request.setValue(deviceKey.current(), forHTTPHeaderField: "x-device-key")
         do {
-            let (data, resp) = try await URLSession.shared.data(from: url)
+            let (data, resp) = try await URLSession.shared.data(for: request)
             guard (resp as? HTTPURLResponse)?.statusCode == 200 else { return [] }
             return try JSONDecoder().decode(ActivitiesResponse.self, from: data).activities.map { $0.workout }
         } catch {
