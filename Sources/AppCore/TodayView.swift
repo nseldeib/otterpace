@@ -43,6 +43,7 @@ public struct TodayDashboard: View {
                 }
                 .screenScrollContent()
             }
+            .refreshable { await model.refresh() }
 
             if showHistory {
                 ActivityHistoryView(model: model, onClose: { withAnimation(Motion.overlay) { showHistory = false } })

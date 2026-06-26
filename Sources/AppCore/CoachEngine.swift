@@ -81,10 +81,6 @@ public enum CoachEngine {
         return false
     }
 
-    private static func miles(_ d: Double) -> String {
-        d == d.rounded() ? "\(Int(d))" : String(format: "%.1f", d)
-    }
-
     // MARK: Intent replies
 
     private static func injuryReply(_ c: TodayState) -> CoachReply {

@@ -88,4 +88,63 @@ final class ActivityHistoryTests: XCTestCase {
         defer { d.removePersistentDomain(forName: suite) }
         XCTAssertTrue(OtterpaceModel.readState(defaults: d).workouts.isEmpty)
     }
+
+    // MARK: weeklyLoad(from:asOf:) — the live HealthKit/Strava derivation (SW-1)
+
+    // A fixed reference day inside the week of Mon 2026-06-22 (UTC ISO week).
+    private static let asOf: Date = {
+        let f = DateFormatter()
+        f.dateFormat = "yyyy-MM-dd"
+        f.locale = Locale(identifier: "en_US_POSIX")
+        f.timeZone = TimeZone(identifier: "UTC")
+        return f.date(from: "2026-06-24")!   // Wednesday
+    }()
+
+    // Only the week containing `asOf` feeds the rollup; mileage, longest run,
+    // run-days and rest-days come from that week alone.
+    func testWeeklyLoadRollsUpCurrentWeek() {
+        let load = ActivityHistory.weeklyLoad(from: [
+            wk("run", 4.0, "2026-06-22"),   // current week (Mon)
+            wk("run", 6.0, "2026-06-24"),   // current week (Wed) — longest
+            wk("walk", 2.0, "2026-06-24"),  // same day, not a run
+            wk("run", 9.0, "2026-06-15"),   // previous week — excluded from the rollup
+        ], asOf: Self.asOf)
+        XCTAssertEqual(load.weeklyMileage, 12.0, accuracy: 0.001)  // 4+6+2
+        XCTAssertEqual(load.longestRunMiles, 6.0, accuracy: 0.001)
+        XCTAssertEqual(load.daysRunThisWeek, 2)                    // Mon + Wed
+        XCTAssertEqual(load.restDaysThisWeek, 5)                   // 7 - 2 active days
+    }
+
+    // A big jump over the previous week is flagged "spiking" (the safety signal).
+    func testWeeklyLoadSpikingTrend() {
+        let load = ActivityHistory.weeklyLoad(from: [
+            wk("run", 10.0, "2026-06-23"),  // current week
+            wk("run", 5.0, "2026-06-16"),   // previous week — 10/5 = 2.0x
+        ], asOf: Self.asOf)
+        XCTAssertEqual(load.loadTrend, "spiking")
+    }
+
+    // Pulling back vs. the previous week reads as "recovering".
+    func testWeeklyLoadRecoveringTrend() {
+        let load = ActivityHistory.weeklyLoad(from: [
+            wk("run", 3.0, "2026-06-23"),   // current week
+            wk("run", 10.0, "2026-06-16"),  // previous week — 3/10 = 0.3x
+        ], asOf: Self.asOf)
+        XCTAssertEqual(load.loadTrend, "recovering")
+    }
+
+    // No prior-week mileage with activity this week reads as "building".
+    func testWeeklyLoadBuildingFromZeroBase() {
+        let load = ActivityHistory.weeklyLoad(from: [wk("run", 4.0, "2026-06-23")], asOf: Self.asOf)
+        XCTAssertEqual(load.loadTrend, "building")
+    }
+
+    // No workouts at all: an all-rest week, steady, nothing logged.
+    func testWeeklyLoadEmptyIsRestWeek() {
+        let load = ActivityHistory.weeklyLoad(from: [], asOf: Self.asOf)
+        XCTAssertEqual(load.weeklyMileage, 0)
+        XCTAssertEqual(load.daysRunThisWeek, 0)
+        XCTAssertEqual(load.restDaysThisWeek, 7)
+        XCTAssertEqual(load.loadTrend, "steady")
+    }
 }

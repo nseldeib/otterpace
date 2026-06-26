@@ -83,4 +83,56 @@ public enum ActivityHistory {
             )
         }
     }
+
+    /// Derive the current-week training-load rollup (Milestone 4) from a flat,
+    /// newest-first workout list — what the real HealthKit/Strava paths feed the
+    /// Today dashboard's Weekly Load card. Pure + deterministic on the same
+    /// Monday-start UTC ISO weeks as `groupByWeek`, so it's unit-testable:
+    ///   • weeklyMileage / longestRun / daysRun / restDays come from the week
+    ///     that contains `now`.
+    ///   • loadTrend compares this week's mileage to the previous week's:
+    ///     ≥1.3× spiking, ≥1.1× building, <0.7× recovering, else steady. With no
+    ///     prior-week mileage it's "building" when active, "steady" when empty.
+    public static func weeklyLoad(from workouts: [LatestWorkout], asOf now: Date = Date()) -> WeeklyLoad {
+        let cal = calendar
+        let fmt = parser
+        let weeks = groupByWeek(workouts)
+
+        func weekStartISO(for date: Date) -> String? {
+            guard let start = cal.dateInterval(of: .weekOfYear, for: date)?.start else { return nil }
+            return fmt.string(from: start)
+        }
+
+        let thisISO = weekStartISO(for: now)
+        let prevISO = cal.date(byAdding: .weekOfYear, value: -1, to: now).flatMap(weekStartISO)
+
+        let current = weeks.first { $0.weekStartISO == thisISO }
+        let previous = weeks.first { $0.weekStartISO == prevISO }
+
+        let mileage = current?.totalMiles ?? 0
+        let prevMileage = previous?.totalMiles ?? 0
+        let runs = current?.workouts.filter { $0.type == "run" } ?? []
+        let longest = runs.map { $0.distanceMiles }.max() ?? 0
+        let daysRun = Set(runs.map { $0.date }).count
+
+        let trend: String
+        if prevMileage <= 0 {
+            trend = mileage > 0 ? "building" : "steady"
+        } else {
+            let ratio = mileage / prevMileage
+            if ratio >= 1.3 { trend = "spiking" }
+            else if ratio >= 1.1 { trend = "building" }
+            else if ratio < 0.7 { trend = "recovering" }
+            else { trend = "steady" }
+        }
+
+        func round1(_ n: Double) -> Double { (n * 10).rounded() / 10 }
+        return WeeklyLoad(
+            weeklyMileage: round1(mileage),
+            daysRunThisWeek: daysRun,
+            longestRunMiles: round1(longest),
+            restDaysThisWeek: current?.restDays ?? 7,
+            loadTrend: trend
+        )
+    }
 }
