@@ -38,6 +38,11 @@ function makeRes(): MockRes {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function call(req: any) {
   const res = makeRes();
+  // The real iOS client always sends application/json; default it for POSTs so
+  // each test doesn't repeat the header (an explicit content-type still wins).
+  if (req.method === "POST") {
+    req.headers = { "content-type": "application/json", ...(req.headers ?? {}) };
+  }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return { res, done: handler(req as any, res as any) };
 }
@@ -135,5 +140,56 @@ describe("coach handler", () => {
     await done;
     expect(res.statusCode).toBe(502);
     expect((res.body as { error: string }).error).toBe("upstream_error");
+  });
+
+  // BE-8: the user's API key must never reach the logs, even on the error path.
+  it("never logs the Anthropic API key", async () => {
+    const errSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+    const SECRET = "sk-ant-super-secret-key";
+    createMock.mockRejectedValue(Object.assign(new Error("boom"), { status: 500 }));
+    const { done } = call({ method: "POST", headers: { "x-anthropic-key": SECRET }, body: { question: "hi" } });
+    await done;
+    const logged = [...errSpy.mock.calls, ...logSpy.mock.calls].flat().join(" ");
+    expect(logged).not.toContain(SECRET);
+    errSpy.mockRestore();
+    logSpy.mockRestore();
+  });
+
+  // A non-JSON content type is rejected (BE-7).
+  it("415s on a non-JSON content type", async () => {
+    const { res, done } = call({
+      method: "POST",
+      headers: { "content-type": "text/plain", "x-anthropic-key": "sk-ant-xyz" },
+      body: { question: "hi" },
+    });
+    await done;
+    expect(res.statusCode).toBe(415);
+    expect(createMock).not.toHaveBeenCalled();
+  });
+
+  // A non-object context is rejected before any model call (BE-7).
+  it("400s on a non-object context", async () => {
+    const { res, done } = call({
+      method: "POST",
+      headers: { "x-anthropic-key": "sk-ant-xyz" },
+      body: { question: "hi", context: [1, 2, 3] },
+    });
+    await done;
+    expect(res.statusCode).toBe(400);
+    expect((res.body as { error: string }).error).toBe("invalid_context");
+    expect(createMock).not.toHaveBeenCalled();
+  });
+
+  // Over-long inputs are rejected before any model call (BE-4 size bounds).
+  it("413s on an over-long question", async () => {
+    const { res, done } = call({
+      method: "POST",
+      headers: { "x-anthropic-key": "sk-ant-xyz" },
+      body: { question: "x".repeat(3000) },
+    });
+    await done;
+    expect(res.statusCode).toBe(413);
+    expect(createMock).not.toHaveBeenCalled();
   });
 });

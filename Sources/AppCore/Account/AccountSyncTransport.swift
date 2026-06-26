@@ -20,10 +20,25 @@ public enum AccountSyncConfig {
 public struct URLSessionAccountSyncTransport: AccountSyncTransport {
     private let session: URLSession
     private let base: URL
+    /// Supplies the bearer session token for every request. Injectable so tests
+    /// can provide a fixed token; in production it reads the Keychain-backed
+    /// `AccountSessionStore`. When nil, the request goes out unauthenticated and
+    /// the backend answers 401 — which the service treats as a silent no-op.
+    private let tokenProvider: () -> String?
 
-    public init(session: URLSession = .shared, base: URL = AccountSyncConfig.apiBase) {
+    public init(session: URLSession = .shared,
+                base: URL = AccountSyncConfig.apiBase,
+                tokenProvider: @escaping () -> String? = { AccountSessionStore().token() }) {
         self.session = session
         self.base = base
+        self.tokenProvider = tokenProvider
+    }
+
+    /// Attach `Authorization: Bearer <token>` when a session exists.
+    private func authorize(_ request: inout URLRequest) {
+        if let token = tokenProvider() {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
     }
 
     public func fetchPrefs(userID: String) async throws -> TimestampedPayload<SyncablePreferences>? {
@@ -54,7 +69,7 @@ public struct URLSessionAccountSyncTransport: AccountSyncTransport {
         var request = URLRequest(url: base.appendingPathComponent("account/health"))
         request.httpMethod = "DELETE"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try JSONSerialization.data(withJSONObject: ["userId": userID])
+        authorize(&request)
         let (_, resp) = try await session.data(for: request)
         try Self.check(resp)
     }
@@ -62,10 +77,10 @@ public struct URLSessionAccountSyncTransport: AccountSyncTransport {
     // MARK: Helpers
 
     private func fetch<T: Decodable>(path: String, userID: String, field: String, as: T.Type) async throws -> TimestampedPayload<T>? {
-        var comps = URLComponents(url: base.appendingPathComponent(path), resolvingAgainstBaseURL: false)
-        comps?.queryItems = [URLQueryItem(name: "userId", value: userID)]
-        guard let url = comps?.url else { return nil }
-        let (data, resp) = try await session.data(from: url)
+        // The user is resolved server-side from the bearer token; no userId in the URL.
+        var request = URLRequest(url: base.appendingPathComponent(path))
+        authorize(&request)
+        let (data, resp) = try await session.data(for: request)
         try Self.check(resp)
         guard let obj = try JSONSerialization.jsonObject(with: data) as? [String: Any],
               (obj["found"] as? Bool) == true,
@@ -82,6 +97,7 @@ public struct URLSessionAccountSyncTransport: AccountSyncTransport {
         var request = URLRequest(url: base.appendingPathComponent(path))
         request.httpMethod = "PUT"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        authorize(&request)
         request.httpBody = try JSONSerialization.data(withJSONObject: body)
         let (_, resp) = try await session.data(for: request)
         try Self.check(resp)

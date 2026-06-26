@@ -10,6 +10,13 @@ func formatted(_ n: Int) -> String {
     return f.string(from: NSNumber(value: n)) ?? "\(n)"
 }
 
+/// Render a mileage value: a whole number drops the decimal ("8"), otherwise one
+/// decimal place ("8.4"). Shared by the coach copy and the activity-week rollups
+/// so the two never drift apart.
+func miles(_ d: Double) -> String {
+    d == d.rounded() ? "\(Int(d))" : String(format: "%.1f", d)
+}
+
 /// Compact "time since last movement" label: "now", "45m", "1h", "1h32m".
 func movementLabel(_ minutes: Int) -> String {
     if minutes <= 0 { return "now" }

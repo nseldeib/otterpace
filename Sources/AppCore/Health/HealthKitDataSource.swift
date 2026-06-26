@@ -9,8 +9,9 @@ import Foundation
 // behavior is verified on a signed device build, not in the CodeYam preview loop
 // (which uses the seeded source).
 //
-// Requires: the HealthKit capability/entitlement and `NSHealthShareUsageDescription`
-// in Info.plist (enabled in Xcode when signing — see docs/integrations-plan.md).
+// Requires: the HealthKit capability/entitlement (declared in App/App.entitlements
+// and wired via CODE_SIGN_ENTITLEMENTS) plus `NSHealthShareUsageDescription` in
+// App/Info.plist. See docs/testflight-prep.md for the signing/capability checklist.
 
 #if os(iOS)
 import HealthKit
@@ -60,18 +61,87 @@ public final class HealthKitDataSource: HealthDataSource {
         async let steps = sumToday(.stepCount, unit: .count())
         async let distance = sumToday(.distanceWalkingRunning, unit: .mile())
         async let energy = sumToday(.activeEnergyBurned, unit: .kilocalorie())
+        async let workouts = recentWorkouts()
 
-        let isoDate = DateFormatter.iso.string(from: Date())
+        let now = Date()
+        let isoDate = DateFormatter.iso.string(from: now)
+        let history = await workouts                       // newest-first, last ~30 days
+        let todayISO = isoDate
+        // Active minutes = time spent in workouts logged today.
+        let activeMinutes = history
+            .filter { $0.date == todayISO }
+            .reduce(0) { $0 + $1.durationMinutes }
+        // Latest run (preferred) or latest workout of any kind, for the Today card.
+        let latest = history.first(where: { $0.type == "run" }) ?? history.first
+        // Weekly Load / Activity History derive from the same workout list.
+        let load = history.isEmpty ? nil : ActivityHistory.weeklyLoad(from: history, asOf: now)
+
         return TodayState(
             healthKitConnected: true,
             date: isoDate,
             steps: Int(await steps),
             goalSteps: goalSteps,
-            activeMinutes: 0,                       // derived later from workouts
+            activeMinutes: activeMinutes,
             distanceMiles: await distance,
             activeEnergyKcal: Int(await energy),
-            minutesSinceLastMovement: 0
+            minutesSinceLastMovement: 0,
+            latestWorkout: latest,
+            weeklyLoad: load,
+            workouts: history
         )
+    }
+
+    /// Read recent workouts (last 30 days, newest-first) and map them to the app's
+    /// `LatestWorkout` shape so the Today card, Weekly Load, Activity History, and
+    /// Weekly Review all populate from live HealthKit data.
+    private func recentWorkouts(days: Int = 30, limit: Int = 60) async -> [LatestWorkout] {
+        let start = Calendar.current.date(byAdding: .day, value: -days, to: Date()) ?? Date()
+        let predicate = HKQuery.predicateForSamples(withStart: start, end: Date(), options: .strictStartDate)
+        let sort = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
+        return await withCheckedContinuation { cont in
+            let q = HKSampleQuery(sampleType: .workoutType(), predicate: predicate,
+                                  limit: limit, sortDescriptors: [sort]) { _, samples, _ in
+                let workouts = (samples as? [HKWorkout])?.map(Self.map) ?? []
+                cont.resume(returning: workouts)
+            }
+            store.execute(q)
+        }
+    }
+
+    /// Map an `HKWorkout` to a `LatestWorkout`. Distance is taken from the
+    /// workout's total distance (0 when HealthKit didn't record one, e.g. yoga);
+    /// the date is the workout's local calendar day so it groups under the day the
+    /// user actually moved.
+    private static func map(_ w: HKWorkout) -> LatestWorkout {
+        let meters = w.totalDistance?.doubleValue(for: .meter()) ?? 0
+        let miles = meters / 1609.344
+        let minutes = Int((w.duration / 60).rounded())
+        let pace = (miles > 0 && w.duration > 0) ? pacePerMile(secondsPerMile: w.duration / miles) : ""
+        return LatestWorkout(
+            type: activityName(w.workoutActivityType),
+            distanceMiles: (miles * 10).rounded() / 10,
+            durationMinutes: minutes,
+            pace: pace,
+            date: DateFormatter.iso.string(from: w.startDate),
+            source: "healthkit"
+        )
+    }
+
+    /// The app's coarse activity vocabulary (run | walk | ride | workout), matching
+    /// the Strava mapping so both sources read the same downstream.
+    private static func activityName(_ type: HKWorkoutActivityType) -> String {
+        switch type {
+        case .running:                return "run"
+        case .walking, .hiking:       return "walk"
+        case .cycling:                return "ride"
+        default:                      return "workout"
+        }
+    }
+
+    /// Format a "mm:ss/mi" pace from seconds-per-mile.
+    private static func pacePerMile(secondsPerMile: Double) -> String {
+        let total = Int(secondsPerMile.rounded())
+        return "\(total / 60):\(String(format: "%02d", total % 60))/mi"
     }
 
     /// Sum a cumulative quantity from midnight to now.
@@ -94,6 +164,11 @@ private extension DateFormatter {
         let f = DateFormatter()
         f.dateFormat = "yyyy-MM-dd"
         f.locale = Locale(identifier: "en_US_POSIX")
+        // Explicitly the user's LOCAL calendar day: "today" pairs with the local-day
+        // step sums, and a workout's date is the day the user actually moved. (This
+        // differs intentionally from ActivityHistory's fixed-UTC date math, which
+        // only does deterministic week-bucketing on these date-only strings.)
+        f.timeZone = .current
         return f
     }()
 }

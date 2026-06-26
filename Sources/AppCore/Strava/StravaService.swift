@@ -99,19 +99,20 @@ public final class StravaService: NSObject, ObservableObject {
     }
 
     /// Fetch imported activities from the backend proxy, mapped to `LatestWorkout`.
-    public func fetchActivities() async -> [LatestWorkout] {
+    /// The device key rides in the `x-device-key` header (never the query string)
+    /// so it stays out of any proxy/CDN access logs.
+    ///
+    /// Throws on a real failure (network/non-200/decode) so the caller can tell
+    /// "connected but the import failed" apart from "connected with no activities
+    /// yet" — the latter is a legitimate empty array, not an error. A not-connected
+    /// service returns [] without a network call.
+    public func fetchActivities() async throws -> [LatestWorkout] {
         guard isConnected else { return [] }
-        var comps = URLComponents(url: StravaConfig.apiBase.appendingPathComponent("strava/activities"),
-                                  resolvingAgainstBaseURL: false)
-        comps?.queryItems = [URLQueryItem(name: "deviceKey", value: deviceKey.current())]
-        guard let url = comps?.url else { return [] }
-        do {
-            let (data, resp) = try await URLSession.shared.data(from: url)
-            guard (resp as? HTTPURLResponse)?.statusCode == 200 else { return [] }
-            return try JSONDecoder().decode(ActivitiesResponse.self, from: data).activities.map { $0.workout }
-        } catch {
-            return []
-        }
+        var request = URLRequest(url: StravaConfig.apiBase.appendingPathComponent("strava/activities"))
+        request.setValue(deviceKey.current(), forHTTPHeaderField: "x-device-key")
+        let (data, resp) = try await URLSession.shared.data(for: request)
+        guard (resp as? HTTPURLResponse)?.statusCode == 200 else { throw StravaError.failed }
+        return try JSONDecoder().decode(ActivitiesResponse.self, from: data).activities.map { $0.workout }
     }
 
     // MARK: Networking

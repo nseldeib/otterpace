@@ -51,11 +51,17 @@ struct SignInView: View {
         SignInWithAppleButton(.signIn) { request in
             request.requestedScopes = [.fullName, .email]
         } onCompletion: { result in
-            // The stable `user` identifier is all we keep (no backend). Email/name
-            // arrive only on first authorization — we don't depend on them.
+            // The stable `user` identifier is what we keep locally. The short-lived
+            // identity token is exchanged once for a backend bearer so optional
+            // account sync can authenticate without ever trusting the (non-secret)
+            // user id — best-effort, so sign-in never blocks on the network.
             if case .success(let auth) = result,
                let credential = auth.credential as? ASAuthorizationAppleIDCredential {
                 session.signIn(userID: credential.user)
+                if let tokenData = credential.identityToken,
+                   let identityToken = String(data: tokenData, encoding: .utf8) {
+                    Task { await AccountSessionService().establish(identityToken: identityToken) }
+                }
             }
         }
         .signInWithAppleButtonStyle(.black)

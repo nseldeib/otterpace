@@ -241,7 +241,12 @@ public final class OtterpaceModel: ObservableObject {
         }
     }
 
-    /// Re-read today's data from the source (e.g. on foreground), if authorized.
+    /// Re-read today's data from the source, if authorized. Wired to the Today
+    /// dashboard's pull-to-refresh so a real HealthKit user can pull in newly
+    /// recorded steps/workouts without relaunching. `@MainActor` so the
+    /// `@Published today` mutation always publishes on the main actor (matching
+    /// `connect()` and `ingestStravaWorkouts`).
+    @MainActor
     public func refresh() async {
         guard healthAuth == .authorized else { return }
         today = await source.loadToday()

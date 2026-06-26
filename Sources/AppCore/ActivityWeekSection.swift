@@ -20,27 +20,21 @@ struct ActivityWeekSection: View {
             .accessibilityElement(children: .ignore)
             .accessibilityLabel("\(group.title). \(spokenRollup)")
 
-            ForEach(group.workouts) { WorkoutCard(workout: $0) }
+            // Positional identity: two genuinely identical workouts in the same
+            // week (same date/distance/duration/source) would collide on any
+            // content-derived id and SwiftUI would drop a row, so key on the
+            // index within this already-sorted, static week list instead.
+            ForEach(Array(group.workouts.enumerated()), id: \.offset) { _, workout in
+                WorkoutCard(workout: workout)
+            }
         }
     }
 
-    private var milesText: String {
-        group.totalMiles == group.totalMiles.rounded()
-            ? "\(Int(group.totalMiles))"
-            : String(format: "%.1f", group.totalMiles)
-    }
-
     private var rollup: String {
-        "\(milesText) mi · \(group.runCount) \(group.runCount == 1 ? "run" : "runs") · \(group.restDays) rest"
+        "\(miles(group.totalMiles)) mi · \(group.runCount) \(group.runCount == 1 ? "run" : "runs") · \(group.restDays) rest"
     }
 
     private var spokenRollup: String {
-        "\(milesText) miles, \(group.runCount) \(group.runCount == 1 ? "run" : "runs"), \(group.restDays) rest \(group.restDays == 1 ? "day" : "days")"
+        "\(miles(group.totalMiles)) miles, \(group.runCount) \(group.runCount == 1 ? "run" : "runs"), \(group.restDays) rest \(group.restDays == 1 ? "day" : "days")"
     }
-}
-
-// LatestWorkout needs an identity to drive the ForEach above. Date + distance +
-// source is stable enough to distinguish rows within a week.
-extension LatestWorkout: Identifiable {
-    public var id: String { "\(date)-\(distanceMiles)-\(source)-\(durationMinutes)" }
 }
