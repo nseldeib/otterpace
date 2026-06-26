@@ -1,0 +1,17 @@
+{
+  "name": "Welcome — Meet Buddy",
+  "id": "f37d2580-a1e7-4766-8ba3-3507e96d12f1",
+  "url": "/",
+  "dimensions": [
+    "iPhone 16"
+  ],
+  "mocks": {},
+  "deviceState": {
+    "preferences": {
+      "rbOnboardingPage": 0,
+      "rbStartScreen": "onboarding"
+    }
+  },
+  "scenarioType": "application",
+  "pageFilePath": "Sources/AppCore/Onboarding/OnboardingFlowView.swift"
+}

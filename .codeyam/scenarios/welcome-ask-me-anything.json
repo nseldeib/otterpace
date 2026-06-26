@@ -1,0 +1,17 @@
+{
+  "name": "Welcome — Ask Me Anything",
+  "id": "88076f37-4666-49de-979a-9a0d3530fd0f",
+  "url": "/",
+  "dimensions": [
+    "iPhone 16"
+  ],
+  "mocks": {},
+  "deviceState": {
+    "preferences": {
+      "rbStartScreen": "onboarding",
+      "rbOnboardingPage": 2
+    }
+  },
+  "scenarioType": "application",
+  "pageFilePath": "Sources/AppCore/Onboarding/OnboardingFlowView.swift"
+}

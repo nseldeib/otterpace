@@ -1,0 +1,17 @@
+{
+  "name": "Welcome — Day-by-Day Coaching",
+  "id": "4a83fee7-b4d6-4546-8068-56121e864d24",
+  "url": "/",
+  "dimensions": [
+    "iPhone 16"
+  ],
+  "mocks": {},
+  "deviceState": {
+    "preferences": {
+      "rbOnboardingPage": 1,
+      "rbStartScreen": "onboarding"
+    }
+  },
+  "scenarioType": "application",
+  "pageFilePath": "Sources/AppCore/Onboarding/OnboardingFlowView.swift"
+}
