@@ -93,3 +93,7 @@ package-lock.json
 # Xcode per-user state — generated locally, never shared
 xcuserdata/
 *.xcuserstate
+
+# App Store Connect API keys — never commit
+*.p8
+AuthKey_*.p8

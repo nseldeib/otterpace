@@ -1,45 +1,35 @@
 {
   "files": {
-    "Sources/AppCore/StepRing.swift": {
+    "api/strava/callback.ts": {
       "imports": [],
-      "importedBy": []
-    },
-    "Sources/AppCore/Formatters.swift": {
-      "imports": [],
-      "importedBy": []
-    },
-    "api/_lib/strava.ts": {
-      "imports": [],
-      "importedBy": [
-        "test/api/strava.test.ts"
-      ]
-    },
-    "api/account/health.ts": {
-      "imports": [
-        "api/_lib/account.js"
-      ],
-      "importedBy": [
-        "test/api/account-handlers.test.ts"
-      ]
-    },
-    "Sources/AppCore/SettingsView.swift": {
-      "imports": [],
-      "importedBy": []
-    },
-    "test/api/account-handlers.test.ts": {
-      "imports": [
-        "api/account/sync.ts",
-        "api/account/health.ts"
-      ],
-      "importedBy": []
-    },
-    "api/strava/activities.ts": {
-      "imports": [
-        "api/_lib/strava.js"
-      ],
       "importedBy": [
         "test/api/strava-handlers.test.ts"
       ]
+    },
+    "test/api/strava-handlers.test.ts": {
+      "imports": [
+        "api/strava/activities.ts",
+        "api/strava/callback.ts",
+        "api/strava/disconnect.ts",
+        "api/strava/exchange.ts"
+      ],
+      "importedBy": []
+    },
+    "Tests/AppCoreTests/SessionStoreTests.swift": {
+      "imports": [],
+      "importedBy": []
+    },
+    "Tests/AppCoreTests/WeeklyReviewEngineTests.swift": {
+      "imports": [],
+      "importedBy": []
+    },
+    ".claude/skills/review-session/scripts/extract-session-helpers.mjs": {
+      "imports": [],
+      "importedBy": []
+    },
+    "Sources/AppCore/StepRing.swift": {
+      "imports": [],
+      "importedBy": []
     },
     "test/api/strava.test.ts": {
       "imports": [
@@ -51,52 +41,14 @@
       "imports": [],
       "importedBy": []
     },
-    ".claude/skills/review-session/scripts/extract-session-helpers.mjs": {
+    "api/_lib/strava.js": {
       "imports": [],
-      "importedBy": []
-    },
-    "test/api/strava-handlers.test.ts": {
-      "imports": [
-        "api/strava/activities.ts",
-        "api/strava/callback.ts",
+      "importedBy": [
+        "api/_lib/account.ts",
         "api/strava/disconnect.ts",
-        "api/strava/exchange.ts"
-      ],
-      "importedBy": []
-    },
-    "api/strava/exchange.ts": {
-      "imports": [
-        "api/_lib/strava.js"
-      ],
-      "importedBy": [
-        "test/api/strava-handlers.test.ts"
+        "api/strava/exchange.ts",
+        "api/strava/activities.ts"
       ]
-    },
-    "api/coach.ts": {
-      "imports": [],
-      "importedBy": [
-        "test/api/coach.test.ts"
-      ]
-    },
-    ".claude/hooks/editor-pretool-hook.py": {
-      "imports": [],
-      "importedBy": []
-    },
-    "Sources/AppCore/ContentView.swift": {
-      "imports": [],
-      "importedBy": []
-    },
-    "Tests/AppCoreTests/ActivityHistoryTests.swift": {
-      "imports": [],
-      "importedBy": []
-    },
-    ".claude/skills/review-session/scripts/extract-session.mjs": {
-      "imports": [],
-      "importedBy": []
-    },
-    "Tests/AppCoreTests/FormattersTests.swift": {
-      "imports": [],
-      "importedBy": []
     },
     "api/_lib/account.ts": {
       "imports": [
@@ -106,7 +58,36 @@
         "test/api/account.test.ts"
       ]
     },
-    "Tests/AppCoreTests/MainTabTests.swift": {
+    "Sources/AppCore/Auth/SessionStore.swift": {
+      "imports": [],
+      "importedBy": []
+    },
+    "api/_lib/strava.ts": {
+      "imports": [],
+      "importedBy": [
+        "test/api/strava.test.ts"
+      ]
+    },
+    "api/strava/disconnect.ts": {
+      "imports": [
+        "api/_lib/strava.js"
+      ],
+      "importedBy": [
+        "test/api/strava-handlers.test.ts"
+      ]
+    },
+    "test/api/account-handlers.test.ts": {
+      "imports": [
+        "api/account/sync.ts",
+        "api/account/health.ts"
+      ],
+      "importedBy": []
+    },
+    "Tests/AppCoreTests/AppleCredentialMappingTests.swift": {
+      "imports": [],
+      "importedBy": []
+    },
+    "Tests/AppCoreTests/ActivityHistoryTests.swift": {
       "imports": [],
       "importedBy": []
     },
@@ -118,17 +99,48 @@
       "imports": [],
       "importedBy": []
     },
-    "test/api/account.test.ts": {
+    "test/api/coach.test.ts": {
       "imports": [
-        "api/_lib/account.ts"
+        "api/coach.ts"
       ],
       "importedBy": []
     },
-    "Tests/AppCoreTests/AppleCredentialMappingTests.swift": {
+    ".claude/skills/review-session/scripts/extract-session.mjs": {
       "imports": [],
       "importedBy": []
     },
-    "Sources/AppCore/Auth/AppleCredentialChecker.swift": {
+    "Sources/AppCore/SettingsView.swift": {
+      "imports": [],
+      "importedBy": []
+    },
+    "Sources/AppCore/Formatters.swift": {
+      "imports": [],
+      "importedBy": []
+    },
+    "vitest.config.ts": {
+      "imports": [],
+      "importedBy": []
+    },
+    "api/account/health.ts": {
+      "imports": [
+        "api/_lib/account.js"
+      ],
+      "importedBy": [
+        "test/api/account-handlers.test.ts"
+      ]
+    },
+    "api/_lib/account.js": {
+      "imports": [],
+      "importedBy": [
+        "api/account/health.ts",
+        "api/account/sync.ts"
+      ]
+    },
+    "Tests/AppCoreTests/FormattersTests.swift": {
+      "imports": [],
+      "importedBy": []
+    },
+    "Sources/AppCore/ContentView.swift": {
       "imports": [],
       "importedBy": []
     },
@@ -138,13 +150,53 @@
         ".claude/skills/review-session/scripts/find-last-session.mjs"
       ]
     },
-    "api/strava/callback.ts": {
+    ".claude/hooks/_step_metadata.py": {
       "imports": [],
+      "importedBy": []
+    },
+    ".claude/skills/review-session/scripts/find-last-session.mjs": {
+      "imports": [
+        ".claude/skills/review-session/scripts/find-last-session-helpers.mjs"
+      ],
+      "importedBy": []
+    },
+    "api/strava/activities.ts": {
+      "imports": [
+        "api/_lib/strava.js"
+      ],
       "importedBy": [
         "test/api/strava-handlers.test.ts"
       ]
     },
-    ".claude/hooks/_step_metadata.py": {
+    ".claude/hooks/editor-pretool-hook.py": {
+      "imports": [],
+      "importedBy": []
+    },
+    "Tests/AppCoreTests/MainTabTests.swift": {
+      "imports": [],
+      "importedBy": []
+    },
+    "api/strava/exchange.ts": {
+      "imports": [
+        "api/_lib/strava.js"
+      ],
+      "importedBy": [
+        "test/api/strava-handlers.test.ts"
+      ]
+    },
+    "test/api/account.test.ts": {
+      "imports": [
+        "api/_lib/account.ts"
+      ],
+      "importedBy": []
+    },
+    "api/coach.ts": {
+      "imports": [],
+      "importedBy": [
+        "test/api/coach.test.ts"
+      ]
+    },
+    ".claude/hooks/editor-step-hook.py": {
       "imports": [],
       "importedBy": []
     },
@@ -156,68 +208,44 @@
         "test/api/account-handlers.test.ts"
       ]
     },
-    "Tests/AppCoreTests/WeeklyReviewEngineTests.swift": {
-      "imports": [],
-      "importedBy": []
-    },
-    "Tests/AppCoreTests/SessionStoreTests.swift": {
-      "imports": [],
-      "importedBy": []
-    },
-    "vitest.config.ts": {
-      "imports": [],
-      "importedBy": []
-    },
     "ui/src/helpers/stepLabels.generated.ts": {
       "imports": [],
       "importedBy": []
     },
-    "Sources/AppCore/Auth/SessionStore.swift": {
+    "Sources/AppCore/Auth/AppleCredentialChecker.swift": {
       "imports": [],
-      "importedBy": []
-    },
-    "api/strava/disconnect.ts": {
-      "imports": [
-        "api/_lib/strava.js"
-      ],
-      "importedBy": [
-        "test/api/strava-handlers.test.ts"
-      ]
-    },
-    ".claude/hooks/editor-step-hook.py": {
-      "imports": [],
-      "importedBy": []
-    },
-    "api/_lib/account.js": {
-      "imports": [],
-      "importedBy": [
-        "api/account/health.ts",
-        "api/account/sync.ts"
-      ]
-    },
-    "api/_lib/strava.js": {
-      "imports": [],
-      "importedBy": [
-        "api/_lib/account.ts",
-        "api/strava/disconnect.ts",
-        "api/strava/exchange.ts",
-        "api/strava/activities.ts"
-      ]
-    },
-    ".claude/skills/review-session/scripts/find-last-session.mjs": {
-      "imports": [
-        ".claude/skills/review-session/scripts/find-last-session-helpers.mjs"
-      ],
-      "importedBy": []
-    },
-    "test/api/coach.test.ts": {
-      "imports": [
-        "api/coach.ts"
-      ],
       "importedBy": []
     }
   },
   "entities": {
+    "api/_lib/strava.js::__file_root__": {
+      "filePath": "api/_lib/strava.js",
+      "name": "__file_root__",
+      "imports": [],
+      "importedBy": [
+        "api/_lib/account.ts::__file_root__",
+        "api/strava/disconnect.ts::__file_root__",
+        "api/strava/exchange.ts::__file_root__",
+        "api/strava/activities.ts::__file_root__"
+      ]
+    },
+    "api/account/sync.ts::__file_root__": {
+      "filePath": "api/account/sync.ts",
+      "name": "__file_root__",
+      "imports": [
+        "api/_lib/account.js::__file_root__"
+      ],
+      "importedBy": []
+    },
+    "test/api/account-handlers.test.ts::__file_root__": {
+      "filePath": "test/api/account-handlers.test.ts",
+      "name": "__file_root__",
+      "imports": [
+        "api/account/sync.ts::__file_root__",
+        "api/account/health.ts::__file_root__"
+      ],
+      "importedBy": []
+    },
     "test/api/strava.test.ts::__file_root__": {
       "filePath": "test/api/strava.test.ts",
       "name": "__file_root__",
@@ -238,38 +266,11 @@
       ],
       "importedBy": []
     },
-    "api/_lib/account.ts::__file_root__": {
-      "filePath": "api/_lib/account.ts",
-      "name": "__file_root__",
-      "imports": [
-        "api/_lib/strava.js::__file_root__"
-      ],
-      "importedBy": []
-    },
     ".claude/skills/review-session/scripts/find-last-session.mjs::__file_root__": {
       "filePath": ".claude/skills/review-session/scripts/find-last-session.mjs",
       "name": "__file_root__",
       "imports": [
         ".claude/skills/review-session/scripts/find-last-session-helpers.mjs::claudeProjectHashFromPath"
-      ],
-      "importedBy": []
-    },
-    "test/api/strava-handlers.test.ts::__file_root__": {
-      "filePath": "test/api/strava-handlers.test.ts",
-      "name": "__file_root__",
-      "imports": [
-        "api/strava/activities.ts::__file_root__",
-        "api/strava/callback.ts::__file_root__",
-        "api/strava/disconnect.ts::__file_root__",
-        "api/strava/exchange.ts::__file_root__"
-      ],
-      "importedBy": []
-    },
-    "api/account/health.ts::__file_root__": {
-      "filePath": "api/account/health.ts",
-      "name": "__file_root__",
-      "imports": [
-        "api/_lib/account.js::__file_root__"
       ],
       "importedBy": []
     },
@@ -281,15 +282,6 @@
       ],
       "importedBy": []
     },
-    "test/api/account-handlers.test.ts::__file_root__": {
-      "filePath": "test/api/account-handlers.test.ts",
-      "name": "__file_root__",
-      "imports": [
-        "api/account/sync.ts::__file_root__",
-        "api/account/health.ts::__file_root__"
-      ],
-      "importedBy": []
-    },
     "api/strava/disconnect.ts::__file_root__": {
       "filePath": "api/strava/disconnect.ts",
       "name": "__file_root__",
@@ -298,19 +290,19 @@
       ],
       "importedBy": []
     },
-    "api/strava/exchange.ts::__file_root__": {
-      "filePath": "api/strava/exchange.ts",
-      "name": "__file_root__",
-      "imports": [
-        "api/_lib/strava.js::__file_root__"
-      ],
-      "importedBy": []
-    },
-    "api/account/sync.ts::__file_root__": {
-      "filePath": "api/account/sync.ts",
+    "api/account/health.ts::__file_root__": {
+      "filePath": "api/account/health.ts",
       "name": "__file_root__",
       "imports": [
         "api/_lib/account.js::__file_root__"
+      ],
+      "importedBy": []
+    },
+    "api/_lib/account.ts::__file_root__": {
+      "filePath": "api/_lib/account.ts",
+      "name": "__file_root__",
+      "imports": [
+        "api/_lib/strava.js::__file_root__"
       ],
       "importedBy": []
     },
@@ -323,16 +315,13 @@
         "api/account/sync.ts::__file_root__"
       ]
     },
-    "api/_lib/strava.js::__file_root__": {
-      "filePath": "api/_lib/strava.js",
+    "api/strava/exchange.ts::__file_root__": {
+      "filePath": "api/strava/exchange.ts",
       "name": "__file_root__",
-      "imports": [],
-      "importedBy": [
-        "api/_lib/account.ts::__file_root__",
-        "api/strava/disconnect.ts::__file_root__",
-        "api/strava/exchange.ts::__file_root__",
-        "api/strava/activities.ts::__file_root__"
-      ]
+      "imports": [
+        "api/_lib/strava.js::__file_root__"
+      ],
+      "importedBy": []
     },
     "test/api/coach.test.ts::__file_root__": {
       "filePath": "test/api/coach.test.ts",
@@ -357,7 +346,18 @@
         "api/_lib/account.ts::upsertPrefs"
       ],
       "importedBy": []
+    },
+    "test/api/strava-handlers.test.ts::__file_root__": {
+      "filePath": "test/api/strava-handlers.test.ts",
+      "name": "__file_root__",
+      "imports": [
+        "api/strava/activities.ts::__file_root__",
+        "api/strava/callback.ts::__file_root__",
+        "api/strava/disconnect.ts::__file_root__",
+        "api/strava/exchange.ts::__file_root__"
+      ],
+      "importedBy": []
     }
   },
-  "lastUpdated": "2026-06-26T14:54:30Z"
+  "lastUpdated": "2026-06-26T15:30:06Z"
 }
