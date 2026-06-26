@@ -14,6 +14,18 @@ struct StepRing: View {
     // overflows the circle at large Dynamic Type sizes.
     @ScaledMetric(relativeTo: .largeTitle) private var diameter: CGFloat = 150
 
+    // Honor the system "Reduce Motion" setting: snap to the final value instead
+    // of sweeping the arc when it's on.
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    // Drives both the trimmed arc length and the gradient span so color and
+    // length always move together. Starts empty and sweeps up to `progress`.
+    @State private var animatedProgress: Double = 0
+
+    // Clamp the animated value to the drawable arc range (see `stepRingFill`).
+    // The caption still reflects the `exceeded` state via the helpers below.
+    private var fill: Double { stepRingFill(animatedProgress) }
+
     // Presentation logic lives in pure, unit-tested helpers (Formatters.swift).
     private var caption: String {
         stepGoalCaption(reached: reached, exceeded: exceeded, goal: goal)
@@ -29,11 +41,17 @@ struct StepRing: View {
             Circle()
                 .stroke(Palette.brand.opacity(0.14), lineWidth: 14)
             Circle()
-                .trim(from: 0, to: max(0.001, progress))
+                .trim(from: 0, to: fill)
+                // Map the gradient onto the FILLED arc (0 → 360°·fill in the
+                // shape's local space) instead of wrapping the whole circle, so
+                // coral→gold→green flows along the progress and the green
+                // leading cap meets the coral start cleanly — no seam at the top.
                 .stroke(
                     AngularGradient(
                         gradient: Gradient(colors: [Palette.brand, Palette.gold, Palette.go]),
-                        center: .center
+                        center: .center,
+                        startAngle: .degrees(0),
+                        endAngle: .degrees(360 * fill)
                     ),
                     style: StrokeStyle(lineWidth: 14, lineCap: .round)
                 )
@@ -60,5 +78,20 @@ struct StepRing: View {
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Daily step goal")
         .accessibilityValue(accessibilityValue)
+        .onAppear { animate(to: progress) }
+        .onChange(of: progress) { newValue in animate(to: newValue) }
+    }
+
+    // Sweep the arc to `target` with a gentle ease-out, or snap when Reduce
+    // Motion is on. Driving a single state value keeps the gradient span and
+    // the trim length in lockstep.
+    private func animate(to target: Double) {
+        if reduceMotion {
+            animatedProgress = target
+        } else {
+            withAnimation(.easeOut(duration: 0.8)) {
+                animatedProgress = target
+            }
+        }
     }
 }

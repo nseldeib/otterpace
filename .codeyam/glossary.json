@@ -692,6 +692,12 @@
     "testFile": "Tests/AppCoreTests/FormattersTests.swift"
   },
   {
+    "description": "Clamps a goal-progress fraction to the drawable step-ring arc range; floors near zero so the rounded cap shows and caps a met or crushed goal at a full turn. Drives both the trim length and the gradient span.",
+    "filePath": "Sources/AppCore/Formatters.swift",
+    "name": "stepRingFill",
+    "testFile": "Tests/AppCoreTests/FormattersTests.swift"
+  },
+  {
     "description": "Builds the apikey + bearer Authorization headers for Supabase PostgREST from the service-role key.",
     "filePath": "api/_lib/strava.ts",
     "name": "supabaseHeaders",

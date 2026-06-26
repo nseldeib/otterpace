@@ -624,6 +624,42 @@
       "runner": "tests"
     },
     {
+      "description": "stepRingFill clamps a met goal to exactly a full ring.",
+      "file": "Tests/AppCoreTests/FormattersTests.swift",
+      "format": "junit-xml",
+      "key": "AppCoreTests.FormattersTests › testStepRingFillExactlyFull",
+      "line": 107,
+      "registeredAt": "2026-06-26T02:37:49.500381+00:00",
+      "runner": "tests"
+    },
+    {
+      "description": "stepRingFill caps a crushed goal above one at a full ring with no overdraw.",
+      "file": "Tests/AppCoreTests/FormattersTests.swift",
+      "format": "junit-xml",
+      "key": "AppCoreTests.FormattersTests › testStepRingFillExceededCapsAtFull",
+      "line": 112,
+      "registeredAt": "2026-06-26T02:37:54.527469+00:00",
+      "runner": "tests"
+    },
+    {
+      "description": "stepRingFill floors at a tiny positive value so the rounded cap shows at zero percent.",
+      "file": "Tests/AppCoreTests/FormattersTests.swift",
+      "format": "junit-xml",
+      "key": "AppCoreTests.FormattersTests › testStepRingFillFloorsAtZero",
+      "line": 101,
+      "registeredAt": "2026-06-26T02:37:44.643913+00:00",
+      "runner": "tests"
+    },
+    {
+      "description": "stepRingFill passes typical mid-progress fractions through unchanged.",
+      "file": "Tests/AppCoreTests/FormattersTests.swift",
+      "format": "junit-xml",
+      "key": "AppCoreTests.FormattersTests › testStepRingFillMidProgress",
+      "line": 94,
+      "registeredAt": "2026-06-26T02:37:39.435791+00:00",
+      "runner": "tests"
+    },
+    {
       "description": "connect() on a seeded source ends up authorized and loads the seeded steps.",
       "format": "junit-xml",
       "key": "AppCoreTests.HealthDataSourceTests › testConnectWithSeededSourceAuthorizesAndLoads",

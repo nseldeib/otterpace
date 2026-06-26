@@ -1,0 +1,129 @@
+{
+  "timestamp": "2026-06-26T02:59:15Z",
+  "title": "Tracker Wheel — Seamless Gradient & Entrance Animation",
+  "type": "feature",
+  "userRequest": "## Summary\n\nThe daily step-goal ring (`StepRing`) draws its progress arc with a full-circle\n`AngularGradient` of `[Palette.brand, Palette.gold, Palette.go]` rotated by\n`-90°`. Because an angular gradient wraps the entire circle, the green end color\n(`Palette.go`) butts directly against the coral start color (`Palette.brand`) at\n12 o'clock — producing the abrupt green/orange split the user noticed at the top\nof the wheel. The ring is also fully static: it snaps to its final value with no\nmotion. This plan removes the seam by mapping the gradient onto the *filled arc*\ninstead of the whole circle, and adds a smooth entrance animation (the arc sweeps\nup to the current progress on appear) plus animated transitions when the step\ncount changes — while respecting Reduce Motion.\n\n## Key Decisions\n\n- **Map the gradient to the progress arc, don't wrap it** — switch the trimmed\n  `Circle` to an `AngularGradient(gradient:center:startAngle:endAngle:)` whose\n  angular span equals the filled portion (`startAngle = -90°`,\n  `endAngle = -90° + 360° * progress`). Coral→gold→green then flows along the\n  actual progress and the leading rounded cap is green, with no color seam at the\n  top regardless of progress. Chosen over the alternative of duplicating\n  `Palette.brand` as the gradient's end color (which only hides the seam and\n  muddies the coral→green story).\n- **Entrance animation via an animatable progress state** — animate a\n  `@State private var animatedProgress` from `0` to `progress` on appear so the\n  arc sweeps in; the gradient `endAngle` is derived from the same value so color\n  and length stay in sync. Use a gentle ease-out / spring.\n- **Honor Reduce Motion** — read `@Environment(\\.accessibilityReduceMotion)` and\n  skip the sweep (snap to final value) when it's on, consistent with the\n  completed `accessible-responsive-design` work.\n- **Animate updates too** — when `progress`/`steps` change (e.g. new HealthKit\n  read), animate the arc to the new value rather than snapping, with a subtle\n  emphasis when the goal is first reached/exceeded.\n\n## Implementation\n\n### 1. Seamless gradient + animated arc\n\n**File**: `Sources/AppCore/StepRing.swift`\n\n- Replace the full-circle `AngularGradient(gradient:center:)` on the trimmed\n  progress `Circle` with the start/end-angle form so the gradient spans only the\n  filled arc (`startAngle: .degrees(-90)`,\n  `endAngle: .degrees(-90 + 360 * animatedProgress)`). Keep the faint background\n  track ring (`Palette.brand.opacity(0.14)`) and the `.round` line cap.\n- Introduce `@State private var animatedProgress: Double` (init `0`). Drive both\n  the `trim(from:to:)` and the gradient `endAngle` from `animatedProgress` so\n  length and color move together.\n- On `.onAppear`, set `animatedProgress` to `progress` inside\n  `withAnimation(...)` (ease-out or a soft spring, ~0.6–0.9s). On\n  `.onChange(of: progress)`, animate to the new value. When\n  `accessibilityReduceMotion` is true, assign without animation.\n- Optional flourish when `reached`/`exceeded` flips true: a brief scale/opacity\n  pulse on the center count or a one-shot glow on the cap — kept subtle and also\n  gated by Reduce Motion.\n- Leave the center `VStack` (count, caption, \"to go\") and all accessibility\n  wiring (`accessibilityLabel`/`accessibilityValue`, `@ScaledMetric diameter`)\n  unchanged — this is a visual/motion change only.\n\n### 2. Verify exceeded (>100%) rendering\n\n**File**: `Sources/AppCore/StepRing.swift`\n\n`progress` can exceed `1.0` when the goal is beaten. Clamp the *trim* to `1.0`\n(a circle can't draw more than full) while still letting the caption reflect the\n`exceeded` state, and make sure the gradient `endAngle` clamps at `-90 + 360` so\nthe wheel reads as a complete, seam-free ring when the goal is crushed.\n\n## Reused existing code\n\n- `Palette.brand` / `Palette.gold` / `Palette.go` from\n  `Sources/AppCore/Theme.swift` — the existing progress gradient stops.\n- `stepGoalCaption` / `stepGoalAccessibilityValue` (Formatters) and `formatted(_:)`\n  — the center text + accessibility value, unchanged.\n- `Typography` and the `@ScaledMetric` diameter pattern already in `StepRing`.\n- `@Environment(\\.accessibilityReduceMotion)` — same Reduce-Motion approach used\n  by the completed `accessible-responsive-design` plan.\n\n## Scenarios to Demonstrate\n\n- **Mid-progress (no seam)**: `today-midday-nudge` / `today-almost-there` — the\n  arc shows coral→gold→green flowing along the filled portion with the top of the\n  ring clean (no green/orange split).\n- **Entrance animation**: any Today scenario on first appear — the arc sweeps\n  from empty up to its value.\n- **Goal crushed / exceeded**: `today-goal-crushed` — full, seam-free ring plus\n  the reached/exceeded emphasis.\n- **Fresh start (0%)**: `today-fresh-start` — near-empty ring still renders the\n  rounded cap cleanly.\n- **Reduce Motion on**: the ring snaps to its final value with no sweep.",
+  "description": "Reworked the daily step-goal ring (StepRing) so the coral→gold→green gradient maps onto the filled progress arc instead of wrapping the whole circle, eliminating the abrupt green/orange seam at the top of the wheel. Added a smooth ease-out entrance sweep and animated step-count transitions, both gated by Reduce Motion, and clamped the goal-crushed (>100%) case to a full seamless ring. Extracted the drawable-range clamp into a pure, unit-tested stepRingFill helper (4 new tests; 129 total passing).",
+  "modifiedFiles": [
+    {
+      "path": ".codeyam/dependency-graph.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/glossary.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/plans/dogfood-tracker-wheel-gradient-animation.md\t.codeyam/plans/completed/dogfood-tracker-wheel-gradient-animation.md",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-almost-there--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-custom-goal--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-day-one-connect--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-fresh-start--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-goal-crushed--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-long-content--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-midday-nudge--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-recovery-caution--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/screenshots/today-zero-step-morning--iphone-16.png",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/today-almost-there.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/today-custom-goal.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/today-day-one-connect.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/today-fresh-start.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/today-goal-crushed.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/today-long-content.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/today-midday-nudge.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/today-recovery-caution.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/scenarios/today-zero-step-morning.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/stale-proxy-snapshot.json",
+      "status": "deleted"
+    },
+    {
+      "path": ".codeyam/test-cache.json",
+      "status": "modified"
+    },
+    {
+      "path": ".codeyam/test-registry.json",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/Formatters.swift",
+      "status": "modified"
+    },
+    {
+      "path": "Sources/AppCore/StepRing.swift",
+      "status": "modified"
+    },
+    {
+      "path": "Tests/AppCoreTests/FormattersTests.swift",
+      "status": "modified"
+    }
+  ],
+  "testResults": {
+    "total": 129,
+    "passed": 129,
+    "failed": 0,
+    "runners": [
+      {
+        "name": "tests",
+        "total": 129,
+        "passed": 129
+      }
+    ]
+  }
+}

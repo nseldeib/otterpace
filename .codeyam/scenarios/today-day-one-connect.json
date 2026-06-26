@@ -1,6 +1,6 @@
 {
   "name": "Today - Day One (Connect)",
-  "id": "78477d1c-db88-4fe1-9a40-f4976a27e60f",
+  "id": "bd7502cf-54b0-4f86-a51e-752370216895",
   "url": "/",
   "dimensions": [
     "iPhone 16"
@@ -8,14 +8,14 @@
   "mocks": {},
   "deviceState": {
     "preferences": {
-      "rbPreviewMode": "",
-      "rbShowHistory": false,
       "rbConnected": false,
-      "rbShowWeeklyReview": false,
-      "rbContentSize": "",
+      "rbShowSettings": false,
       "rbStartTab": "today",
+      "rbPreviewMode": "",
       "rbAskSeedQuestion": "",
-      "rbShowSettings": false
+      "rbShowHistory": false,
+      "rbShowWeeklyReview": false,
+      "rbContentSize": ""
     }
   },
   "scenarioType": "application",

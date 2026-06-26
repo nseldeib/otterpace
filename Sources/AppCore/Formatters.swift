@@ -35,6 +35,15 @@ func stepGoalAccessibilityValue(steps: Int, goal: Int, remaining: Int, reached: 
     return "\(formatted(steps)) of \(formatted(goal)) steps. \(formatted(remaining)) to go."
 }
 
+/// Clamp a goal-progress fraction to the range the step ring can actually draw.
+/// A circle's trim can't render more than a full turn, so anything at or above
+/// 1.0 (the goal met or crushed) maps to a complete ring; a tiny floor keeps the
+/// rounded leading cap visible at 0%. Drives both the arc length and the
+/// gradient span so color and length always agree.
+func stepRingFill(_ progress: Double) -> Double {
+    min(1.0, max(0.001, progress))
+}
+
 /// Render an ISO `yyyy-MM-dd` date as "EEE, MMM d" (e.g. "Mon, Jun 22").
 /// Falls back to the raw string when it isn't a valid ISO date.
 func prettyDate(_ iso: String) -> String {

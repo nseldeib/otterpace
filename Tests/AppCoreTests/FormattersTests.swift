@@ -89,4 +89,28 @@ final class FormattersTests: XCTestCase {
             "14,200 steps. You crushed your goal of 10,000."
         )
     }
+
+    // stepRingFill passes typical mid-progress fractions through unchanged.
+    func testStepRingFillMidProgress() {
+        XCTAssertEqual(stepRingFill(0.32), 0.32, accuracy: 1e-9)
+        XCTAssertEqual(stepRingFill(0.5), 0.5, accuracy: 1e-9)
+        XCTAssertEqual(stepRingFill(0.999), 0.999, accuracy: 1e-9)
+    }
+
+    // stepRingFill floors at a tiny positive value so the rounded cap shows at 0%.
+    func testStepRingFillFloorsAtZero() {
+        XCTAssertEqual(stepRingFill(0), 0.001, accuracy: 1e-9)
+        XCTAssertEqual(stepRingFill(-0.4), 0.001, accuracy: 1e-9)
+    }
+
+    // stepRingFill clamps a met goal to exactly a full ring.
+    func testStepRingFillExactlyFull() {
+        XCTAssertEqual(stepRingFill(1.0), 1.0, accuracy: 1e-9)
+    }
+
+    // stepRingFill caps a crushed goal (progress > 1) at a full ring, no overdraw.
+    func testStepRingFillExceededCapsAtFull() {
+        XCTAssertEqual(stepRingFill(1.4), 1.0, accuracy: 1e-9)
+        XCTAssertEqual(stepRingFill(3.0), 1.0, accuracy: 1e-9)
+    }
 }
